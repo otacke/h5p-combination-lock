@@ -1,7 +1,7 @@
 {
-  "name": "h5p-boilerplate-snordian",
+  "name": "h5p-combination-lock",
   "version": "1.0.0",
-  "description": "Boilerplate for plain H5P content types (SNORDIAN style)",
+  "description": "Use a combination lock in H5P",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/otacke/h5p-boilerplate-snordian.git"
+    "url": "git+https://github.com/otacke/h5p-combination-lock.git"
   },
   "keywords": [
     "h5p",

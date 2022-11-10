@@ -1,8 +1,8 @@
 import Util from '@services/util';
 import Dictionary from '@services/dictionary';
-import '@styles/h5p-boilerplate-snordian.scss';
+import '@styles/h5p-combination-lock.scss';
 
-export default class BoilerplateSNORDIAN extends H5P.EventDispatcher {
+export default class CombinationLock extends H5P.EventDispatcher {
   /**
    * @class
    * @param {object} params Parameters passed by the editor.
@@ -46,7 +46,7 @@ export default class BoilerplateSNORDIAN extends H5P.EventDispatcher {
    * @param {H5P.jQuery} $wrapper Content's container.
    */
   attach($wrapper) {
-    $wrapper.get(0).classList.add('h5p-boilerplate-snordian');
+    $wrapper.get(0).classList.add('h5p-combination-lock');
     $wrapper.get(0).appendChild(this.dom);
   }
 
@@ -57,7 +57,7 @@ export default class BoilerplateSNORDIAN extends H5P.EventDispatcher {
    */
   buildDOM() {
     const dom = document.createElement('div');
-    dom.classList.add('h5p-boilerplate-snordian-main');
+    dom.classList.add('h5p-combination-lock-main');
     dom.innerText = this.getTitle();
 
     return dom;
@@ -71,7 +71,7 @@ export default class BoilerplateSNORDIAN extends H5P.EventDispatcher {
   getTitle() {
     // H5P Core function: createTitle
     return H5P.createTitle(
-      this.extras?.metadata?.title || BoilerplateSNORDIAN.DEFAULT_DESCRIPTION
+      this.extras?.metadata?.title || CombinationLock.DEFAULT_DESCRIPTION
     );
   }
 
@@ -81,9 +81,9 @@ export default class BoilerplateSNORDIAN extends H5P.EventDispatcher {
    * @returns {string} Description.
    */
   getDescription() {
-    return BoilerplateSNORDIAN.DEFAULT_DESCRIPTION;
+    return CombinationLock.DEFAULT_DESCRIPTION;
   }
 }
 
 /** @constant {string} Default description */
-BoilerplateSNORDIAN.DEFAULT_DESCRIPTION = 'Boilerplate (SNORDIAN)';
+CombinationLock.DEFAULT_DESCRIPTION = 'Boilerplate (SNORDIAN)';

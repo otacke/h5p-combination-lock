@@ -1,24 +1,24 @@
 {
-  "title": "Boilerplate (SNORDIAN)",
-  "description": "Boilerplate for plain H5P content types (SNORDIAN style)",
+  "title": "Combination Lock",
+  "description": "Use a combination lock in H5P",
   "majorVersion": 1,
   "minorVersion": 0,
   "patchVersion": 0,
   "runnable": 1,
   "author": "Oliver Tacke",
   "license": "MIT",
-  "machineName": "H5P.BoilerplateSNORDIAN",
+  "machineName": "H5P.CombinationLock",
   "embedTypes": [
     "iframe"
   ],
   "preloadedJs": [
     {
-      "path": "dist/h5p-boilerplate-snordian.js"
+      "path": "dist/h5p-combination-lock.js"
     }
   ],
   "preloadedCss": [
     {
-      "path": "dist/h5p-boilerplate-snordian.css"
+      "path": "dist/h5p-combination-lock.css"
     }
   ]
 }

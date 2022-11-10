@@ -1,5 +1,5 @@
-# H5P Boilerplate (SNORDIAN)
-TODO: Add description and change name
+# H5P Combination Lock
+Use a combination lock in H5P
 
 ## Getting started
 Clone this repository with git and check out the branch that you are interested

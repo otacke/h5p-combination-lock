@@ -1,4 +1,4 @@
-import BoilerplateSNORDIAN from '../scripts/h5p-boilerplate-snordian';
+import CombinationLock from '../scripts/h5p-combination-lock';
 
 // Load library
-H5P.BoilerplateSNORDIAN = BoilerplateSNORDIAN;
+H5P.CombinationLock = CombinationLock;
