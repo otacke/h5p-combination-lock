@@ -110,7 +110,25 @@
         "type": "text",
         "label": "Attempts left",
         "description": "@number is a placeholder and will be replaced by the respective number of attempts left.",
-        "default": "You have @number attempts left."
+        "default": "Attempts left: @number"
+      },
+      {
+        "name": "solutions",
+        "type": "text",
+        "label": "Solutions",
+        "default": "This combination opens the lock."
+      },
+      {
+        "name": "wrongCombination",
+        "type": "text",
+        "label": "Wrong combination",
+        "default": "This combination does not open the lock."
+      },
+      {
+        "name": "noMessage",
+        "type": "text",
+        "label": "No message",
+        "default": "..."
       }
     ]
   },

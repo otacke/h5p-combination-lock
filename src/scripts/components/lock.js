@@ -2,6 +2,7 @@ import charRegex from 'char-regex';
 import Util from '@services/util.js';
 import './lock.scss';
 import LockSegment from './lock-segment';
+import MessageDisplay from './message-display';
 
 /** Segment */
 export default class Lock {
@@ -37,15 +38,33 @@ export default class Lock {
       });   
 
     this.dom = document.createElement('div');
-    this.dom.classList.add('h5p-combination-lock-lock-case');
+    this.dom.classList.add('h5p-combination-lock-case');
 
     const lock = document.createElement('div');
-    lock.classList.add('h5p-combination-lock-lock');
+    lock.classList.add('h5p-combination-lock-elements');
     this.dom.appendChild(lock);
 
+    const segments = document.createElement('div');
+    segments.classList.add('h5p-combination-lock-segments');
+    lock.appendChild(segments);
+
     this.segments.forEach((segment) => {
-      lock.appendChild(segment.getDOM());
+      segments.appendChild(segment.getDOM());
     });
+
+    this.messageDisplay = new MessageDisplay();
+    lock.appendChild(this.messageDisplay.getDOM());
+
+    this.observer = new IntersectionObserver((entries) => {
+      if (entries[0].intersectionRatio === 1) {
+        this.observer.unobserve(this.dom);
+        this.messageDisplay.setWidth(segments.getBoundingClientRect().width);
+      }
+    }, {
+      root: document.documentElement,
+      threshold: [1]
+    });
+    this.observer.observe(this.dom);
   }
 
   /**
@@ -84,6 +103,15 @@ export default class Lock {
     return {
       positions: this.getPositions()
     };
+  }
+
+  /**
+   * Set text.
+   *
+   * @param {string} text Text to display.
+   */
+  setMessage(text) {
+    this.messageDisplay.setText(text);
   }
 
   /**

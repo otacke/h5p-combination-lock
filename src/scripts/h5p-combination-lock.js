@@ -30,7 +30,10 @@ export default class CombinationLock extends H5P.Question {
         retry: 'Retry',
         lockOpen: 'Lock open!',
         lockDisabled: 'No more attempts. Lock disabled.',
-        attemptsLeft: 'You have @number attempts left.'
+        attemptsLeft: 'Attempts left: @number',
+        solutions: 'This combination opens the lock.',
+        wrongCombination: 'This combination does not open the lock.',
+        noMessage: '...'
       },
       a11y: {
         sample: 'Sample a11y'
@@ -92,6 +95,14 @@ export default class CombinationLock extends H5P.Question {
         }
       }
     );
+
+    if (!this.params.behaviour.autoCheck && this.maxAttempts !== Infinity) {
+      this.lock.setMessage(Dictionary.get('l10n.attemptsLeft')
+        .replace(/@number/g, this.attemptsLeft));
+    }
+    else {
+      this.lock.setMessage(Dictionary.get('l10n.noMessage'));
+    }
 
     this.dom = this.buildDOM();
   }
@@ -299,6 +310,7 @@ export default class CombinationLock extends H5P.Question {
       this.showButton('try-again');
     }
 
+    this.lock.setMessage(Dictionary.get('l10n.solutions'));
     this.lock.showSolutions();
   }
 
@@ -309,6 +321,14 @@ export default class CombinationLock extends H5P.Question {
     this.attemptsLeft = this.maxAttempts;
     this.score = 0;
     this.wasAnswerGiven = false;
+
+    if (!this.params.behaviour.autoCheck && this.maxAttempts !== Infinity) {
+      this.lock.setMessage(Dictionary.get('l10n.attemptsLeft')
+        .replace(/@number/g, this.attemptsLeft));
+    }
+    else {
+      this.lock.setMessage(Dictionary.get('l10n.noMessage'));
+    }
 
     if (
       this.params.behaviour.autoCheck &&
@@ -335,6 +355,9 @@ export default class CombinationLock extends H5P.Question {
     if (response === this.params.solution) {
       this.lock.disable();
       this.score = this.maxAttempts === Infinity ? 1 : this.attemptsLeft;
+
+      this.lock.setMessage(Dictionary.get('l10n.lockOpen'));
+
       this.triggerXAPIEvent('answered');
       this.hideButton('check-answer');
 
@@ -350,13 +373,20 @@ export default class CombinationLock extends H5P.Question {
     }
 
     if (this.attemptsLeft === Infinity) {
+      if (!this.params.behaviour.autoCheck) {
+        this.lock.setMessage(Dictionary.get('l10n.wrongCombination'));  
+      }
+
       return;
     }
 
-    this.attemptsLeft--;   
+    this.attemptsLeft--;
 
     if (this.attemptsLeft === 0) {
       this.lock.disable();
+
+      this.lock.setMessage(Dictionary.get('l10n.lockDisabled'));
+
       this.score = 0;
       this.triggerXAPIEvent('answered');
       this.hideButton('check-answer');
@@ -368,6 +398,12 @@ export default class CombinationLock extends H5P.Question {
       if (this.params.behaviour.enableRetry) {
         this.showButton('try-again');
       }    
+    }
+    else {
+      if (!this.params.behaviour.autoCheck) {
+        this.lock.setMessage(Dictionary.get('l10n.attemptsLeft')
+          .replace(/@number/g, this.attemptsLeft));
+      }      
     }
   }
 

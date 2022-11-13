@@ -21,7 +21,7 @@ export default class LockSegment {
       Math.floor(Math.random() * this.params.alphabet.length);
 
     this.dom = document.createElement('div');
-    this.dom.classList.add('h5p-combination-lock-lock-segment');
+    this.dom.classList.add('h5p-combination-lock-segment');
 
     this.buttonNext = new Button(
       { id: 'next', label: '\u25b2', classes: ['top'] },

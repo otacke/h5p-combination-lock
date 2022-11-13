@@ -24,7 +24,7 @@ export default class Button {
     this.isDisabled = false;
 
     this.dom = document.createElement('button');
-    this.dom.classList.add('h5p-combination-lock-lock-button');
+    this.dom.classList.add('h5p-combination-lock-button');
     this.params.classes.forEach((style) => {
       if (typeof style === 'string') {
         this.dom.classList.add(style);
