@@ -1,8 +1,17 @@
 [
   {
-    "name": "sample",
-    "type": "boolean",
-    "label": "Sample"
+    "name": "solution",
+    "type": "text",
+    "label": "Solution",
+    "description": "Enter the desired solution for the lock. Please note that using long solutions may be suboptimal on small devices.",
+    "default": "0123"
+  },
+  {
+    "name": "alphabet",
+    "type": "text",
+    "label": "Symbols for each segment",
+    "description": "Choose the symbols that each segment should bear. The symbols will appear in the order defined here.",
+    "default": "0123456789"
   },
   {
     "name": "behaviour",
@@ -11,15 +20,46 @@
     "label": "Behavioural settings",
     "fields": [
       {
-        "name": "sample",
+        "name": "autoCheck",
         "type": "boolean",
-        "label": "Sample behaviour"
+        "label": "AutoCheck",
+        "description": "If autocheck is enabled, the lock will open automatically once the correct solution has been entered.",
+        "default": true,
+        "optional": true
       },
       {
-        "name": "dummy",
+        "name": "maxAttempts",
+        "type": "number",
+        "label": "Maximum attempts",
+        "description": "Enter the maximum number of opening attempts allowed or leave empty to not limit the number.",
+        "min": 1,
+        "widget": "showWhen",
+        "showWhen": {
+          "rules": [
+            {
+              "field": "autoCheck",
+              "equals": false
+            }
+          ],
+          "nullWhenHidden": true
+        },
+        "optional": true
+      },
+      {
+        "name": "enableRetry",
         "type": "boolean",
-        "label": "Dummy",
-        "widget": "none"
+        "label": "Enable \"Retry\" button",
+        "importance": "low",
+        "default": true,
+        "optional": true
+      },
+      {
+        "name": "enableSolutionsButton",
+        "type": "boolean",
+        "label": "Enable \"Show Solution\" button",
+        "importance": "low",
+        "default": true,
+        "optional": true
       }
     ]
   },
@@ -30,18 +70,47 @@
     "common": true,
     "fields": [
       {
-        "name": "sample",
+        "name": "check",
         "type": "text",
-        "label": "Sample entry for visible user interface strings",
-        "description": "This is just a sample entry for visible user interface strings.",
-        "default": "Sample l10n"
+        "label": "Check",
+        "default": "Check"
       },
       {
-        "name": "dummy",
+        "name": "submit",
         "type": "text",
-        "label": "Dummy",
-        "default": "Dummy",
-        "widget": "none"
+        "label": "Submit",
+        "default": "Submit"
+      },
+      {
+        "name": "showSolution",
+        "type": "text",
+        "label": "Show solution",
+        "default": "Show solution"
+      },
+      {
+        "name": "retry",
+        "type": "text",
+        "label": "Retry",
+        "default": "Retry"
+      },
+      {
+        "name": "lockOpen",
+        "type": "text",
+        "label": "Lock open",
+        "default": "Lock open!"
+      },
+      {
+        "name": "lockDisabled",
+        "type": "text",
+        "label": "Lock disabled",
+        "default": "No more attempts. Lock disabled."
+      },
+      {
+        "name": "attemptsLeft",
+        "type": "text",
+        "label": "Attempts left",
+        "description": "@number is a placeholder and will be replaced by the respective number of attempts left.",
+        "default": "You have @number attempts left."
       }
     ]
   },

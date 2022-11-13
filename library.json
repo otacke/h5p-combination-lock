@@ -20,5 +20,19 @@
     {
       "path": "dist/h5p-combination-lock.css"
     }
+  ],
+  "preloadedDependencies": [
+    {
+      "machineName": "H5P.Question",
+      "majorVersion": 1,
+      "minorVersion": 5
+    }
+  ],
+  "editorDependencies": [
+    {
+      "machineName": "H5PEditor.ShowWhen",
+      "majorVersion": 1,
+      "minorVersion": 0
+    }
   ]
 }

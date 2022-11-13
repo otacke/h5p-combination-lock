@@ -36,6 +36,7 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
+    "char-regex": "^2.0.1",
     "he": "^1.2.0"
   },
   "browserslist": "> 0.5%, last 2 versions, Firefox ESR, not dead"
