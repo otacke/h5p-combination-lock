@@ -97,7 +97,8 @@ export default class LockSegment {
   /**
    * Enable.
    */
-  enable() {
+  enable() {  
+    this.isDisabled = false;
     this.buttonNext.enable();
     this.buttonPrevious.enable();
   }
@@ -106,6 +107,9 @@ export default class LockSegment {
    * Disable.
    */
   disable() {
+    this.isDisabled = true;
+    clearTimeout(this.cooldownTimeout);
+    
     this.buttonNext.disable();
     this.buttonPrevious.disable();
   }
@@ -143,6 +147,9 @@ export default class LockSegment {
   handleButtonClicked(position) {
     this.setPosition(position);
     this.callbacks.onChanged();
+    if (this.isDisabled) {
+      return;
+    }
     this.cooldown();
   }
 
@@ -159,7 +166,7 @@ export default class LockSegment {
     this.buttonNext.disable();
 
     clearTimeout(this.cooldownTimeout);
-    this.cooldownTimeout = setTimeout(() => {
+    this.cooldownTimeout = setTimeout(() => {     
       this.buttonPrevious.enable();
       this.buttonNext.enable();
       this.isCoolingDown = false;
