@@ -59,6 +59,11 @@ export default class CombinationLock extends H5P.Question {
         return sanitized;
       }, '');
 
+    // Ensure that there are at least 3 symbols for scrolling on wheel
+    while (this.params.alphabet.match(charRegex()).length < 3) {
+      this.params.alphabet = `${this.params.alphabet}${this.params.alphabet}`;
+    }
+
     this.previousState = extras?.previousState || {};      
 
     const defaultLanguage = extras?.metadata?.defaultLanguage || 'en';
