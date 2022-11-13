@@ -310,6 +310,7 @@ export default class CombinationLock extends H5P.Question {
       this.showButton('try-again');
     }
 
+    this.lock.disable();
     this.lock.setMessage(Dictionary.get('l10n.solutions'));
     this.lock.showSolutions();
   }
