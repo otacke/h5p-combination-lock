@@ -59,9 +59,6 @@ export default class Wheel {
    * @param {number} position New position.
    */
   setPosition(position) {
-    this.computedHeight = this.computedHeight ||
-      this.dom.getBoundingClientRect().height;  
-
     /*
      * Simulates "infinite" wheel by scrolling to copied symbol first and
      * then jumping to back/forth to original symbol after scrolling is done
@@ -104,19 +101,23 @@ export default class Wheel {
       return;
     }
 
-    this.computedHeight = this.computedHeight ||
-      this.dom.getBoundingClientRect().height;
+    this.wheelHeight = this.wheelHeight ||
+      this.dom.getBoundingClientRect().height; 
+    this.itemHeight = this.itemHeight ||
+      this.list.childNodes[0].getBoundingClientRect().height;
+    this.itemOffset = (this.wheelHeight - this.itemHeight) / 2;
+    
+    const translation =
+      `translateY(${-params.index * this.itemHeight + this.itemOffset}px)`;
 
     if (!params.noAnimation) {
-      this.list.style.transform =
-        `translateY(${-params.index * this.computedHeight}px)`;
+      this.list.style.transform = translation;
       return;
     }
 
     this.list.classList.remove('transition');
     window.requestAnimationFrame(() => {
-      this.list.style.transform =
-        `translateY(${-params.index * this.computedHeight}px)`;
+      this.list.style.transform = translation;
 
       window.requestAnimationFrame(() => {
         this.list.classList.add('transition');

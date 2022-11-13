@@ -2,8 +2,7 @@
   background: linear-gradient(to bottom, #767893 0%,#b3b7c6 9%,#d0d3dc 18%,#ffffff 55%,#d0d3dc 82%,#b3b7c6 91%,#767893 100%);
   box-shadow: 0 0 10px rgb(0 0 0 / 60%);
   font-size: 2rem;
-  height: max(80px, 4rem);
-  line-height: max(80px, 4rem);
+  height: 5rem;
   overflow: hidden;
   text-align: center;
   width: 100%;
@@ -18,6 +17,9 @@
     }
 
     .h5p-combination-lock-wheel-listitem {
+      height: 2.75rem;
+      line-height: 2.75rem;
+
       &.cloaked {
         visibility: hidden;
       }
