@@ -83,7 +83,7 @@ export default class CombinationLock extends H5P.Question {
     this.languageTag = Util.formatLanguageCode(defaultLanguage);
 
     this.score = 0;
-    this.wasAnswerGiven = this.previousState.wasAnswered ?? false;
+    this.wasAnswerGiven = this.previousState.wasAnswerGiven ?? false;
 
     this.maxAttempts = this.params.behaviour.autoCheck ?
       Infinity :
@@ -323,7 +323,7 @@ export default class CombinationLock extends H5P.Question {
    *
    * @returns {object} Current state.
    */
-  getCurrentState() {   
+  getCurrentState() {
     return {
       wasAnswerGiven: this.wasAnswerGiven,
       attemptsLeft: this.attemptsLeft,
@@ -413,6 +413,8 @@ export default class CombinationLock extends H5P.Question {
    * @param {boolean} params.skipXAPI If true, don't trigger xAPI events.
    */
   checkAnswer(params = {}) {
+    this.handleAnswerGiven();
+
     const response = this.lock.getResponse();
     if (response === this.params.solution) {
       this.lock.disable();
@@ -528,8 +530,9 @@ export default class CombinationLock extends H5P.Question {
    * Handle lock disabled.
    */
   handleLockChanged() {
+    this.handleAnswerGiven();
+
     if (this.params.behaviour.autoCheck) {
-      this.handleAnswerGiven();
       this.checkAnswer();
     }
   }
