@@ -26,6 +26,20 @@ export default class MessageDisplay {
   }
 
   /**
+   * Show.
+   */
+  show() {
+    this.dom.classList.remove('display-none');
+  }
+
+  /**
+   * Hide.
+   */
+  hide() {
+    this.dom.classList.add('display-none');
+  }
+
+  /**
    * Set width.
    *
    * @param {number} width Width.
@@ -42,4 +56,13 @@ export default class MessageDisplay {
   setText(text) {
     this.dom.innerText = text;
   }
+
+  /**
+   * Get text.
+   *
+   * @returns {string} Text from display.
+   */
+  getText() {
+    return this.dom.innerText;
+  }  
 }

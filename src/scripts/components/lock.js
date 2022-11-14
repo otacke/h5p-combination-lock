@@ -11,6 +11,7 @@ export default class Lock {
    * @param {object} params Parameters.
    * @param {object} callbacks Callbacks.
    * @param {function} callbacks.onChanged Called when lock is changed.
+   * @param {function} callbacks.onResized Called when lock is resized.
    */
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({}, params);
@@ -55,12 +56,17 @@ export default class Lock {
     });
 
     this.messageDisplay = new MessageDisplay();
+    this.messageDisplay.hide();
     lock.appendChild(this.messageDisplay.getDOM());
 
     this.observer = new IntersectionObserver((entries) => {
       if (entries[0].intersectionRatio === 1) {
         this.observer.unobserve(this.dom);
+
         this.messageDisplay.setWidth(segments.getBoundingClientRect().width);
+        this.messageDisplay.show();
+
+        this.callbacks.onResized();
       }
     }, {
       root: document.documentElement,
@@ -114,6 +120,15 @@ export default class Lock {
    */
   setMessage(text) {
     this.messageDisplay.setText(text);
+  }
+
+  /**
+   * Get text.
+   *
+   * @returns {string} Text from display.
+   */
+  getMessage() {
+    return this.messageDisplay.getText();
   }
 
   /**

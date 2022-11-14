@@ -12,4 +12,8 @@
   padding: 0.25rem;
   text-align: center;
   width: 100%;
+
+  &.display-none {
+    display: none;
+  }
 }

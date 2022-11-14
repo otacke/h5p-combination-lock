@@ -18,7 +18,7 @@ export default class LockSegment {
       onChanged: () => {}
     }, callbacks);
     
-    this.position = this.params.position ||
+    this.position = this.params.position ??
       Math.floor(Math.random() * this.params.alphabet.length);
 
     const currentSymbol = this.params.alphabet[this.position];

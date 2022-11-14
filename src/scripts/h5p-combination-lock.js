@@ -76,18 +76,20 @@ export default class CombinationLock extends H5P.Question {
     }
 
     this.previousState = extras?.previousState || {};      
+    this.viewState = this.previousState.viewState ??
+      CombinationLock.VIEW_STATES['task'];
 
     const defaultLanguage = extras?.metadata?.defaultLanguage || 'en';
     this.languageTag = Util.formatLanguageCode(defaultLanguage);
 
     this.score = 0;
-    this.wasAnswerGiven = this.previousState.wasAnswered || false;
+    this.wasAnswerGiven = this.previousState.wasAnswered ?? false;
 
     this.maxAttempts = this.params.behaviour.autoCheck ?
       Infinity :
-      this.params.behaviour.maxAttempts || Infinity;
+      this.params.behaviour.maxAttempts ?? Infinity;
 
-    this.attemptsLeft = this.previousState.attemptsLeft || this.maxAttempts;
+    this.attemptsLeft = this.previousState.attemptsLeft ?? this.maxAttempts;
 
     this.lock = new Lock(
       {
@@ -100,29 +102,40 @@ export default class CombinationLock extends H5P.Question {
       {
         onChanged: () => {
           this.handleLockChanged();
+        },
+        onResized: () => {
+          this.trigger('resize');
         }
       }
     );
 
-    if (!this.params.behaviour.autoCheck && this.maxAttempts !== Infinity) {
-      const attemptsLeftText = Dictionary.get('l10n.attemptsLeft')
-        .replace(/@number/g, this.attemptsLeft);
-
-      const wrongCombinationText = Dictionary.get('a11y.wrongCombination');
-
-      this.announceMessage({
-        text: attemptsLeftText,
-        aria: [wrongCombinationText, attemptsLeftText].join('. ')
-      });
-    }
-    else {
-      this.announceMessage({
-        text: Dictionary.get('l10n.noMessage'),
-        aria: ''
-      });
-    }
-
     this.dom = this.buildDOM();
+
+    if (this.viewState === CombinationLock.VIEW_STATES['task']) {
+      if (!this.params.behaviour.autoCheck && this.maxAttempts !== Infinity) {
+        const attemptsLeftText = Dictionary.get('l10n.attemptsLeft')
+          .replace(/@number/g, this.attemptsLeft);
+  
+        const wrongCombinationText = Dictionary.get('a11y.wrongCombination');
+  
+        this.announceMessage({
+          text: attemptsLeftText,
+          aria: [wrongCombinationText, attemptsLeftText].join('. ')
+        });
+      }
+      else {
+        this.announceMessage({
+          text: Dictionary.get('l10n.noMessage'),
+          aria: ''
+        });
+      }
+    }
+    else if (this.viewState === CombinationLock.VIEW_STATES['results']) {
+      this.checkAnswer({ skipXAPI: true });
+    }
+    else if (this.viewState === CombinationLock.VIEW_STATES['solutions']) {
+      this.showSolutions({ showRetry: true });
+    }
   }
 
   /**
@@ -310,10 +323,12 @@ export default class CombinationLock extends H5P.Question {
    *
    * @returns {object} Current state.
    */
-  getCurrentState() {  
+  getCurrentState() {   
     return {
       wasAnswerGiven: this.wasAnswerGiven,
       attemptsLeft: this.attemptsLeft,
+      viewState: this.viewState,
+      message: this.lock.getMessage(),
       lock: this.lock.getCurrentState()
     };
   }
@@ -325,12 +340,11 @@ export default class CombinationLock extends H5P.Question {
    * @param {boolean} params.showRetry If true and valid, show retry button.
    */
   showSolutions(params = {}) {
+    this.setViewState('solutions');
+    this.hideButton('check-answer');
     this.hideButton('show-solution');
-    if (
-      params.showRetry &&
-      this.params.behaviour.autoCheck &&
-      this.params.behaviour.enableRetry
-    ) {
+    this.hideButton('try-again');
+    if (params.showRetry && this.params.behaviour.enableRetry) {
       this.showButton('try-again');
     }
 
@@ -352,6 +366,7 @@ export default class CombinationLock extends H5P.Question {
    * Reset task.
    */
   resetTask() {
+    this.setViewState('task');
     this.attemptsLeft = this.maxAttempts;
     this.score = 0;
     this.wasAnswerGiven = false;
@@ -393,16 +408,23 @@ export default class CombinationLock extends H5P.Question {
 
   /**
    * Check answer.
+   *
+   * @param {object} [params={}] Parameters.
+   * @param {boolean} params.skipXAPI If true, don't trigger xAPI events.
    */
-  checkAnswer() {
+  checkAnswer(params = {}) {
     const response = this.lock.getResponse();
     if (response === this.params.solution) {
       this.lock.disable();
+      this.setViewState('results');
+
       this.score = this.maxAttempts === Infinity ? 1 : this.attemptsLeft;
 
       this.announceMessage({ text: Dictionary.get('l10n.lockOpen') });
 
-      this.triggerXAPIEvent('answered');
+      if (!params.skipXAPI) {
+        this.triggerXAPIEvent('answered');
+      }
       this.hideButton('check-answer');
 
       if (this.params.behaviour.autoCheck) {
@@ -426,15 +448,18 @@ export default class CombinationLock extends H5P.Question {
       return;
     }
 
-    this.attemptsLeft--;
+    this.attemptsLeft = Math.max(0, this.attemptsLeft - 1);
 
     if (this.attemptsLeft === 0) {
+      this.setViewState('results');
       this.lock.disable();
 
       this.announceMessage({ text: Dictionary.get('l10n.lockDisabled') });
 
       this.score = 0;
-      this.triggerXAPIEvent('answered');
+      if (!params.skipXAPI) {
+        this.triggerXAPIEvent('answered');
+      }
       this.hideButton('check-answer');
 
       if (this.params.behaviour.enableSolutionsButton) {
@@ -476,6 +501,30 @@ export default class CombinationLock extends H5P.Question {
   }
 
   /**
+   * Set view state.
+   *
+   * @param {string|number} state State to be set.
+   */
+  setViewState(state) {
+    if (
+      typeof state === 'string' &&
+      CombinationLock.VIEW_STATES[state] !== undefined
+    ) {
+      this.viewState = CombinationLock.VIEW_STATES[state];
+    }
+    else if (
+      typeof state === 'number' &&
+      Object.values(CombinationLock.VIEW_STATES).includes(state)
+    ) {
+      this.viewState = state;
+
+      this.content.setViewState(
+        CombinationLock.VIEW_STATES.find((value) => value === state).keys[0]
+      );
+    }
+  }
+
+  /**
    * Handle lock disabled.
    */
   handleLockChanged() {
@@ -495,3 +544,6 @@ export default class CombinationLock extends H5P.Question {
 
 /** @constant {string} Default description */
 CombinationLock.DEFAULT_DESCRIPTION = 'Boilerplate (SNORDIAN)';
+
+/** @constant {object} view states */
+CombinationLock.VIEW_STATES = { task: 0, results: 1, solutions: 2 };
