@@ -46,3 +46,9 @@
     }
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .h5p-combination-lock-case.animate.wrong-combination {
+    animation-duration: 1ms;
+  }
+}
