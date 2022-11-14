@@ -60,7 +60,7 @@ export default class Lock {
     lock.appendChild(this.messageDisplay.getDOM());
 
     this.observer = new IntersectionObserver((entries) => {
-      if (entries[0].intersectionRatio === 1) {
+      if (entries[0].intersectionRatio > 0) {
         this.observer.unobserve(this.dom);
 
         this.messageDisplay.setWidth(segments.getBoundingClientRect().width);
@@ -70,7 +70,7 @@ export default class Lock {
       }
     }, {
       root: document.documentElement,
-      threshold: [1]
+      threshold: 0
     });
     this.observer.observe(this.dom);
   }

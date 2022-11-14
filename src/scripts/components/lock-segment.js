@@ -64,14 +64,14 @@ export default class LockSegment {
     this.dom.appendChild(this.buttonPrevious.getDOM());
    
     this.observer = new IntersectionObserver((entries) => {
-      if (entries[0].intersectionRatio === 1) {
+      if (entries[0].intersectionRatio > 0) {
         this.observer.unobserve(this.dom);
         this.setPosition(this.position);
         this.wheel.uncloak();
       }
     }, {
       root: document.documentElement,
-      threshold: [1]
+      threshold: 0
     });
     this.observer.observe(this.dom);
   }
