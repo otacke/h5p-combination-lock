@@ -13,6 +13,11 @@
     flex-direction: column;
     padding: .5rem 1rem;
 
+    .h5p-combination-lock-hidden {
+      position: absolute;
+      left: -999999px;      
+    }
+
     .h5p-combination-lock-segments {
       display: flex;
       flex-direction: row;

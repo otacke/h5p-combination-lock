@@ -1,8 +1,9 @@
 import charRegex from 'char-regex';
 import Util from '@services/util.js';
-import './lock.scss';
+import Dictionary from '@services/dictionary';
 import LockSegment from './lock-segment';
 import MessageDisplay from './message-display';
+import './lock.scss';
 
 /** Segment */
 export default class Lock {
@@ -22,8 +23,9 @@ export default class Lock {
     this.segments = this.params.solution
       .match(charRegex())
       .map((symbol, index) => {
-        return new LockSegment(
+        const segment = new LockSegment(
           {
+            id: index,
             solution: symbol,
             alphabet: this.params.alphabet,
             position: this.params.previousState?.positions ?
@@ -33,10 +35,19 @@ export default class Lock {
           {
             onChanged: () => {
               this.handleSegmentChanged();              
+            },
+            onKeydown: (key) => {
+              this.handleSegmentAction(key);
             }
           }
         );
+        segment.deactivate();
+
+        return segment;
       });   
+
+    this.currentSegmentId = 0;
+    this.activateSegment(this.currentSegmentId);
 
     this.handleAnimationEnded = this.handleAnimationEnded.bind(this);
 
@@ -47,8 +58,16 @@ export default class Lock {
     lock.classList.add('h5p-combination-lock-elements');
     this.dom.appendChild(lock);
 
+    const tabListLabelId = H5P.createUUID();
+    this.tabListLabel = document.createElement('div');
+    this.tabListLabel.classList.add('h5p-combination-lock-hidden');
+    this.tabListLabel.setAttribute('id', tabListLabelId);
+    lock.appendChild(this.tabListLabel);
+
     const segments = document.createElement('div');
     segments.classList.add('h5p-combination-lock-segments');
+    segments.setAttribute('role', 'tablist');
+    segments.setAttribute('aria-labelledby', tabListLabelId);
     lock.appendChild(segments);
 
     this.segments.forEach((segment) => {
@@ -58,6 +77,8 @@ export default class Lock {
     this.messageDisplay = new MessageDisplay();
     this.messageDisplay.hide();
     lock.appendChild(this.messageDisplay.getDOM());
+
+    this.updateTabListLabel();
 
     this.observer = new IntersectionObserver((entries) => {
       if (entries[0].intersectionRatio > 0) {
@@ -123,6 +144,42 @@ export default class Lock {
   }
 
   /**
+   * Focus.
+   */
+  focus() {
+    this.segments[0].focus();
+  }
+
+  /**
+   * Update tablist label.
+   */
+  updateTabListLabel() {
+    const symbolString = this.segments
+      .map((segment) => segment.getResponse())
+      .join(', ');
+
+    this.tabListLabel.innerText = Dictionary
+      .get('a11y.currentSymbols')
+      .replace(/@symbols/g, symbolString);
+  }
+
+  /**
+   * Activate segment
+   *
+   * @param {number} segmentId Segment id.
+   */
+  activateSegment(segmentId) { 
+    this.segments.forEach((segment, index) => {     
+      if (index === segmentId) {
+        segment.activate();       
+      }
+      else {
+        segment.deactivate();
+      }
+    });
+  }
+
+  /**
    * Get text.
    *
    * @returns {string} Text from display.
@@ -138,6 +195,8 @@ export default class Lock {
     this.segments.forEach((segment) => {
       segment.showSolutions();
     });
+
+    this.updateTabListLabel();
   }
 
   /**
@@ -166,6 +225,11 @@ export default class Lock {
     this.segments.forEach((segment) => {
       segment.reset();
     });
+
+    this.currentSegmentId = 0;
+    this.activateSegment(this.currentSegmentId);
+
+    this.updateTabListLabel();
   }
 
   /**
@@ -196,6 +260,45 @@ export default class Lock {
    * Handle segment changed.
    */
   handleSegmentChanged() {
+    this.updateTabListLabel();
     this.callbacks.onChanged();
+  }
+
+  /**
+   * Handle segment activation.
+   *
+   * @param {KeyboardEvent.key} key Key for movement.
+   */
+  handleSegmentAction(key) {
+    if (key === 'ArrowLeft' && this.currentSegmentId > 0) {
+      this.currentSegmentId--;
+    }
+    else if (
+      key === 'ArrowRight' && this.currentSegmentId < this.segments.length - 1
+    ) {
+      this.currentSegmentId++;
+    }
+    else if (key === 'Home') {
+      this.currentSegmentId = 0;
+    }
+    else if (key === 'End') {
+      this.currentSegmentId = this.segments.length - 1;
+    }
+    else if (key === 'ArrowUp') {
+      this.segments[this.currentSegmentId].changeToNextSymbol();
+      this.segments[this.currentSegmentId].blur();
+      this.segments[this.currentSegmentId].focus();
+    }
+    else if (key === 'ArrowDown') {
+      this.segments[this.currentSegmentId].changeToPreviousSymbol();
+      this.segments[this.currentSegmentId].blur();
+      this.segments[this.currentSegmentId].focus();
+    }
+    else {
+      return;
+    }
+
+    this.activateSegment(this.currentSegmentId);
+    this.segments[this.currentSegmentId].focus();
   }
 }

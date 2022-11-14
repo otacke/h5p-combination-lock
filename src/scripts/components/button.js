@@ -57,12 +57,25 @@ export default class Button {
   }
 
   /**
+   * Activate.
+   */
+  activate() {  
+    this.dom.removeAttribute('tabindex');
+  }
+
+  /**
+   * Deactivate.
+   */
+  deactivate() {
+    this.dom.setAttribute('tabindex', '-1');
+  }
+
+  /**
    * Enable.
    */
   enable() {
     this.isDisabled = false;
     this.dom.classList.remove('disabled');
-    this.dom.removeAttribute('tabindex');
   }
 
   /**
@@ -71,16 +84,27 @@ export default class Button {
   disable() {
     this.isDisabled = true;
     this.dom.classList.add('disabled');
-    this.dom.setAttribute('tabindex', -1);
   }
 
   /**
    * Set aria label.
    *
-   * @param {string | null} ariaLabel Aria label.
+   * @param {string | string[] | null} ariaLabel Aria label.
    */
   setAriaLabel(ariaLabel = null) {
     if (typeof ariaLabel === 'string') {
+      this.dom.setAttribute('aria-label', ariaLabel);
+    }
+    else if (Array.isArray(ariaLabel)) {
+      ariaLabel = ariaLabel
+        .map((label) => {
+          if (label.substring(label.length - 1) === '.') {
+            label = label.substring(0, label.length - 1);
+          }
+          return label;
+        })
+        .join('. ');
+      
       this.dom.setAttribute('aria-label', ariaLabel);
     }
     else {

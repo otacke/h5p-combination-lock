@@ -168,6 +168,14 @@
         "default": "Current symbol: @symbol"
       },
       {
+        "name": "currentSymbols",
+        "type": "text",
+        "label": "Assistive technology description for current symbols",
+        "description": "@symbols is a placeholder and will be replaced by the respective value.",
+        "importance": "low",
+        "default": "Current symbols: @symbol"
+      },
+      {
         "name": "previousSymbol",
         "type": "text",
         "label": "Assistive technology description for previous symbol button",
@@ -202,6 +210,12 @@
         "type": "text",
         "label": "Assistive technology description for announcing a wrong combination",
         "default": "Wrong combination"
+      },
+      {
+        "name": "disabled",
+        "type": "text",
+        "label": "Assistive technology description for announcing disabled",
+        "default": "disabled"
       }
     ]
   }

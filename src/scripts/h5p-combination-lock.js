@@ -41,10 +41,12 @@ export default class CombinationLock extends H5P.Question {
         showSolution: 'Show the solution. The correct symbols that will open the lock will be displayed.',
         retry: 'Retry the task. Reset all lock segments and start the task over again.',
         currentSymbol: 'Current symbol: @symbol',
+        currentSymbols: 'Current symbols: @symbols',
         previousSymbol: 'Previous symbol',
         nextSymbol: 'Next symbol',
         correctCombination: 'This combination opens the lock. @combination.',
-        wrongCombination: 'Wrong combination',        
+        wrongCombination: 'Wrong combination',
+        disabled: 'disabled'
       }
     }, params);   
 
@@ -188,6 +190,7 @@ export default class CombinationLock extends H5P.Question {
       Dictionary.get('l10n.retry'),
       () => {
         this.resetTask();
+        this.lock.focus();
       },
       false,
       { 'aria-label': Dictionary.get('a11y.retry') }
@@ -340,14 +343,6 @@ export default class CombinationLock extends H5P.Question {
    * @param {boolean} params.showRetry If true and valid, show retry button.
    */
   showSolutions(params = {}) {
-    this.setViewState('solutions');
-    this.hideButton('check-answer');
-    this.hideButton('show-solution');
-    this.hideButton('try-again');
-    if (params.showRetry && this.params.behaviour.enableRetry) {
-      this.showButton('try-again');
-    }
-
     const ariaText = Dictionary
       .get('a11y.correctCombination')
       .replace(
@@ -360,6 +355,24 @@ export default class CombinationLock extends H5P.Question {
       aria: ariaText
     });
     this.lock.showSolutions();
+
+    // Announce message before some other element gets focus
+    window.setTimeout(() => {
+      this.setViewState('solutions');
+      this.hideButton('check-answer');
+      this.hideButton('show-solution');
+      this.hideButton('try-again');
+      if (params.showRetry) {
+        if (this.params.behaviour.enableRetry) {
+          this.showButton('try-again');
+        }
+        else {
+          window.setTimeout(() => {
+            this.lock.focus();      
+          }, 50);
+        }
+      }
+    }, 50);
   }
 
   /**
@@ -427,15 +440,24 @@ export default class CombinationLock extends H5P.Question {
       if (!params.skipXAPI) {
         this.triggerXAPIEvent('answered');
       }
-      this.hideButton('check-answer');
 
-      if (this.params.behaviour.autoCheck) {
-        this.hideButton('show-solution');
-      }
+      window.setTimeout(() => {      
+        this.hideButton('check-answer');
 
-      if (this.params.behaviour.enableRetry) {
-        this.showButton('try-again');
-      }
+        if (this.params.behaviour.autoCheck) {
+          this.hideButton('show-solution');
+        }
+  
+        if (this.params.behaviour.enableRetry) {
+          this.showButton('try-again');
+          setTimeout(() => {
+            this.focusButton('try-again'); // Not done by H5P.Question
+          }, 50);
+        }
+        else if (!params.skipXAPI) {
+          this.lock.focus(); // Don't lose focus
+        }
+      }, 50);
 
       return;
     }
@@ -456,21 +478,37 @@ export default class CombinationLock extends H5P.Question {
       this.setViewState('results');
       this.lock.disable();
 
-      this.announceMessage({ text: Dictionary.get('l10n.lockDisabled') });
-
       this.score = 0;
       if (!params.skipXAPI) {
         this.triggerXAPIEvent('answered');
       }
-      this.hideButton('check-answer');
 
-      if (this.params.behaviour.enableSolutionsButton) {
-        this.showButton('show-solution');
-      }
+      this.announceMessage({ text: Dictionary.get('l10n.lockDisabled') });
 
-      if (this.params.behaviour.enableRetry) {
-        this.showButton('try-again');
-      }    
+      // Lock disabled message should be read before other element gets focus
+      window.setTimeout(() => {
+        this.hideButton('check-answer');
+
+        if (this.params.behaviour.enableSolutionsButton) {
+          this.showButton('show-solution');
+        }
+  
+        if (this.params.behaviour.enableRetry) {
+          this.showButton('try-again');
+        }
+  
+        // Don't lose focus
+        if (
+          !this.params.behaviour.enableSolutionsButton &&
+          !this.params.behaviour.enableRetry
+        ) {
+          if (!params.skipXAPI) {
+            window.setTimeout(() => {
+              this.lock.focus();
+            }, 50);
+          }
+        }
+      }, 50);
     }
     else {
       if (!this.params.behaviour.autoCheck) {
