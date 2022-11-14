@@ -293,6 +293,10 @@ export default class LockSegment {
    * @param {number} position New position.
    */
   changeSymbol(position) {
+    if (this.isCoolingDown) {    
+      return;
+    }
+
     this.setPosition(position);
     this.callbacks.onChanged();
 
@@ -307,7 +311,7 @@ export default class LockSegment {
    * Cooldown.
    */
   cooldown() {
-    if (this.isCoolingDown) {
+    if (this.isCoolingDown) {    
       return;
     }
     this.isCoolingDown = true;
