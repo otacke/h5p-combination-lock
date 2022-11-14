@@ -172,7 +172,7 @@ export default class Lock {
    */
   handleAnimationEnded() {  
     this.dom.classList.remove('animate');
-    this.dom.classList.add('wrong-combination');
+    this.dom.classList.remove('wrong-combination');
     this.dom.addEventListener('animationend', this.handleAnimationEnded);
     this.isAnimating = false;    
   }
