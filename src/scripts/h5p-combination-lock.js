@@ -31,12 +31,20 @@ export default class CombinationLock extends H5P.Question {
         lockOpen: 'Lock open!',
         lockDisabled: 'No more attempts. Lock disabled.',
         attemptsLeft: 'Attempts left: @number',
-        solutions: 'This combination opens the lock.',
+        correctCombination: 'This combination opens the lock.',
         wrongCombination: 'This combination does not open the lock.',
         noMessage: '...'
       },
       a11y: {
-        sample: 'Sample a11y'
+        check: 'Check whether the combination opens the lock.',
+        submit: 'Check whether the combination opens the lock and submit attempt to server.',
+        showSolution: 'Show the solution. The correct symbols that will open the lock will be displayed.',
+        retry: 'Retry the task. Reset all lock segments and start the task over again.',
+        currentSymbol: 'Current symbol: @symbol',
+        previousSymbol: 'Previous symbol',
+        nextSymbol: 'Next symbol',
+        correctCombination: 'This combination opens the lock. @combination.',
+        wrongCombination: 'Wrong combination',        
       }
     }, params);   
 
@@ -97,11 +105,21 @@ export default class CombinationLock extends H5P.Question {
     );
 
     if (!this.params.behaviour.autoCheck && this.maxAttempts !== Infinity) {
-      this.lock.setMessage(Dictionary.get('l10n.attemptsLeft')
-        .replace(/@number/g, this.attemptsLeft));
+      const attemptsLeftText = Dictionary.get('l10n.attemptsLeft')
+        .replace(/@number/g, this.attemptsLeft);
+
+      const wrongCombinationText = Dictionary.get('a11y.wrongCombination');
+
+      this.announceMessage({
+        text: attemptsLeftText,
+        aria: [wrongCombinationText, attemptsLeftText].join('. ')
+      });
     }
     else {
-      this.lock.setMessage(Dictionary.get('l10n.noMessage'));
+      this.announceMessage({
+        text: Dictionary.get('l10n.noMessage'),
+        aria: ''
+      });
     }
 
     this.dom = this.buildDOM();
@@ -128,32 +146,38 @@ export default class CombinationLock extends H5P.Question {
     // Check answer button
     this.addButton(
       'check-answer',
-      Dictionary.get('l10n.check'), () => {
+      Dictionary.get('l10n.check'),
+      () => {
         this.checkAnswer();
       },
       !this.params.behaviour.autoCheck,
-      { 'aria-label': 'TODO' },
-      { contentData: this.extras, textIfSubmitting: 'TODO' });
+      { 'aria-label': Dictionary.get('a11y.check') },
+      {
+        contentData: this.extras,
+        textIfSubmitting: Dictionary.get('l10n.submit')
+      });
     
     // Show solution button
     this.addButton(
       'show-solution',
-      Dictionary.get('l10n.showSolution'), () => {
+      Dictionary.get('l10n.showSolution'),
+      () => {
         this.showSolutions({ showRetry: true });
       },
       this.params.behaviour.autoCheck &&
         this.params.behaviour.enableSolutionsButton,
-      { 'aria-label': 'TODO' }
+      { 'aria-label': Dictionary.get('a11y.showSolution') }
     );
 
     // Retry button
     this.addButton(
       'try-again',
-      Dictionary.get('l10n.retry'), () => {
+      Dictionary.get('l10n.retry'),
+      () => {
         this.resetTask();
       },
       false,
-      { 'aria-label': 'TODO' }
+      { 'aria-label': Dictionary.get('a11y.retry') }
     );  
 
     return dom;
@@ -310,8 +334,17 @@ export default class CombinationLock extends H5P.Question {
       this.showButton('try-again');
     }
 
+    const ariaText = Dictionary
+      .get('a11y.correctCombination')
+      .replace(
+        /@combination/g, this.params.solution.match(charRegex()).join(', ')
+      );
+
     this.lock.disable();
-    this.lock.setMessage(Dictionary.get('l10n.solutions'));
+    this.announceMessage({
+      text: Dictionary.get('l10n.correctCombination'),
+      aria: ariaText
+    });
     this.lock.showSolutions();
   }
 
@@ -324,11 +357,21 @@ export default class CombinationLock extends H5P.Question {
     this.wasAnswerGiven = false;
 
     if (!this.params.behaviour.autoCheck && this.maxAttempts !== Infinity) {
-      this.lock.setMessage(Dictionary.get('l10n.attemptsLeft')
-        .replace(/@number/g, this.attemptsLeft));
+      const attemptsLeftText = Dictionary.get('l10n.attemptsLeft')
+        .replace(/@number/g, this.attemptsLeft);
+
+      const wrongCombinationText = Dictionary.get('a11y.wrongCombination');
+
+      this.announceMessage({
+        text: attemptsLeftText,
+        aria: [wrongCombinationText, attemptsLeftText].join('. ')
+      });
     }
     else {
-      this.lock.setMessage(Dictionary.get('l10n.noMessage'));
+      this.announceMessage({
+        text: Dictionary.get('l10n.noMessage'),
+        aria: ''
+      });
     }
 
     if (
@@ -357,7 +400,7 @@ export default class CombinationLock extends H5P.Question {
       this.lock.disable();
       this.score = this.maxAttempts === Infinity ? 1 : this.attemptsLeft;
 
-      this.lock.setMessage(Dictionary.get('l10n.lockOpen'));
+      this.announceMessage({ text: Dictionary.get('l10n.lockOpen') });
 
       this.triggerXAPIEvent('answered');
       this.hideButton('check-answer');
@@ -373,11 +416,13 @@ export default class CombinationLock extends H5P.Question {
       return;
     }
 
-    if (this.attemptsLeft === Infinity) {
-      if (!this.params.behaviour.autoCheck) {
-        this.lock.setMessage(Dictionary.get('l10n.wrongCombination'));  
-      }
+    if (!this.params.behaviour.autoCheck) {
+      this.lock.showAnimationWrongCombination();
+    }
 
+    if (!this.params.behaviour.autoCheck && this.attemptsLeft === Infinity) {
+      this.announceMessage({ text: Dictionary.get('l10n.wrongCombination') });
+      
       return;
     }
 
@@ -386,7 +431,7 @@ export default class CombinationLock extends H5P.Question {
     if (this.attemptsLeft === 0) {
       this.lock.disable();
 
-      this.lock.setMessage(Dictionary.get('l10n.lockDisabled'));
+      this.announceMessage({ text: Dictionary.get('l10n.lockDisabled') });
 
       this.score = 0;
       this.triggerXAPIEvent('answered');
@@ -402,10 +447,32 @@ export default class CombinationLock extends H5P.Question {
     }
     else {
       if (!this.params.behaviour.autoCheck) {
-        this.lock.setMessage(Dictionary.get('l10n.attemptsLeft')
-          .replace(/@number/g, this.attemptsLeft));
+        const attemptsLeftText = Dictionary.get('l10n.attemptsLeft')
+          .replace(/@number/g, this.attemptsLeft);
+
+        const wrongCombinationText = Dictionary.get('a11y.wrongCombination');
+
+        this.announceMessage({
+          text: attemptsLeftText,
+          aria: [wrongCombinationText, attemptsLeftText].join('. ')
+        });
       }      
     }
+  }
+
+  /**
+   * Announce message as text and audio.
+   *
+   * @param {object} params Parameters.
+   * @param {string} params.text Text.
+   */
+  announceMessage(params = {}) {
+    if (!params.text) {
+      return;
+    }
+
+    this.lock.setMessage(params.text);
+    this.read(params.aria ?? params.text);
   }
 
   /**

@@ -113,7 +113,7 @@
         "default": "Attempts left: @number"
       },
       {
-        "name": "solutions",
+        "name": "correctCombination",
         "type": "text",
         "label": "Solutions",
         "default": "This combination opens the lock."
@@ -139,18 +139,69 @@
     "common": true,
     "fields": [
       {
-        "name": "sample",
+        "name": "check",
         "type": "text",
-        "label": "Sample entry for accessibility strings",
-        "description": "This is just a sample entry for accessibility strings.",
-        "default": "Sample a11y"
+        "label": "Assistive technology description for \"Check\" button",
+        "importance": "low",
+        "default": "Check whether the combination opens the lock."
       },
       {
-        "name": "dummy",
+        "name": "showSolution",
         "type": "text",
-        "label": "Dummy",
-        "default": "Dummy",
-        "widget": "none"
+        "label": "Assistive technology description for \"Show Solution\" button",
+        "importance": "low",
+        "default": "Show the solution. The correct symbols that will open the lock will be displayed."
+      },
+      {
+        "name": "retry",
+        "type": "text",
+        "label": "Assistive technology description for \"Retry\" button",
+        "importance": "low",
+        "default": "Retry the task. Reset all lock segments and start the task over again."
+      },
+      {
+        "name": "currentSymbol",
+        "type": "text",
+        "label": "Assistive technology description for current symbol",
+        "description": "@symbol is a placeholder and will be replaced by the respective value.",
+        "importance": "low",
+        "default": "Current symbol: @symbol"
+      },
+      {
+        "name": "previousSymbol",
+        "type": "text",
+        "label": "Assistive technology description for previous symbol button",
+        "importance": "low",
+        "default": "Previous symbol"
+      },
+      {
+        "name": "nextSymbol",
+        "type": "text",
+        "label": "Assistive technology description for next symbol button",
+        "importance": "low",
+        "default": "Next symbol"
+      },
+      {
+        "name": "correctCombination",
+        "type": "text",
+        "label": "Assistive technology description for announcing correct Combination",
+        "description": "@combination is a placeholder and will be replaced by the respective value.",
+        "importance": "low",
+        "default": "This combination opens the lock. @combination."
+      },
+      {
+        "name": "correctCombination",
+        "type": "text",
+        "label": "Assistive technology description for announcing the correct combination",
+        "description": "@combination is a placeholder and will be replaced by the respective value.",
+        "importance": "low",
+        "default": "This combination opens the lock. @combination."
+      },
+      {
+        "name": "wrongCombination",
+        "type": "text",
+        "label": "Assistive technology description for announcing a wrong combination",
+        "default": "Wrong combination"
       }
     ]
   }

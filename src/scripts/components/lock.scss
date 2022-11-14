@@ -19,4 +19,30 @@
       margin-bottom: 1rem;
     }
   }
+
+  &.animate {
+    &.wrong-combination {
+      animation: wrong-combination;
+      animation-duration: 0.25s;
+    }
+  }
+
+  @keyframes wrong-combination {
+    from,
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+
+    15%,
+    45%,
+    75% {
+      transform: translate3d(-10px, 0, 0);
+    }
+
+    30%,
+    60%,
+    90% {
+      transform: translate3d(10px, 0, 0);
+    }
+  }
 }

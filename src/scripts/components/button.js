@@ -62,6 +62,7 @@ export default class Button {
   enable() {
     this.isDisabled = false;
     this.dom.classList.remove('disabled');
+    this.dom.removeAttribute('tabindex');
   }
 
   /**
@@ -70,5 +71,20 @@ export default class Button {
   disable() {
     this.isDisabled = true;
     this.dom.classList.add('disabled');
+    this.dom.setAttribute('tabindex', -1);
+  }
+
+  /**
+   * Set aria label.
+   *
+   * @param {string | null} ariaLabel Aria label.
+   */
+  setAriaLabel(ariaLabel = null) {
+    if (typeof ariaLabel === 'string') {
+      this.dom.setAttribute('aria-label', ariaLabel);
+    }
+    else {
+      this.dom.removeAttribute('aria-label');
+    }
   }
 }

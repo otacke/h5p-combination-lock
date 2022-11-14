@@ -37,6 +37,8 @@ export default class Lock {
         );
       });   
 
+    this.handleAnimationEnded = this.handleAnimationEnded.bind(this);
+
     this.dom = document.createElement('div');
     this.dom.classList.add('h5p-combination-lock-case');
 
@@ -149,6 +151,30 @@ export default class Lock {
     this.segments.forEach((segment) => {
       segment.reset();
     });
+  }
+
+  /**
+   * Handle animation ended.
+   */
+  showAnimationWrongCombination() {
+    if (this.isAnimating) {
+      return;
+    }
+
+    this.isAnimating = true;
+    this.dom.addEventListener('animationend', this.handleAnimationEnded);
+    this.dom.classList.add('wrong-combination');
+    this.dom.classList.add('animate');
+  }
+
+  /**
+   * Handle animation ended.
+   */
+  handleAnimationEnded() {  
+    this.dom.classList.remove('animate');
+    this.dom.classList.add('wrong-combination');
+    this.dom.addEventListener('animationend', this.handleAnimationEnded);
+    this.isAnimating = false;    
   }
 
   /**

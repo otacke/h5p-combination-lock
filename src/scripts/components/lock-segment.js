@@ -1,4 +1,5 @@
 import Util from '@services/util.js';
+import Dictionary from '@services/dictionary';
 import Button from './button';
 import './lock-segment.scss';
 import Wheel from './wheel';
@@ -20,6 +21,8 @@ export default class LockSegment {
     this.position = this.params.position ||
       Math.floor(Math.random() * this.params.alphabet.length);
 
+    const currentSymbol = this.params.alphabet[this.position];
+
     this.dom = document.createElement('div');
     this.dom.classList.add('h5p-combination-lock-segment');
 
@@ -33,6 +36,9 @@ export default class LockSegment {
           );
         }
       }
+    );
+    this.buttonNext.setAriaLabel(
+      `${Dictionary.get('a11y.nextSymbol')}. ${Dictionary.get(`a11y.currentSymbol`).replace(/@symbol/g, currentSymbol)}`
     );
     this.dom.appendChild(this.buttonNext.getDOM());
 
@@ -52,6 +58,9 @@ export default class LockSegment {
         }
       }
     );
+    this.buttonPrevious.setAriaLabel(
+      `${Dictionary.get('a11y.previousSymbol')}. ${Dictionary.get(`a11y.currentSymbol`).replace(/@symbol/g, currentSymbol)}`
+    );    
     this.dom.appendChild(this.buttonPrevious.getDOM());
    
     this.observer = new IntersectionObserver((entries) => {
@@ -137,6 +146,14 @@ export default class LockSegment {
   setPosition(position) {
     this.position = position;
     this.wheel.setPosition(this.position);
+
+    const currentSymbol = this.params.alphabet[this.position];
+    this.buttonNext.setAriaLabel(
+      `${Dictionary.get('a11y.nextSymbol')}. ${Dictionary.get(`a11y.currentSymbol`).replace(/@symbol/g, currentSymbol)}`
+    );
+    this.buttonPrevious.setAriaLabel(
+      `${Dictionary.get('a11y.previousSymbol')}. ${Dictionary.get(`a11y.currentSymbol`).replace(/@symbol/g, currentSymbol)}`
+    );        
   }
 
   /**
