@@ -1,3 +1,5 @@
+@import "@styles/main.scss";
+
 .h5p-combination-lock-case {
   background: linear-gradient(#ffffff, #b3b7c6);
   border-radius: 0.5rem;
@@ -13,15 +15,16 @@
     flex-direction: column;
     padding: .5rem 1rem;
 
-    .h5p-combination-lock-hidden {
-      position: absolute;
-      left: -999999px;      
-    }
-
     .h5p-combination-lock-segments {
       display: flex;
       flex-direction: row;
       margin-bottom: 1rem;
+
+      .h5p-combination-lock-group-label,
+      .h5p-combination-lock-configuration-aria {
+        position: absolute;
+        left: $offset-offscreen;        
+      }
     }
   }
 

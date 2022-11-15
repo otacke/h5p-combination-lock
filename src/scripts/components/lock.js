@@ -26,6 +26,7 @@ export default class Lock {
         const segment = new LockSegment(
           {
             id: index,
+            total: this.params.solution.match(charRegex()).length,
             solution: symbol,
             alphabet: this.params.alphabet,
             position: this.params.previousState?.positions ?
@@ -35,19 +36,14 @@ export default class Lock {
           {
             onChanged: () => {
               this.handleSegmentChanged();              
-            },
-            onKeydown: (key) => {
-              this.handleSegmentAction(key);
             }
           }
         );
-        segment.deactivate();
 
         return segment;
       });   
 
     this.currentSegmentId = 0;
-    this.activateSegment(this.currentSegmentId);
 
     this.handleAnimationEnded = this.handleAnimationEnded.bind(this);
 
@@ -57,18 +53,28 @@ export default class Lock {
     const lock = document.createElement('div');
     lock.classList.add('h5p-combination-lock-elements');
     this.dom.appendChild(lock);
-
-    const tabListLabelId = H5P.createUUID();
-    this.tabListLabel = document.createElement('div');
-    this.tabListLabel.classList.add('h5p-combination-lock-hidden');
-    this.tabListLabel.setAttribute('id', tabListLabelId);
-    lock.appendChild(this.tabListLabel);
+    
+    const groupLabelId = H5P.createUUID();
+    const configurationId = H5P.createUUID();
 
     const segments = document.createElement('div');
     segments.classList.add('h5p-combination-lock-segments');
-    segments.setAttribute('role', 'tablist');
-    segments.setAttribute('aria-labelledby', tabListLabelId);
+    segments.setAttribute('role', 'group');
+    segments.setAttribute(
+      'aria-labelledby', `${groupLabelId} ${configurationId}`
+    );
     lock.appendChild(segments);
+
+    this.groupLabel = document.createElement('div');
+    this.groupLabel.classList.add('h5p-combination-lock-group-label');
+    this.groupLabel.setAttribute('id', groupLabelId);
+    this.groupLabel.innerText = `${Dictionary.get('a11y.combinationLock')}.`;
+    segments.appendChild(this.groupLabel);
+
+    this.configuration = document.createElement('div');
+    this.configuration.classList.add('h5p-combination-lock-configuration-aria');
+    this.configuration.setAttribute('id', configurationId);
+    segments.appendChild(this.configuration);
 
     this.segments.forEach((segment) => {
       segments.appendChild(segment.getDOM());
@@ -78,7 +84,7 @@ export default class Lock {
     this.messageDisplay.hide();
     lock.appendChild(this.messageDisplay.getDOM());
 
-    this.updateTabListLabel();
+    this.updateConfigurationAria();
 
     this.observer = new IntersectionObserver((entries) => {
       if (entries[0].intersectionRatio > 0) {
@@ -153,30 +159,19 @@ export default class Lock {
   /**
    * Update tablist label.
    */
-  updateTabListLabel() {
+  updateConfigurationAria() {
     const symbolString = this.segments
       .map((segment) => segment.getResponse())
       .join(', ');
 
-    this.tabListLabel.innerText = Dictionary
+    let text = Dictionary
       .get('a11y.currentSymbols')
       .replace(/@symbols/g, symbolString);
-  }
+    if (text.substring(text.length - 1) !== '.') {
+      text = `${text}.`;
+    }
 
-  /**
-   * Activate segment
-   *
-   * @param {number} segmentId Segment id.
-   */
-  activateSegment(segmentId) { 
-    this.segments.forEach((segment, index) => {     
-      if (index === segmentId) {
-        segment.activate();       
-      }
-      else {
-        segment.deactivate();
-      }
-    });
+    this.configuration.innerText = text;
   }
 
   /**
@@ -196,7 +191,7 @@ export default class Lock {
       segment.showSolutions();
     });
 
-    this.updateTabListLabel();
+    this.updateConfigurationAria();
   }
 
   /**
@@ -226,10 +221,7 @@ export default class Lock {
       segment.reset();
     });
 
-    this.currentSegmentId = 0;
-    this.activateSegment(this.currentSegmentId);
-
-    this.updateTabListLabel();
+    this.updateConfigurationAria();
   }
 
   /**
@@ -260,7 +252,7 @@ export default class Lock {
    * Handle segment changed.
    */
   handleSegmentChanged() {
-    this.updateTabListLabel();
+    this.updateConfigurationAria();
     this.callbacks.onChanged();
   }
 
@@ -298,7 +290,6 @@ export default class Lock {
       return;
     }
 
-    this.activateSegment(this.currentSegmentId);
     this.segments[this.currentSegmentId].focus();
   }
 }

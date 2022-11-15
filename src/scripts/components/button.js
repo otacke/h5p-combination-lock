@@ -30,6 +30,7 @@ export default class Button {
         this.dom.classList.add(style);
       }
     });
+    this.dom.setAttribute('tabindex', '-1');
     this.dom.innerText = this.params.label;
     this.dom.addEventListener('click', () => {
       this.handleClicked();
@@ -54,20 +55,6 @@ export default class Button {
     }
 
     this.callbacks.onClicked();
-  }
-
-  /**
-   * Activate.
-   */
-  activate() {  
-    this.dom.removeAttribute('tabindex');
-  }
-
-  /**
-   * Deactivate.
-   */
-  deactivate() {
-    this.dom.setAttribute('tabindex', '-1');
   }
 
   /**

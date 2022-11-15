@@ -46,7 +46,9 @@ export default class CombinationLock extends H5P.Question {
         nextSymbol: 'Next symbol',
         correctCombination: 'This combination opens the lock. @combination.',
         wrongCombination: 'Wrong combination',
-        disabled: 'disabled'
+        disabled: 'disabled',
+        combinationLock: 'combination lock',
+        segment: 'Segment @number of @total'
       }
     }, params);   
 

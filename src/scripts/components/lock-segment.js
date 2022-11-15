@@ -16,8 +16,7 @@ export default class LockSegment {
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({}, params);
     this.callbacks = Util.extend({
-      onChanged: () => {},
-      onKeydown: () => {}
+      onChanged: () => {}
     }, callbacks);
     
     this.position = this.params.position ??
@@ -25,34 +24,16 @@ export default class LockSegment {
 
     const currentSymbol = this.params.alphabet[this.position];
 
-    const tabId = H5P.createUUID();
-    const tabPanelId = H5P.createUUID();
-
     this.dom = document.createElement('div');
     this.dom.classList.add('h5p-combination-lock-segment');
-
-    this.tab = document.createElement('button');
-    this.tab.classList.add('h5p-combination-lock-segment-tab');
-    this.tab.setAttribute('id', tabId);
-    this.tab.setAttribute('role', 'tab');
-    this.tab.setAttribute('aria-controls', tabPanelId);
-    this.tab.setAttribute('aria-label', currentSymbol);
-    this.tab.addEventListener('keydown', (event) => {
-      this.handleKeydown(event);
-    });
-    this.dom.appendChild(this.tab);
-
-    this.panel = document.createElement('div');
-    this.panel.classList.add('h5p-combination-lock-segment-panel');
-    this.panel.setAttribute('role', 'tabpanel');
-    this.panel.setAttribute('aria-labelledby', tabId);
-    this.dom.appendChild(this.panel);
 
     this.buttonNext = new Button(
       { id: 'next', label: '\u25b2', classes: ['top'] },
       {
         onClicked: () => {
-          this.changeToNextSymbol();
+          this.changeSymbol((this.position + this.params.alphabet.length - 1) %
+            this.params.alphabet.length
+          );
         }
       }
     );
@@ -60,19 +41,28 @@ export default class LockSegment {
       Dictionary.get('a11y.nextSymbol'),
       Dictionary.get(`a11y.currentSymbol`).replace(/@symbol/g, currentSymbol)
     ]);
-    this.panel.appendChild(this.buttonNext.getDOM());
+    this.dom.appendChild(this.buttonNext.getDOM());
 
-    this.wheel = new Wheel({
-      alphabet: this.params.alphabet,
-      position: this.position
-    });
-    this.panel.appendChild(this.wheel.getDOM());
+    this.wheel = new Wheel(
+      {
+        alphabet: this.params.alphabet,
+        position: this.position,
+        index: this.params.id,
+        total: this.params.total
+      },
+      {
+        onChanged: (key) => {
+          this.handleWheelChanged(key);
+        }
+      }
+    );
+    this.dom.appendChild(this.wheel.getDOM());
 
     this.buttonPrevious = new Button(
       { id: 'previous', label: '\u25bc', classes: ['bottom'] },
       {
         onClicked: () => {
-          this.changeToPreviousSymbol();
+          this.changeSymbol((this.position + 1) % this.params.alphabet.length);
         }
       }
     );
@@ -80,7 +70,7 @@ export default class LockSegment {
       Dictionary.get('a11y.previousSymbol'),
       Dictionary.get(`a11y.currentSymbol`).replace(/@symbol/g, currentSymbol)
     ]);
-    this.panel.appendChild(this.buttonPrevious.getDOM());
+    this.dom.appendChild(this.buttonPrevious.getDOM());
    
     this.observer = new IntersectionObserver((entries) => {
       if (entries[0].intersectionRatio > 0) {
@@ -123,39 +113,10 @@ export default class LockSegment {
   }
 
   /**
-   * Activate.
-   */
-  activate() {
-    this.tab.removeAttribute('tabindex');
-    this.tab.setAttribute('aria-selected', 'true');
-
-    this.buttonNext.activate();
-    this.buttonPrevious.activate();   
-  }
-
-  /**
-   * Deactivate.
-   */
-  deactivate() {
-    this.tab.setAttribute('tabindex', '-1');
-    this.tab.setAttribute('aria-selected', 'false');
-
-    this.buttonNext.deactivate();
-    this.buttonPrevious.deactivate();  
-  }
-
-  /**
-   * Blur.
-   */
-  blur() {
-    this.tab.blur();
-  }
-
-  /**
    * Focus.
    */
   focus() {
-    this.tab.focus();
+    this.wheel.focusSpinbutton();
   }
 
   /**
@@ -237,54 +198,6 @@ export default class LockSegment {
       Dictionary.get('a11y.previousSymbol'),
       buttonSymbol
     ]);
-
-    this.tab.setAttribute('aria-label', currentSymbol);
-  }
-
-  /**
-   * Handle segment keydown.
-   *
-   * @param {KeyboardEvent} event Keyboard event.
-   */
-  handleKeydown(event) {
-    let propagate = true;
-
-    if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].indexOf(event.key) !== -1) {
-      this.callbacks.onKeydown(event.key);
-      propagate = false;
-    }
-    else if (
-      !this.isDisabled &&
-      ['ArrowUp', 'ArrowDown'].indexOf(event.key) !== -1
-    ) {
-      // Amendmend of aria tab scheme
-      this.callbacks.onKeydown(event.key);
-      propagate = false;      
-    }
-
-    if (!propagate) {
-      event.stopPropagation();
-      event.preventDefault();
-    }
-  }
-
-  /**
-   * Change to next symbol.
-   */
-  changeToNextSymbol() {
-    this.changeSymbol(
-      (this.position + this.params.alphabet.length - 1) %
-        this.params.alphabet.length
-    );    
-  }
-
-  /**
-   * Change to previous symbol.
-   */
-  changeToPreviousSymbol() {
-    this.changeSymbol(
-      (this.position + 1) % this.params.alphabet.length
-    );    
   }
 
   /**
@@ -300,6 +213,7 @@ export default class LockSegment {
     this.setPosition(position);
     this.callbacks.onChanged();
 
+    
     if (this.isDisabled) {
       return;
     }
@@ -317,14 +231,44 @@ export default class LockSegment {
     this.isCoolingDown = true;
 
     this.buttonPrevious.disable();
+    this.wheel.cooldown(LockSegment.COOLDOWN_TIMEOUT_MS);
     this.buttonNext.disable();
 
     clearTimeout(this.cooldownTimeout);
     this.cooldownTimeout = setTimeout(() => {     
       this.buttonPrevious.enable();
       this.buttonNext.enable();
+
       this.isCoolingDown = false;
     }, LockSegment.COOLDOWN_TIMEOUT_MS);
+  }
+
+  /**
+   * Handle wheel changed.
+   *
+   * @param {string} key KeyboardEvent key.
+   */
+  handleWheelChanged(key) {
+    let position;
+
+    if (key === 'ArrowUp') {
+      position = (this.position + this.params.alphabet.length - 1) %
+        this.params.alphabet.length;
+    }
+    else if (key === 'ArrowDown') {
+      position = (this.position + 1) % this.params.alphabet.length;
+    }
+    else if (key === 'Home') {
+      position = 0;
+    }
+    else if (key === 'End') {
+      position = this.params.alphabet.length - 1;
+    }
+    else {
+      return;
+    }   
+
+    this.changeSymbol(position);
   }
 }
 

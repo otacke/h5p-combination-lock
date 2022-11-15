@@ -1,4 +1,5 @@
 import Util from '@services/util.js';
+import Dictionary from '@services/dictionary';
 import './wheel.scss';
 
 /** Wheel */
@@ -11,14 +12,18 @@ export default class Wheel {
    */
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({}, params);
-    this.callbacks = Util.extend({}, callbacks);
+    this.callbacks = Util.extend({
+      onChanged: () => {}
+    }, callbacks);
 
     this.oldIndex = this.params.position || 0;
+
+    this.blockEventPropagation = this.blockEventPropagation.bind(this);
 
     this.dom = document.createElement('div');
     this.dom.classList.add('h5p-combination-lock-wheel');
 
-    this.list = document.createElement('ol');
+    this.list = document.createElement('div');
     this.list.classList.add('h5p-combination-lock-wheel-list');
     this.list.classList.add('transition');
     this.dom.appendChild(this.list); 
@@ -30,11 +35,22 @@ export default class Wheel {
       this.params.alphabet[0]
     ];
 
-    this.items = alphabetPlus.map((symbol) => {
-      const item = document.createElement('li');
+    this.items = alphabetPlus.map((symbol, index) => {
+      const item = document.createElement('div');
       item.classList.add('h5p-combination-lock-wheel-listitem');
       item.classList.add('cloaked');
+      item.setAttribute('aria-valuenow', index - 1);
+      item.setAttribute('aria-valuetext', symbol);
+      item.setAttribute(
+        'aria-label',
+        Dictionary.get('a11y.segment')
+          .replace(/@number/g, this.params.index + 1)
+          .replace(/@total/g, this.params.total)
+      );
       item.innerText = symbol;
+      item.addEventListener('keydown', (event) => {
+        this.handleKeydown(event);
+      });
 
       return item;
     });
@@ -86,7 +102,7 @@ export default class Wheel {
       this.oldIndex = position + 1;
     }
 
-    this.scrollTo({ index: this.oldIndex });    
+    this.scrollTo({ index: this.oldIndex });
   }
 
   /**
@@ -100,6 +116,8 @@ export default class Wheel {
     if (typeof params.index !== 'number') {
       return;
     }
+
+    this.setActive(params.index);
 
     this.wheelHeight = this.wheelHeight ||
       this.dom.getBoundingClientRect().height; 
@@ -118,6 +136,7 @@ export default class Wheel {
     this.list.classList.remove('transition');
     window.requestAnimationFrame(() => {
       this.list.style.transform = translation;
+      this.focusSpinbutton();
 
       window.requestAnimationFrame(() => {
         this.list.classList.add('transition');
@@ -129,8 +148,117 @@ export default class Wheel {
    * Uncloak list items.
    */
   uncloak() {
-    this.list.childNodes.forEach((child) => {
-      child.classList.remove('cloaked');
+    this.items.forEach((item) => {
+      item.classList.remove('cloaked');
     });
+  }
+
+  /**
+   * Focus spinbutton.
+   */
+  focusSpinbutton() {
+    const spinbutton = this.items.find((item) => {     
+      return item.getAttribute('role') === 'spinbutton';
+    });  
+
+    spinbutton.focus();
+
+    this.requestRefocus = false;
+  }
+
+  /**
+   * Set active spinbutton.
+   *
+   * @param {number} position Position to set active.
+   */
+  setActive(position) {
+    if (typeof position !== 'number') {
+      return;
+    }
+
+    this.items.forEach((item, index) => {
+      if (position === index) {
+        item.removeAttribute('aria-hidden');
+        item.setAttribute('tabindex', '0');
+        item.setAttribute('role', 'spinbutton');
+      }
+      else {
+        item.setAttribute('aria-hidden', 'true');
+        item.removeAttribute('tabindex');
+        item.removeAttribute('role');
+      }
+    });
+  }
+
+  /**
+   * Handle key down on spinbutton.
+   *
+   * @param {KeyboardEvent} event Keyboard event
+   */
+  handleKeydown(event) {
+    if (this.isDisabled || event.repeat || this.isTransitioning) {
+      event.stopPropagation();
+      event.preventDefault();
+      return;
+    }
+  
+    if (event.target.getAttribute('role') !== 'spinbutton') {
+      return; // Just to be sure ...
+    }
+
+    if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) {
+      event.stopPropagation();
+      event.preventDefault();
+
+      this.requestRefocus = true;
+      this.callbacks.onChanged(event.key);
+    }
+  }
+
+  /**
+   * Block event propagation.
+   *
+   * @param {Event} event Event.
+   */
+  blockEventPropagation(event) {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+
+  /**
+   * Cooldown. Workaround for transitionend event that may never be called.
+   *
+   * @param {number} timeout Timeout.
+   */
+  cooldown(timeout) {
+    window.clearTimeout(this.cooldownTimeout);
+    this.handleTransitionStart();
+
+    window.setTimeout(() => {
+      this.handleTransitionEnd();
+    }, timeout);
+  }
+
+  /**
+   * Handle transitionstart.
+   */
+  handleTransitionStart() {
+    this.isTransitioning = true;
+
+    // Prevent moving page around via body when spinbutton loses focus.
+    document.body.addEventListener('keydown', this.blockEventPropagation);
+  }
+
+  /**
+   * Handle transitionend.
+   */
+  handleTransitionEnd() {   
+    if (this.requestRefocus) {
+      this.focusSpinbutton();
+    }
+
+    document.body.removeEventListener('keydown', this.blockEventPropagation);
+
+    this.isTransitioning = false;
   }
 }

@@ -1,35 +1,22 @@
 .h5p-combination-lock-segment {
-  display: grid;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  grid-column: 1;
+  grid-row: 1;
+  padding: 0 max(6px, 0.25rem);
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  width: max(48px, 3rem);
 
-  .h5p-combination-lock-segment-tab {
-    background: none;
-    border: none;
-    grid-column: 1;
-    grid-row: 1;    
-    margin: 0;
-    padding: 0;
-  }
-
-  .h5p-combination-lock-segment-panel {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    grid-column: 1;
-    grid-row: 1;
-    padding: 0 max(6px, 0.25rem);
-    user-select: none;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    width: max(48px, 3rem);
-
-    .h5p-combination-lock-symbols-container {
-      background: linear-gradient(to bottom, #767893 0%,#b3b7c6 9%,#d0d3dc 18%,#ffffff 55%,#d0d3dc 82%,#b3b7c6 91%,#767893 100%);
-      box-shadow: 0 0 10px rgb(0 0 0 / 60%);
-      font-size: 2rem;
-      height: max(80px, 4rem);
-      line-height: max(80px, 4rem);
-      text-align: center;
-      width: 100%;
-    }
+  .h5p-combination-lock-symbols-container {
+    background: linear-gradient(to bottom, #767893 0%,#b3b7c6 9%,#d0d3dc 18%,#ffffff 55%,#d0d3dc 82%,#b3b7c6 91%,#767893 100%);
+    box-shadow: 0 0 10px rgb(0 0 0 / 60%);
+    font-size: 2rem;
+    height: max(80px, 4rem);
+    line-height: max(80px, 4rem);
+    text-align: center;
+    width: 100%;
   }
 }

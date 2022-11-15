@@ -214,9 +214,22 @@
       {
         "name": "disabled",
         "type": "text",
-        "label": "Assistive technology description for announcing disabled",
+        "label": "Assistive technology description for announcing \"disabled\"",
         "default": "disabled"
-      }
+      },
+      {
+        "name": "combinationLock",
+        "type": "text",
+        "label": "Assistive technology description for announcing \"combination lock\"",
+        "default": "combination lock"
+      },
+      {
+        "name": "segment",
+        "type": "text",
+        "label": "Assistive technology description for announcing the current segment",
+        "description": "@number and @total are placeholders and will be replaced by the respective values.",
+        "default": "Segment @number of @total"
+      }      
     ]
   }
 ]
