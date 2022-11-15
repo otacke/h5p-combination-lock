@@ -13,7 +13,8 @@ export default class Wheel {
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({}, params);
     this.callbacks = Util.extend({
-      onChanged: () => {}
+      onChanged: () => {},
+      onFocusChanged: () => {}
     }, callbacks);
 
     this.oldIndex = this.params.position || 0;
@@ -60,6 +61,12 @@ export default class Wheel {
     );
     this.spinbutton.addEventListener('keydown', (event) => {
       this.handleKeydown(event);
+    });
+    this.spinbutton.addEventListener('focus', () => {
+      this.callbacks.onFocusChanged(true);
+    });
+    this.spinbutton.addEventListener('blur', () => {
+      this.callbacks.onFocusChanged(false);
     });
 
     this.dom.appendChild(this.spinbutton);

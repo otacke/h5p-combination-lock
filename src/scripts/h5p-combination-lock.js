@@ -63,6 +63,13 @@ export default class CombinationLock extends H5P.Question {
     if (!symbols || symbols?.length < 1) {
       this.params.solution = 'H5P';
     }
+    if (symbols.length > CombinationLock.SEGMENTS_MAX) {
+      this.params.solution = symbols
+        .slice(0, CombinationLock.SEGMENTS_MAX)
+        .join('');
+
+      console.warn(`${this.getTitle()}: The original solution was truncated because it was longer than ${CombinationLock.SEGMENTS_MAX} symbols that are allowed.`);
+    }
     
     // Sanitize alphabet
     this.params.alphabet = `${this.params.alphabet}${this.params.solution}`
@@ -598,8 +605,11 @@ export default class CombinationLock extends H5P.Question {
   }  
 }
 
-/** @constant {string} Default description */
+/** @constant {string} DEFAULT_DESCRIPTION Default description */
 CombinationLock.DEFAULT_DESCRIPTION = 'Combination Lock';
 
-/** @constant {object} view states */
+/** @constant {object} VIEW_STATES view states */
 CombinationLock.VIEW_STATES = { task: 0, results: 1, solutions: 2 };
+
+/** @constant {number} SEGMENTS_MAX Maximum number of segments */
+CombinationLock.SEGMENTS_MAX = 6;

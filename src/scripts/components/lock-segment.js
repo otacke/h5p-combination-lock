@@ -53,6 +53,9 @@ export default class LockSegment {
       {
         onChanged: (key) => {
           this.handleWheelChanged(key);
+        },
+        onFocusChanged: (focusOn) => {
+          this.dom.classList.toggle('focus', focusOn);
         }
       }
     );

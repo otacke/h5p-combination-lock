@@ -1,3 +1,5 @@
+@import "@styles/main.scss";
+
 .h5p-combination-lock-wheel {
   background: linear-gradient(to bottom, #767893 0%,#b3b7c6 9%,#d0d3dc 18%,#ffffff 55%,#d0d3dc 82%,#b3b7c6 91%,#767893 100%);
   box-shadow: 0 0 10px rgb(0 0 0 / 60%);
@@ -31,5 +33,9 @@
     grid-row: 1;
     height: 6rem;
     z-index: 1;
+
+    &:focus {
+      outline: none;
+    }
   }
 }
