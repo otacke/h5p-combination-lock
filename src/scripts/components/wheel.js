@@ -35,29 +35,34 @@ export default class Wheel {
       this.params.alphabet[0]
     ];
 
-    this.items = alphabetPlus.map((symbol, index) => {
+    this.items = alphabetPlus.map((symbol) => {
       const item = document.createElement('div');
       item.classList.add('h5p-combination-lock-wheel-listitem');
       item.classList.add('cloaked');
-      item.setAttribute('aria-valuenow', index - 1);
-      item.setAttribute('aria-valuetext', symbol);
-      item.setAttribute(
-        'aria-label',
-        Dictionary.get('a11y.segment')
-          .replace(/@number/g, this.params.index + 1)
-          .replace(/@total/g, this.params.total)
-      );
+      item.setAttribute('aria-hidden', 'true');
       item.innerText = symbol;
-      item.addEventListener('keydown', (event) => {
-        this.handleKeydown(event);
-      });
-
       return item;
     });
 
     this.items.forEach((item) => {
       this.list.appendChild(item);
     });
+
+    this.spinbutton = document.createElement('div');
+    this.spinbutton.classList.add('h5p-combination-lock-wheel-spinbutton');
+    this.spinbutton.setAttribute('role', 'spinbutton');
+    this.spinbutton.setAttribute('tabindex', '0');
+    this.spinbutton.setAttribute(
+      'aria-label',
+      Dictionary.get('a11y.segment')
+        .replace(/@number/g, this.params.index + 1)
+        .replace(/@total/g, this.params.total)
+    );
+    this.spinbutton.addEventListener('keydown', (event) => {
+      this.handleKeydown(event);
+    });
+
+    this.dom.appendChild(this.spinbutton);
   }
 
   /**
@@ -116,8 +121,14 @@ export default class Wheel {
     if (typeof params.index !== 'number') {
       return;
     }
-
-    this.setActive(params.index);
+   
+    const alphabetIndex = (params.index - 1 + this.params.alphabet.length) %
+    this.params.alphabet.length;
+    
+    this.spinbutton.setAttribute('aria-valuenow', `${alphabetIndex}`);
+    this.spinbutton.setAttribute(
+      'aria-valuetext', this.params.alphabet[alphabetIndex]
+    );
 
     this.wheelHeight = this.wheelHeight ||
       this.dom.getBoundingClientRect().height; 
@@ -157,37 +168,7 @@ export default class Wheel {
    * Focus spinbutton.
    */
   focusSpinbutton() {
-    const spinbutton = this.items.find((item) => {     
-      return item.getAttribute('role') === 'spinbutton';
-    });  
-
-    spinbutton.focus();
-
-    this.requestRefocus = false;
-  }
-
-  /**
-   * Set active spinbutton.
-   *
-   * @param {number} position Position to set active.
-   */
-  setActive(position) {
-    if (typeof position !== 'number') {
-      return;
-    }
-
-    this.items.forEach((item, index) => {
-      if (position === index) {
-        item.removeAttribute('aria-hidden');
-        item.setAttribute('tabindex', '0');
-        item.setAttribute('role', 'spinbutton');
-      }
-      else {
-        item.setAttribute('aria-hidden', 'true');
-        item.removeAttribute('tabindex');
-        item.removeAttribute('role');
-      }
-    });
+    this.spinbutton.focus();
   }
 
   /**
@@ -210,7 +191,6 @@ export default class Wheel {
       event.stopPropagation();
       event.preventDefault();
 
-      this.requestRefocus = true;
       this.callbacks.onChanged(event.key);
     }
   }
@@ -253,10 +233,6 @@ export default class Wheel {
    * Handle transitionend.
    */
   handleTransitionEnd() {   
-    if (this.requestRefocus) {
-      this.focusSpinbutton();
-    }
-
     document.body.removeEventListener('keydown', this.blockEventPropagation);
 
     this.isTransitioning = false;

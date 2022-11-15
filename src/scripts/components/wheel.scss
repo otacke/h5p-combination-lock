@@ -6,8 +6,12 @@
   overflow: hidden;
   text-align: center;
   width: 100%;
+  display: grid;
 
   .h5p-combination-lock-wheel-list {
+    grid-column: 1;
+    grid-row: 1;
+
     &.transition {
       transition: transform 0.25s;
     }
@@ -20,5 +24,12 @@
         visibility: hidden;
       }
     }
+  }
+
+  .h5p-combination-lock-wheel-spinbutton {
+    grid-column: 1;
+    grid-row: 1;
+    height: 6rem;
+    z-index: 1;
   }
 }
