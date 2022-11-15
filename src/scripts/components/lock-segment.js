@@ -9,15 +9,17 @@ export default class LockSegment {
   /**
    * @class
    * @param {object} params Parameters.
+   * @param {number} params.index This segment's index.
+   * @param {number} params.total Total number of segments.
+   * @param {string} params.solution Symbol that is this segment's solution.
+   * @param {string[]} params.alphabet This segment's alphabet.
+   * @param {number|null} params.position Start position (from previous state).
    * @param {object} callbacks Callbacks.
    * @param {function} callbacks.onChanged Called when position changed.
-   * @param {function} callbacks.onKeyDown Called when using controls.
    */
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({}, params);
-    this.callbacks = Util.extend({
-      onChanged: () => {}
-    }, callbacks);
+    this.callbacks = Util.extend({ onChanged: () => {} }, callbacks);
     
     this.position = this.params.position ??
       Math.floor(Math.random() * this.params.alphabet.length);
@@ -47,7 +49,7 @@ export default class LockSegment {
       {
         alphabet: this.params.alphabet,
         position: this.position,
-        index: this.params.id,
+        index: this.params.index,
         total: this.params.total
       },
       {
@@ -75,6 +77,7 @@ export default class LockSegment {
     ]);
     this.dom.appendChild(this.buttonPrevious.getDOM());
    
+    // Get started once visible
     this.observer = new IntersectionObserver((entries) => {
       if (entries[0].intersectionRatio > 0) {
         this.observer.unobserve(this.dom);
@@ -216,7 +219,7 @@ export default class LockSegment {
     this.setPosition(position);
     this.callbacks.onChanged();
 
-    
+    // Allow setting while not disabled without cooling down    
     if (this.isDisabled) {
       return;
     }
@@ -225,7 +228,7 @@ export default class LockSegment {
   }
 
   /**
-   * Cooldown.
+   * Cooldown. Workaround, because transitionend is unreliable.
    */
   cooldown() {
     if (this.isCoolingDown) {    

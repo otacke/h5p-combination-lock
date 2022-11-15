@@ -1,4 +1,3 @@
-import charRegex from 'char-regex';
 import Util from '@services/util.js';
 import Dictionary from '@services/dictionary';
 import LockSegment from './lock-segment';
@@ -10,96 +9,94 @@ export default class Lock {
   /**
    * @class
    * @param {object} params Parameters.
+   * @param {string[]} params.alphabet Alphabet for segments.
+   * @param {string[]} params.solution Solution symbols.
+   * @param {boolean} params.autoCheck If true, check solution automatically.
+   * @param {number|Infinity} params.maxAttempts Number of maximum attempts.
+   * @param {object} [params.previousState={}] Previously stored state.
    * @param {object} callbacks Callbacks.
    * @param {function} callbacks.onChanged Called when lock is changed.
    * @param {function} callbacks.onResized Called when lock is resized.
    */
   constructor(params = {}, callbacks = {}) {
-    this.params = Util.extend({}, params);
+    this.params = Util.extend({
+      previousState: {}
+    }, params);
+
     this.callbacks = Util.extend({
-      onChanged: () => {}
+      onChanged: () => {},
+      onResized: () => {}
     }, callbacks);
 
-    this.segments = this.params.solution
-      .match(charRegex())
-      .map((symbol, index) => {
-        const segment = new LockSegment(
-          {
-            id: index,
-            total: this.params.solution.match(charRegex()).length,
-            solution: symbol,
-            alphabet: this.params.alphabet,
-            position: this.params.previousState?.positions ?
-              this.params.previousState.positions[index] :
-              null
-          },
-          {
-            onChanged: () => {
-              this.handleSegmentChanged();              
-            }
+    this.segments = this.params.solution.map((symbol, index) => {
+      const segment = new LockSegment(
+        {
+          index: index,
+          total: this.params.solution.length,
+          solution: symbol,
+          alphabet: this.params.alphabet,
+          position: this.params.previousState?.positions[index] ?? null
+        },
+        {
+          onChanged: () => {
+            this.handleSegmentChanged();              
           }
-        );
+        }
+      );
 
-        return segment;
-      });   
+      return segment;
+    });
 
     this.currentSegmentId = 0;
-
     this.handleAnimationEnded = this.handleAnimationEnded.bind(this);
 
+    this.buildDOM();
+    this.updateConfigurationAria();
+  }
+
+  /**
+   * Build DOM. Using spin button design pattern for a11y.
+   *
+   * @see https://www.w3.org/WAI/ARIA/apg/example-index/spinbutton/datepicker-spinbuttons.html
+   */
+  buildDOM() {
     this.dom = document.createElement('div');
     this.dom.classList.add('h5p-combination-lock-case');
 
     const lock = document.createElement('div');
     lock.classList.add('h5p-combination-lock-elements');
     this.dom.appendChild(lock);
-    
+   
     const groupLabelId = H5P.createUUID();
     const configurationId = H5P.createUUID();
 
-    const segments = document.createElement('div');
-    segments.classList.add('h5p-combination-lock-segments');
-    segments.setAttribute('role', 'group');
-    segments.setAttribute(
+    this.segmentsDOM = document.createElement('div');
+    this.segmentsDOM.classList.add('h5p-combination-lock-segments');
+    this.segmentsDOM.setAttribute('role', 'group');
+    this.segmentsDOM.setAttribute(
       'aria-labelledby', `${groupLabelId} ${configurationId}`
     );
-    lock.appendChild(segments);
+    lock.appendChild(this.segmentsDOM);
 
     this.groupLabel = document.createElement('div');
     this.groupLabel.classList.add('h5p-combination-lock-group-label');
     this.groupLabel.setAttribute('id', groupLabelId);
     this.groupLabel.innerText = `${Dictionary.get('a11y.combinationLock')}.`;
-    segments.appendChild(this.groupLabel);
+    this.segmentsDOM.appendChild(this.groupLabel);
 
-    this.configuration = document.createElement('div');
-    this.configuration.classList.add('h5p-combination-lock-configuration-aria');
-    this.configuration.setAttribute('id', configurationId);
-    segments.appendChild(this.configuration);
+    // Will announce current combination for all segments
+    this.currentCombination = document.createElement('div');
+    this.currentCombination.classList.add(
+      'h5p-combination-lock-current-combination-aria');
+    this.currentCombination.setAttribute('id', configurationId);
+    this.segmentsDOM.appendChild(this.currentCombination);
 
     this.segments.forEach((segment) => {
-      segments.appendChild(segment.getDOM());
+      this.segmentsDOM.appendChild(segment.getDOM());
     });
 
     this.messageDisplay = new MessageDisplay();
-    this.messageDisplay.hide();
     lock.appendChild(this.messageDisplay.getDOM());
-
-    this.updateConfigurationAria();
-
-    this.observer = new IntersectionObserver((entries) => {
-      if (entries[0].intersectionRatio > 0) {
-        this.observer.unobserve(this.dom);
-
-        this.messageDisplay.setWidth(segments.getBoundingClientRect().width);
-        this.messageDisplay.show();
-
-        this.callbacks.onResized();
-      }
-    }, {
-      root: document.documentElement,
-      threshold: 0
-    });
-    this.observer.observe(this.dom);
   }
 
   /**
@@ -109,6 +106,15 @@ export default class Lock {
    */
   getDOM() {
     return this.dom;
+  }
+
+  /**
+   * Resize.
+   */
+  resize() {  
+    this.messageDisplay.setWidth(
+      this.segmentsDOM.getBoundingClientRect().width
+    );
   }
 
   /**
@@ -150,31 +156,6 @@ export default class Lock {
   }
 
   /**
-   * Focus.
-   */
-  focus() {
-    this.segments[0].focus();
-  }
-
-  /**
-   * Update tablist label.
-   */
-  updateConfigurationAria() {
-    const symbolString = this.segments
-      .map((segment) => segment.getResponse())
-      .join(', ');
-
-    let text = Dictionary
-      .get('a11y.currentSymbols')
-      .replace(/@symbols/g, symbolString);
-    if (text.substring(text.length - 1) !== '.') {
-      text = `${text}.`;
-    }
-
-    this.configuration.innerText = text;
-  }
-
-  /**
    * Get text.
    *
    * @returns {string} Text from display.
@@ -184,14 +165,10 @@ export default class Lock {
   }
 
   /**
-   * Show solutions.
+   * Focus.
    */
-  showSolutions() {
-    this.segments.forEach((segment) => {
-      segment.showSolutions();
-    });
-
-    this.updateConfigurationAria();
+  focus() {
+    this.segments[0].focus();
   }
 
   /**
@@ -210,6 +187,35 @@ export default class Lock {
     this.segments.forEach((segment) => {
       segment.disable();
     });
+  }  
+
+  /**
+   * Update combination aria.
+   */
+  updateConfigurationAria() {
+    const symbolString = this.segments
+      .map((segment) => segment.getResponse())
+      .join(', ');
+
+    let text = Dictionary
+      .get('a11y.currentSymbols')
+      .replace(/@symbols/g, symbolString);
+    if (text.substring(text.length - 1) !== '.') {
+      text = `${text}.`;
+    }
+
+    this.currentCombination.innerText = text;
+  }
+
+  /**
+   * Show solutions.
+   */
+  showSolutions() {
+    this.segments.forEach((segment) => {
+      segment.showSolutions();
+    });
+
+    this.updateConfigurationAria();
   }
 
   /**

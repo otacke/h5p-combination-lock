@@ -6,6 +6,9 @@ export default class Button {
   /**
    * @class
    * @param {object} params Parameters.
+   * @param {string} params.id Button id.
+   * @param {string} params.label Button label.
+   * @param {string[]} params.classes Extra classes.
    * @param {object} callbacks Callbacks.
    * @param {function} callbacks.onClicked Called when button is clicked.
    */
@@ -13,8 +16,7 @@ export default class Button {
     this.params = Util.extend({
       id: H5P.createUUID(),
       label: '\u1F605',
-      classes: [],
-      a11y: {}
+      classes: []
     }, params);
 
     this.callbacks = Util.extend({

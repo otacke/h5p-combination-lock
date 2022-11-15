@@ -7,19 +7,23 @@ export default class Wheel {
   /**
    * @class
    * @param {object} params Parameters.
+   * @param {string[]} params.alphabet Alphabet for the wheel.
+   * @param {number} params.position Start position (from previous state).
+   * @param {number} params.index This wheels index of all wheels.
+   * @param {number} params.total Total number of wheels.
    * @param {object} callbacks Callbacks.
    * @param {function} callbacks.onClicked Called when button is clicked.
+   * @param {function} callbacks.onFocusChanged Called when focus changes.
    */
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({}, params);
+
     this.callbacks = Util.extend({
       onChanged: () => {},
       onFocusChanged: () => {}
     }, callbacks);
 
-    this.oldIndex = this.params.position || 0;
-
-    this.blockEventPropagation = this.blockEventPropagation.bind(this);
+    this.oldIndex = this.params.position ?? 0;
 
     this.dom = document.createElement('div');
     this.dom.classList.add('h5p-combination-lock-wheel');
@@ -49,6 +53,7 @@ export default class Wheel {
       this.list.appendChild(item);
     });
 
+    // Spin button desing pattern for aria
     this.spinbutton = document.createElement('div');
     this.spinbutton.classList.add('h5p-combination-lock-wheel-spinbutton');
     this.spinbutton.setAttribute('role', 'spinbutton');
@@ -59,12 +64,15 @@ export default class Wheel {
         .replace(/@number/g, this.params.index + 1)
         .replace(/@total/g, this.params.total)
     );
+
     this.spinbutton.addEventListener('keydown', (event) => {
       this.handleKeydown(event);
     });
+
     this.spinbutton.addEventListener('focus', () => {
       this.callbacks.onFocusChanged(true);
     });
+
     this.spinbutton.addEventListener('blur', () => {
       this.callbacks.onFocusChanged(false);
     });
@@ -103,7 +111,7 @@ export default class Wheel {
       }, 250);      
     }
     else if (this.oldIndex === this.params.alphabet.length && position === 0) {
-    // Overflow scrolling down
+      // Overflow scrolling down
       this.oldIndex = this.params.alphabet.length + 1;
       setTimeout(() => {
         this.oldIndex = 1;
@@ -137,6 +145,7 @@ export default class Wheel {
       'aria-valuetext', this.params.alphabet[alphabetIndex]
     );
 
+    // Compute correct translation
     this.wheelHeight = this.wheelHeight ||
       this.dom.getBoundingClientRect().height; 
     this.itemHeight = this.itemHeight ||
@@ -203,45 +212,16 @@ export default class Wheel {
   }
 
   /**
-   * Block event propagation.
-   *
-   * @param {Event} event Event.
-   */
-  blockEventPropagation(event) {
-    event.stopPropagation();
-    event.preventDefault();
-  }
-
-  /**
    * Cooldown. Workaround for transitionend event that may never be called.
    *
    * @param {number} timeout Timeout.
    */
   cooldown(timeout) {
     window.clearTimeout(this.cooldownTimeout);
-    this.handleTransitionStart();
-
-    window.setTimeout(() => {
-      this.handleTransitionEnd();
-    }, timeout);
-  }
-
-  /**
-   * Handle transitionstart.
-   */
-  handleTransitionStart() {
     this.isTransitioning = true;
 
-    // Prevent moving page around via body when spinbutton loses focus.
-    document.body.addEventListener('keydown', this.blockEventPropagation);
-  }
-
-  /**
-   * Handle transitionend.
-   */
-  handleTransitionEnd() {   
-    document.body.removeEventListener('keydown', this.blockEventPropagation);
-
-    this.isTransitioning = false;
+    window.setTimeout(() => {
+      this.isTransitioning = false;
+    }, timeout);
   }
 }

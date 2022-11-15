@@ -1,17 +1,11 @@
-import Util from '@services/util.js';
 import './message-display.scss';
 
 /** MessageDisplay */
 export default class MessageDisplay {
   /**
    * @class
-   * @param {object} params Parameters.
-   * @param {object} callbacks Callbacks.
    */
-  constructor(params = {}, callbacks = {}) {
-    this.params = Util.extend({}, params);
-    this.callbacks = Util.extend({}, callbacks);
-
+  constructor() {
     this.dom = document.createElement('div');
     this.dom.classList.add('h5p-combination-lock-message-display');
   }
@@ -26,26 +20,12 @@ export default class MessageDisplay {
   }
 
   /**
-   * Show.
-   */
-  show() {
-    this.dom.classList.remove('display-none');
-  }
-
-  /**
-   * Hide.
-   */
-  hide() {
-    this.dom.classList.add('display-none');
-  }
-
-  /**
    * Set width.
    *
    * @param {number} width Width.
    */
   setWidth(width) {
-    this.dom.style.width = `${width}px`;
+    this.dom.style.maxWidth = `${width}px`;
   }
 
   /**
