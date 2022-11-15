@@ -158,6 +158,19 @@ export default class CombinationLock extends H5P.Question {
   buildDOM() {
     const dom = document.createElement('div');
     dom.classList.add('h5p-combination-lock-main');
+
+    if (this.params.introduction) {
+      const introduction = document.createElement('div');
+      introduction.classList.add('h5p-combination-lock-introduction');
+
+      const content = document.createElement('div');
+      content.classList.add('h5p-combination-lock-intro-content');
+      content.innerHTML = this.params.introduction;
+      introduction.appendChild(content);
+
+      dom.appendChild(introduction);
+    }
+
     dom.appendChild(this.lock.getDOM());
 
     // Check answer button

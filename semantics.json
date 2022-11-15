@@ -1,5 +1,42 @@
 [
   {
+    "name": "introduction",
+    "type": "text",
+    "label": "Introduction",
+    "description": "Optionally set some introduction.",
+    "default": "<p style=\"text-align: center;\"></p>",
+    "optional": true,
+    "widget": "html",
+    "enterMode": "div",
+    "tags": [
+      "sub",
+      "sup",
+      "strong",
+      "em",
+      "p",
+      "code",
+      "u",
+      "del",
+      "a",
+      "ul",
+      "ol",
+      "h1",
+      "h2",
+      "h3",
+      "h4",
+      "h5",
+      "h6",
+      "pre",
+      "hr",
+      "table"
+    ],
+    "font": {
+      "size": true,
+      "color": true,
+      "background": true
+    }
+  },
+  {
     "name": "solution",
     "type": "text",
     "label": "Solution",
