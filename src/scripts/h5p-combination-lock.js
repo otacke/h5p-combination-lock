@@ -586,7 +586,7 @@ export default class CombinationLock extends H5P.Question {
 }
 
 /** @constant {string} Default description */
-CombinationLock.DEFAULT_DESCRIPTION = 'Boilerplate (SNORDIAN)';
+CombinationLock.DEFAULT_DESCRIPTION = 'Combination Lock';
 
 /** @constant {object} view states */
 CombinationLock.VIEW_STATES = { task: 0, results: 1, solutions: 2 };
