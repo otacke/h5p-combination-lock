@@ -1,16 +1,36 @@
 {
   "semantics": [
     {
-      "label": "Sample"
+      "label": "Introduction",
+      "description": "Optionally set some introduction.",
+      "default": "<p style=\"text-align: center;\"></p>"
+    },
+    {
+      "label": "Solution",
+      "description": "Enter the desired solution for the lock. Please note that using long solutions may be suboptimal on small devices.",
+      "default": "0123"
+    },
+    {
+      "label": "Symbols for each segment",
+      "description": "Choose the symbols that each segment should bear. The symbols will appear in the order defined here.",
+      "default": "0123456789"
     },
     {
       "label": "Behavioural settings",
       "fields": [
         {
-          "label": "Sample behaviour"
+          "label": "AutoCheck",
+          "description": "If autocheck is enabled, the lock will open automatically once the correct solution has been entered."
         },
         {
-          "label": "Dummy"
+          "label": "Maximum attempts",
+          "description": "Enter the maximum number of opening attempts allowed or leave empty to not limit the number."
+        },
+        {
+          "label": "Enable \"Retry\" button"
+        },
+        {
+          "label": "Enable \"Show Solution\" button"
         }
       ]
     },
@@ -18,13 +38,45 @@
       "label": "User interface",
       "fields": [
         {
-          "label": "Sample entry for visible user interface strings",
-          "description": "This is just a sample entry for visible user interface strings.",
-          "default": "Sample l10n"
+          "label": "Check",
+          "default": "Check"
         },
         {
-          "label": "Dummy",
-          "default": "Dummy"
+          "label": "Submit",
+          "default": "Submit"
+        },
+        {
+          "label": "Show solution",
+          "default": "Show solution"
+        },
+        {
+          "label": "Retry",
+          "default": "Retry"
+        },
+        {
+          "label": "Lock open",
+          "default": "Lock open!"
+        },
+        {
+          "label": "Lock disabled",
+          "default": "No more attempts. Lock disabled."
+        },
+        {
+          "label": "Attempts left",
+          "description": "@number is a placeholder and will be replaced by the respective number of attempts left.",
+          "default": "Attempts left: @number"
+        },
+        {
+          "label": "Solutions",
+          "default": "This combination opens the lock."
+        },
+        {
+          "label": "Wrong combination",
+          "default": "This combination does not open the lock."
+        },
+        {
+          "label": "No message",
+          "default": "..."
         }
       ]
     },
@@ -32,13 +84,61 @@
       "label": "Accessibility texts",
       "fields": [
         {
-          "label": "Sample entry for accessibility strings",
-          "description": "This is just a sample entry for accessibility strings.",
-          "default": "Sample a11y"
+          "label": "Assistive technology description for \"Check\" button",
+          "default": "Check whether the combination opens the lock."
         },
         {
-          "label": "Dummy",
-          "default": "Dummy"
+          "label": "Assistive technology description for \"Show Solution\" button",
+          "default": "Show the solution. The correct symbols that will open the lock will be displayed."
+        },
+        {
+          "label": "Assistive technology description for \"Retry\" button",
+          "default": "Retry the task. Reset all lock segments and start the task over again."
+        },
+        {
+          "label": "Assistive technology description for current symbol",
+          "description": "@symbol is a placeholder and will be replaced by the respective value.",
+          "default": "Current symbol: @symbol"
+        },
+        {
+          "label": "Assistive technology description for current symbols",
+          "description": "@symbols is a placeholder and will be replaced by the respective value.",
+          "default": "Current symbols: @symbol"
+        },
+        {
+          "label": "Assistive technology description for previous symbol button",
+          "default": "Previous symbol"
+        },
+        {
+          "label": "Assistive technology description for next symbol button",
+          "default": "Next symbol"
+        },
+        {
+          "label": "Assistive technology description for announcing correct Combination",
+          "description": "@combination is a placeholder and will be replaced by the respective value.",
+          "default": "This combination opens the lock. @combination."
+        },
+        {
+          "label": "Assistive technology description for announcing the correct combination",
+          "description": "@combination is a placeholder and will be replaced by the respective value.",
+          "default": "This combination opens the lock. @combination."
+        },
+        {
+          "label": "Assistive technology description for announcing a wrong combination",
+          "default": "Wrong combination"
+        },
+        {
+          "label": "Assistive technology description for announcing \"disabled\"",
+          "default": "disabled"
+        },
+        {
+          "label": "Assistive technology description for announcing \"combination lock\"",
+          "default": "combination lock"
+        },
+        {
+          "label": "Assistive technology description for announcing the current segment",
+          "description": "@number and @total are placeholders and will be replaced by the respective values.",
+          "default": "Segment @number of @total"
         }
       ]
     }
