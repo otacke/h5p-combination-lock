@@ -3,6 +3,7 @@ import Dictionary from '@services/dictionary';
 import charRegex from 'char-regex';
 import CombinationLock from '../h5p-combination-lock';
 import Lock from '@components/lock';
+import he from 'he';
 
 /**
  * Mixin containing methods for initializing the content.
@@ -59,9 +60,10 @@ export default class Initialization {
     }, this.params);
 
     // Sanitize solution
+    this.params.solution = Util.stripHTML(he.decode(this.params.solution));
     const symbols = this.params.solution.match(charRegex());
     if (!symbols || symbols?.length < 1) {
-      this.params.solution = 'H5P';
+      symbols = ['H', '5', 'P'];
     }
     if (symbols.length > CombinationLock.SEGMENTS_MAX) {
       this.params.solution = symbols
@@ -70,7 +72,9 @@ export default class Initialization {
 
       console.warn(`${this.getTitle()}: The original solution was truncated because it was longer than ${CombinationLock.SEGMENTS_MAX} symbols that are allowed.`);
     }
-    
+
+    this.params.alphabet = he.decode(this.params.alphabet);
+
     // Sanitize alphabet
     this.params.alphabet = `${this.params.alphabet}${this.params.solution}`
       .match(charRegex()) // Ensure support for graphemes
@@ -94,9 +98,9 @@ export default class Initialization {
 
     // Fill dictionary
     Dictionary.fill({ l10n: this.params.l10n, a11y: this.params.a11y });
-    
+
     // Retrieve previous state
-    this.previousState = this.extras?.previousState || {};      
+    this.previousState = this.extras?.previousState || {};
     this.viewState = this.previousState.viewState ??
       CombinationLock.VIEW_STATES['task'];
     this.wasAnswerGiven = this.previousState.wasAnswerGiven ?? false;
@@ -168,7 +172,7 @@ export default class Initialization {
         contentData: this.extras,
         textIfSubmitting: Dictionary.get('l10n.submit')
       });
-    
+
     // Show solution button
     this.addButton(
       'show-solution',
@@ -191,7 +195,7 @@ export default class Initialization {
       },
       false,
       { 'aria-label': Dictionary.get('a11y.retry') }
-    );  
+    );
 
     return dom;
   }
@@ -204,9 +208,9 @@ export default class Initialization {
       if (!this.params.behaviour.autoCheck && this.maxAttempts !== Infinity) {
         const attemptsLeftText = Dictionary.get('l10n.attemptsLeft')
           .replace(/@number/g, this.attemptsLeft);
-  
+
         const wrongCombinationText = Dictionary.get('a11y.wrongCombination');
-  
+
         this.announceMessage({
           text: attemptsLeftText,
           aria: [wrongCombinationText, attemptsLeftText].join('. ')
