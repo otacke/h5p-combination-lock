@@ -1,0 +1,141 @@
+{
+  "semantics": [
+    {
+      "label": "Einleitung",
+      "description": "Füge optional eine Einleitung ein.",
+      "default": "<p style=\"text-align: center;\"></p>"
+    },
+    {
+      "label": "Lösung",
+      "description": "Gib hier die Lösung zum Öffnen des Schlosses ein. Bitte beachte, dass lange Lösungen auf kleinen Bildschirmen suboptimal dargestellt werden könnten.",
+      "default": "0123"
+    },
+    {
+      "label": "Symbole für jedes Segment",
+      "description": "Wähle die Symbole, die jedes Segment tragen soll. Die Symbole erscheinen in der hier definierten Reihenfolge.",
+      "default": "0123456789"
+    },
+    {
+      "label": "Verhaltenseinstellungen",
+      "fields": [
+        {
+          "label": "Automatisch prüfen",
+          "description": "Falls automatisches Prüfen aktiviert ist, öffnet sich das Schloss automatisch, sobald die richtige Lösung eingegeben wurde."
+        },
+        {
+          "label": "Maximale Versuche",
+          "description": "Gib die maximal erlaubte Anzahl an Versuchen zum Öffnen ein oder lasse das Feld leer, um keine Begrenzung zu setzen."
+        },
+        {
+          "label": "\"Wiederholen\"-Button anzeigen"
+        },
+        {
+          "label": "\"Lösung anzeigen\"-Button anzeigen"
+        }
+      ]
+    },
+    {
+      "label": "Bedienoberfläche",
+      "fields": [
+        {
+          "label": "Überprüfen",
+          "default": "Überprüfen"
+        },
+        {
+          "label": "Absenden",
+          "default": "Absenden"
+        },
+        {
+          "label": "Lösung anzeigen",
+          "default": "Lösung anzeigen"
+        },
+        {
+          "label": "Wiederholen",
+          "default": "Wiederholen"
+        },
+        {
+          "label": "Schloss offen",
+          "default": "Schloss offen!"
+        },
+        {
+          "label": "Schloss gesperrt",
+          "default": "Keine Versuche übrig. Schloss gesperrt."
+        },
+        {
+          "label": "Versuche übrig",
+          "description": "@number ist ein Platzhalter und wird durch die jeweilige Anzahl verbleibender Versuche ersetzt.",
+          "default": "Versuche übrig: @number"
+        },
+        {
+          "label": "Lösung",
+          "default": "Diese Kombination öffnet das Schloss."
+        },
+        {
+          "label": "Falsche Kombination",
+          "default": "Diese Kombination öffnet das Schloss nicht."
+        },
+        {
+          "label": "Keine Nachricht",
+          "default": "..."
+        }
+      ]
+    },
+    {
+      "label": "Vorlesewerkzeug",
+      "fields": [
+        {
+          "label": "Vorlesewerkzeug-Beschreibung für den \"Überprüfen\"-Button",
+          "default": "Überprüfe, ob die Kombination das Schloss öffnet."
+        },
+        {
+          "label": "Vorlesewerkzeug-Beschreibung für den \"Lösung anzeigen\"-Button",
+          "default": "Zeige die Lösung. Die korrekten Symbole zum Öffnen des Schlosses werden angezeigt."
+        },
+        {
+          "label": "Vorlesewerkzeug-Beschreibung für den \"Wiederholen\"-Button",
+          "default": "Wiederhole die Aufgabe. Setze alle Schlosssegmente zurück und starte die Aufgabe erneut."
+        },
+        {
+          "label": "Vorlesewerkzeug-Beschreibung für das aktuell angezeigte Symbol",
+          "description": "@symbol ist ein Platzhalter und wird durch den jeweiligen Wert ersetzt.",
+          "default": "Aktuelles Symbol: @symbol"
+        },
+        {
+          "label": "Vorlesewerkzeug-Beschreibung für die aktuell angezeigten Symbole",
+          "description": "@symbols ist ein Platzhalter und wird durch den jeweiligen Wert ersetzt.",
+          "default": "Aktuelle Symbole: @symbols"
+        },
+        {
+          "label": "Vorlesewerkzeug-Beschreibung für den \"Vorheriges Symbol\"-Button",
+          "default": "Vorheriges Symbol"
+        },
+        {
+          "label": "Vorlesewerkzeug-Beschreibung für den \"Nächstes Symbol\"-Button",
+          "default": "Nächstes Symbol"
+        },
+        {
+          "label": "Vorlesewerkzeug-Beschreibung für den Hinweis auf die korrekte Kombination",
+          "description": "@combination ist ein Platzhalter und wird durch den jeweiligen Wert ersetzt.",
+          "default": "Diese Kombination öffnet das Schloss. @combination."
+        },
+        {
+          "label": "Vorlesewerkzeug-Beschreibung für den Hinweis auf eine falsche Kombination",
+          "default": "Falsche Kombination"
+        },
+        {
+          "label": "Vorlesewerkzeug-Beschreibung für \"deaktiviert\"",
+          "default": "deaktiviert"
+        },
+        {
+          "label": "Vorlesewerkzeug-Beschreibung für \"Kombinationsschloss\"",
+          "default": "Kombinationsschloss"
+        },
+        {
+          "label": "Vorlesewerkzeug-Beschreibung für den Hinweis auf das aktuelle Segment",
+          "description": "@number und @total sind Platzhalter und werden durch die entsprechenden Werte ersetzt.",
+          "default": "Segment @number von @total"
+        }
+      ]
+    }
+  ]
+}
