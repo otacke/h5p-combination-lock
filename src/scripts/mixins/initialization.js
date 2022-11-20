@@ -61,7 +61,7 @@ export default class Initialization {
 
     // Sanitize solution
     this.params.solution = Util.stripHTML(he.decode(this.params.solution));
-    const symbols = this.params.solution.match(charRegex());
+    let symbols = this.params.solution.match(charRegex());
     if (!symbols || symbols?.length < 1) {
       symbols = ['H', '5', 'P'];
     }
