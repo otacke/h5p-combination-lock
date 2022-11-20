@@ -24,11 +24,13 @@
     }
   }
 
-  .h5p-question-buttons {
-    display: flex;
-    justify-content: center;
-    margin-left: 0;
-    margin-right: 0;
-    width: 100%;
+  &.h5p-standalone {
+    .h5p-question-buttons {
+      display: flex;
+      justify-content: center;
+      margin-left: 0;
+      margin-right: 0;
+      width: 100%;
+    }
   }
 }
