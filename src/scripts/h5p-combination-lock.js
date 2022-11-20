@@ -98,14 +98,14 @@ export default class CombinationLock extends H5P.Question {
   handleCorrectResponse(params = {}) {
     this.lock.disable();
     this.setViewState('results');
-   
+
     this.announceMessage({ text: Dictionary.get('l10n.lockOpen') });
 
     if (!params.skipXAPI) {
       this.triggerXAPIEvent('answered');
     }
 
-    window.setTimeout(() => {      
+    window.setTimeout(() => {
       this.hideButton('check-answer');
 
       if (this.params.behaviour.autoCheck) {
@@ -130,7 +130,7 @@ export default class CombinationLock extends H5P.Question {
   handleIntermediaryWrongResponse() {
     if (this.attemptsLeft === Infinity) {
       this.announceMessage({ text: Dictionary.get('l10n.wrongCombination') });
-    
+
       return;
     }
 
@@ -241,7 +241,7 @@ export default class CombinationLock extends H5P.Question {
    */
   handleAnswerGiven() {
     this.wasAnswerGiven = true;
-  }  
+  }
 }
 
 /** @constant {object} VIEW_STATES view states */

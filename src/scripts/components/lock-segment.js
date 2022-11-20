@@ -20,7 +20,7 @@ export default class LockSegment {
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({}, params);
     this.callbacks = Util.extend({ onChanged: () => {} }, callbacks);
-    
+
     this.position = this.params.position ??
       Math.floor(Math.random() * this.params.alphabet.length);
 
@@ -76,7 +76,7 @@ export default class LockSegment {
       Dictionary.get(`a11y.currentSymbol`).replace(/@symbol/g, currentSymbol)
     ]);
     this.dom.appendChild(this.buttonPrevious.getDOM());
-   
+
     // Get started once visible
     this.observer = new IntersectionObserver((entries) => {
       if (entries[0].intersectionRatio > 0) {
@@ -99,7 +99,7 @@ export default class LockSegment {
   getDOM() {
     return this.dom;
   }
- 
+
   /**
    * Get current response.
    *
@@ -128,7 +128,7 @@ export default class LockSegment {
   /**
    * Enable.
    */
-  enable() {  
+  enable() {
     this.isDisabled = false;
 
     this.buttonNext.enable();
@@ -142,7 +142,7 @@ export default class LockSegment {
     this.buttonPrevious.setAriaLabel([
       Dictionary.get('a11y.previousSymbol'),
       Dictionary.get(`a11y.currentSymbol`).replace(/@symbol/g, currentSymbol)
-    ]); 
+    ]);
   }
 
   /**
@@ -152,10 +152,10 @@ export default class LockSegment {
     this.isDisabled = true;
 
     clearTimeout(this.cooldownTimeout);
-    
+
     this.buttonNext.disable();
     this.buttonPrevious.disable();
-    
+
     this.buttonNext.setAriaLabel([
       Dictionary.get('a11y.nextSymbol'),
       Dictionary.get(`a11y.disabled`)
@@ -163,7 +163,7 @@ export default class LockSegment {
     this.buttonNext.setAriaLabel([
       Dictionary.get('a11y.previousSymbol'),
       Dictionary.get(`a11y.disabled`)
-    ]);      
+    ]);
   }
 
   /**
@@ -212,14 +212,14 @@ export default class LockSegment {
    * @param {number} position New position.
    */
   changeSymbol(position) {
-    if (this.isCoolingDown) {    
+    if (this.isCoolingDown) {
       return;
     }
 
     this.setPosition(position);
     this.callbacks.onChanged();
 
-    // Allow setting while not disabled without cooling down    
+    // Allow setting while not disabled without cooling down
     if (this.isDisabled) {
       return;
     }
@@ -231,7 +231,7 @@ export default class LockSegment {
    * Cooldown. Workaround, because transitionend is unreliable.
    */
   cooldown() {
-    if (this.isCoolingDown) {    
+    if (this.isCoolingDown) {
       return;
     }
     this.isCoolingDown = true;
@@ -241,7 +241,7 @@ export default class LockSegment {
     this.buttonNext.disable();
 
     clearTimeout(this.cooldownTimeout);
-    this.cooldownTimeout = setTimeout(() => {     
+    this.cooldownTimeout = setTimeout(() => {
       this.buttonPrevious.enable();
       this.buttonNext.enable();
 
@@ -272,7 +272,7 @@ export default class LockSegment {
     }
     else {
       return;
-    }   
+    }
 
     this.changeSymbol(position);
   }

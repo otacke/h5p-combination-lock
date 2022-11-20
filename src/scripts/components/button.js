@@ -93,7 +93,7 @@ export default class Button {
           return label;
         })
         .join('. ');
-      
+
       this.dom.setAttribute('aria-label', ariaLabel);
     }
     else {

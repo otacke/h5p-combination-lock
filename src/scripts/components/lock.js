@@ -39,7 +39,7 @@ export default class Lock {
         },
         {
           onChanged: () => {
-            this.handleSegmentChanged();              
+            this.handleSegmentChanged();
           }
         }
       );
@@ -66,7 +66,7 @@ export default class Lock {
     const lock = document.createElement('div');
     lock.classList.add('h5p-combination-lock-elements');
     this.dom.appendChild(lock);
-   
+
     const groupLabelId = H5P.createUUID();
     const configurationId = H5P.createUUID();
 
@@ -111,7 +111,7 @@ export default class Lock {
   /**
    * Resize.
    */
-  resize() {  
+  resize() {
     this.messageDisplay.setWidth(
       this.segmentsDOM.getBoundingClientRect().width
     );
@@ -177,7 +177,7 @@ export default class Lock {
   enable() {
     this.segments.forEach((segment) => {
       segment.enable();
-    });    
+    });
   }
 
   /**
@@ -187,7 +187,7 @@ export default class Lock {
     this.segments.forEach((segment) => {
       segment.disable();
     });
-  }  
+  }
 
   /**
    * Update combination aria.
@@ -247,11 +247,11 @@ export default class Lock {
   /**
    * Handle animation ended.
    */
-  handleAnimationEnded() {  
+  handleAnimationEnded() {
     this.dom.classList.remove('animate');
     this.dom.classList.remove('wrong-combination');
     this.dom.addEventListener('animationend', this.handleAnimationEnded);
-    this.isAnimating = false;    
+    this.isAnimating = false;
   }
 
   /**

@@ -31,7 +31,7 @@ export default class Wheel {
     this.list = document.createElement('div');
     this.list.classList.add('h5p-combination-lock-wheel-list');
     this.list.classList.add('transition');
-    this.dom.appendChild(this.list); 
+    this.dom.appendChild(this.list);
 
     // Copy of first and last symbol required for simulating "infinite" wheel
     const alphabetPlus = [
@@ -108,7 +108,7 @@ export default class Wheel {
       setTimeout(() => {
         this.oldIndex = this.params.alphabet.length;
         this.scrollTo({ index: this.oldIndex, noAnimation: true });
-      }, 250);      
+      }, 250);
     }
     else if (this.oldIndex === this.params.alphabet.length && position === 0) {
       // Overflow scrolling down
@@ -136,10 +136,10 @@ export default class Wheel {
     if (typeof params.index !== 'number') {
       return;
     }
-   
+
     const alphabetIndex = (params.index - 1 + this.params.alphabet.length) %
     this.params.alphabet.length;
-    
+
     this.spinbutton.setAttribute('aria-valuenow', `${alphabetIndex}`);
     this.spinbutton.setAttribute(
       'aria-valuetext', this.params.alphabet[alphabetIndex]
@@ -147,11 +147,11 @@ export default class Wheel {
 
     // Compute correct translation
     this.wheelHeight = this.wheelHeight ||
-      this.dom.getBoundingClientRect().height; 
+      this.dom.getBoundingClientRect().height;
     this.itemHeight = this.itemHeight ||
       this.list.childNodes[0].getBoundingClientRect().height;
     this.itemOffset = (this.wheelHeight - this.itemHeight) / 2;
-    
+
     const translation =
       `translateY(${-params.index * this.itemHeight + this.itemOffset}px)`;
 
@@ -198,7 +198,7 @@ export default class Wheel {
       event.preventDefault();
       return;
     }
-  
+
     if (event.target.getAttribute('role') !== 'spinbutton') {
       return; // Just to be sure ...
     }

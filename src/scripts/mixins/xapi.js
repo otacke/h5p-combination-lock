@@ -103,7 +103,7 @@ export default class XAPI {
     const placeholders = this.params.solution
       .match(charRegex())
       .map(() => XAPI.RESPONSE_PLACEHOLDER)
-      .join(' ');   
+      .join(' ');
 
     return `${description}\n<p>${placeholders}</p>`;
   }

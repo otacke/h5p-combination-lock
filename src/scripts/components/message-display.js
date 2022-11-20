@@ -44,5 +44,5 @@ export default class MessageDisplay {
    */
   getText() {
     return this.dom.innerText;
-  }  
+  }
 }
