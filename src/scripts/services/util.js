@@ -84,11 +84,11 @@ export default class Util {
         }
 
         if (Object.getOwnPropertyNames(masterPrototype).includes(property)) {
-          throw (`Class ${masterPrototype.constructor.name} already contains ${property}. Cannot add ${mixinPrototype.constructor.name}`);
+          return; // property already present, do not override
         }
 
         masterPrototype[property] = mixinPrototype[property];
       });
     });
-  }  
+  }
 }
