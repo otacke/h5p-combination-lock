@@ -28,7 +28,8 @@ export default class Initialization {
       behaviour: {
         autoCheck: true,
         enableRetry: true,
-        enableSolutionsButton: true
+        enableSolutionsButton: true,
+        enableCheckButton: true
       },
       l10n: {
         check: 'Check',
@@ -58,6 +59,11 @@ export default class Initialization {
         segment: 'Segment @number of @total'
       }
     }, this.params);
+
+    // Handle potential override from parent content type
+    if (!this.params.behaviour.enableCheckButton) {
+      this.params.behaviour.autoCheck = true;
+    }
 
     // Sanitize solution
     this.params.solution = Util.stripHTML(he.decode(this.params.solution));
