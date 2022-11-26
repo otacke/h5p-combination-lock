@@ -41,7 +41,7 @@ export default class LockSegment {
     );
     this.buttonNext.setAriaLabel([
       Dictionary.get('a11y.nextSymbol'),
-      Dictionary.get(`a11y.currentSymbol`).replace(/@symbol/g, currentSymbol)
+      Dictionary.get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol)
     ]);
     this.dom.appendChild(this.buttonNext.getDOM());
 
@@ -73,7 +73,7 @@ export default class LockSegment {
     );
     this.buttonPrevious.setAriaLabel([
       Dictionary.get('a11y.previousSymbol'),
-      Dictionary.get(`a11y.currentSymbol`).replace(/@symbol/g, currentSymbol)
+      Dictionary.get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol)
     ]);
     this.dom.appendChild(this.buttonPrevious.getDOM());
 
@@ -137,11 +137,11 @@ export default class LockSegment {
     const currentSymbol = this.params.alphabet[this.position];
     this.buttonNext.setAriaLabel([
       Dictionary.get('a11y.nextSymbol'),
-      Dictionary.get(`a11y.currentSymbol`).replace(/@symbol/g, currentSymbol)
+      Dictionary.get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol)
     ]);
     this.buttonPrevious.setAriaLabel([
       Dictionary.get('a11y.previousSymbol'),
-      Dictionary.get(`a11y.currentSymbol`).replace(/@symbol/g, currentSymbol)
+      Dictionary.get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol)
     ]);
   }
 
@@ -158,11 +158,11 @@ export default class LockSegment {
 
     this.buttonNext.setAriaLabel([
       Dictionary.get('a11y.nextSymbol'),
-      Dictionary.get(`a11y.disabled`)
+      Dictionary.get('a11y.disabled')
     ]);
     this.buttonNext.setAriaLabel([
       Dictionary.get('a11y.previousSymbol'),
-      Dictionary.get(`a11y.disabled`)
+      Dictionary.get('a11y.disabled')
     ]);
   }
 
@@ -192,8 +192,8 @@ export default class LockSegment {
 
     const currentSymbol = this.params.alphabet[this.position];
     const buttonSymbol = (this.isDisabled) ?
-      Dictionary.get(`a11y.disabled`) :
-      Dictionary.get(`a11y.currentSymbol`).replace(/@symbol/g, currentSymbol);
+      Dictionary.get('a11y.disabled') :
+      Dictionary.get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol);
 
     this.buttonNext.setAriaLabel([
       Dictionary.get('a11y.nextSymbol'),
