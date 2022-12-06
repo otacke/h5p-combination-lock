@@ -79,7 +79,7 @@ export default class LockSegment {
 
     // Get started once visible
     this.observer = new IntersectionObserver((entries) => {
-      if (entries[0].intersectionRatio > 0) {
+      if (entries[0].isIntersecting || !H5P.isFramed) {
         this.observer.unobserve(this.dom);
         this.setPosition(this.position);
         this.wheel.uncloak();
