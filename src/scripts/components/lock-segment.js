@@ -77,18 +77,20 @@ export default class LockSegment {
     ]);
     this.dom.appendChild(this.buttonPrevious.getDOM());
 
-    // Get started once visible
-    this.observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting || !H5P.isFramed) {
-        this.observer.unobserve(this.dom);
-        this.setPosition(this.position);
-        this.wheel.uncloak();
-      }
-    }, {
-      root: document.documentElement,
-      threshold: 0
+    window.requestIdleCallback(() => {
+    // Get started once visible and ready
+      this.observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          this.observer.unobserve(this.dom);
+          this.setPosition(this.position);
+          this.wheel.uncloak();
+        }
+      }, {
+        root: document.documentElement,
+        threshold: 0
+      });
+      this.observer.observe(this.dom);
     });
-    this.observer.observe(this.dom);
   }
 
   /**
