@@ -78,7 +78,7 @@ export default class LockSegment {
     this.dom.appendChild(this.buttonPrevious.getDOM());
 
     window.requestIdleCallback(() => {
-    // Get started once visible and ready
+      // Get started once visible and ready
       this.observer = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
           this.observer.unobserve(this.dom);
@@ -86,7 +86,6 @@ export default class LockSegment {
           this.wheel.uncloak();
         }
       }, {
-        root: document.documentElement,
         threshold: 0
       });
       this.observer.observe(this.dom);
