@@ -1,6 +1,6 @@
 {
   "name": "h5p-combination-lock",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Use a combination lock in H5P",
   "private": true,
   "scripts": {
