@@ -1,0 +1,141 @@
+{
+  "semantics": [
+    {
+      "label": "Introdución",
+      "description": "Opcionalmente, establece algunha introdución.",
+      "default": "<p style=\"text-align: center;\"></p>"
+    },
+    {
+      "default": "0123",
+      "label": "Solución",
+      "description": "Introduza a solución desexada para a pechadura de combinación. Ten en conta que o uso de solucións longas pode non ser óptimo en dispositivos pequenos."
+    },
+    {
+      "label": "Símbolos para cada segmento",
+      "description": "Escolle os símbolos que debe levar cada segmento. Os símbolos aparecerán na orde aquí definida.",
+      "default": "0123456789"
+    },
+    {
+      "label": "Configuración do comportamento",
+      "fields": [
+        {
+          "label": "Comprobación automática",
+          "description": "Se a comprobación automática está activada, a pechadura abrirase automaticamente unha vez que se introduza a solución correcta."
+        },
+        {
+          "label": "Número máximo de intentos",
+          "description": "Introduce o número máximo de intentos de apertura permitidos ou déixao baleiro para non limitar o número."
+        },
+        {
+          "label": "Activar o botón \"Tentar de novo\""
+        },
+        {
+          "label": "Activar botón \"Amosar Solución\""
+        }
+      ]
+    },
+    {
+      "fields": [
+        {
+          "label": "Comprobar",
+          "default": "Comprobar"
+        },
+        {
+          "label": "Enviar",
+          "default": "Enviar"
+        },
+        {
+          "label": "Amosar a solución",
+          "default": "Amosar a solución"
+        },
+        {
+          "label": "Tentar de novo",
+          "default": "Tentar de novo"
+        },
+        {
+          "default": "Pechadura aberta!",
+          "label": "Pechadura aberta"
+        },
+        {
+          "label": "Pechadura desactivada",
+          "default": "Non se permiten máis intentos. Pechadura desactivada."
+        },
+        {
+          "label": "Intentos restantes",
+          "default": "Intentos restantes: @number",
+          "description": "@number é un marcador de posición e substituirase polo número respectivo de intentos restantes."
+        },
+        {
+          "label": "Solución",
+          "default": "Esta combinación abre a pechadura."
+        },
+        {
+          "label": "Combinación incorrecta",
+          "default": "Esta combinación non abre a pechadura."
+        },
+        {
+          "label": "Sen mensaxe",
+          "default": "..."
+        }
+      ],
+      "label": "Interface de usuario"
+    },
+    {
+      "fields": [
+        {
+          "label": "Descrición do botón \"Comprobar\" para as tecnoloxías de asistencia",
+          "default": "Comproba se a combinación abre a pechadura."
+        },
+        {
+          "label": "Descrición para as tecnoloxías de asistencia do botón \"Amosar solución\"",
+          "default": "Amosar a solución. Amosaranse os símbolos correctos que abrirán a pechadura."
+        },
+        {
+          "label": "Descrición para as tecnoloxías de asistencia do botón \"Tentar de novo\"",
+          "default": "Volve tentar a tarefa. Restablece todos os segmentos da pechadura e comeza a tarefa de novo."
+        },
+        {
+          "description": "@symbol é un marcador de posición e substituirase polo valor respectivo.",
+          "default": "Símbolo actual: @symbol",
+          "label": "Descrición para as tecnoloxías de asistencia do símbolo actual"
+        },
+        {
+          "label": "Descrición para as tecnoloxías da asistencia dos símbolos actuais",
+          "description": "@symbols é un marcador de posición e substituirase polo valor respectivo.",
+          "default": "Símbolos actuais: @symbols"
+        },
+        {
+          "label": "Descrición para as tecnoloxías de asistencia do botón do símbolo anterior",
+          "default": "Símbolo anterior"
+        },
+        {
+          "label": "Descrición para as tecnoloxías de asistencia do botón de símbolo seguinte",
+          "default": "Seguinte símbolo"
+        },
+        {
+          "label": "Descrición para as tecnoloxías de asistencia do anuncio de combinación correcta",
+          "description": "@combination é un marcador de posición e substituirase polo valor respectivo.",
+          "default": "Esta combinación abre a pechadura. @combination."
+        },
+        {
+          "default": "Combinación incorrecta",
+          "label": "Descrición para as tecnoloxías de asistencia do anuncio dunha combinación incorrecta"
+        },
+        {
+          "label": "Descrición para as tecnoloxías de asistencia para anunciar \"desactivado\"",
+          "default": "desactivado"
+        },
+        {
+          "label": "Descrición para as tecnoloxías de asistencia para anunciar \"pechadura de combinación\"",
+          "default": "pechadura de combinación"
+        },
+        {
+          "label": "Descrición para as tecnoloxías de asistencia para anunciar o segmento actual",
+          "description": "@number e @total son marcadores de posición e serán substituídos polos valores respectivos.",
+          "default": "Segmento @number de @total"
+        }
+      ],
+      "label": "Textos de accesibilidade"
+    }
+  ]
+}
