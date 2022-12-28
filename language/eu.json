@@ -1,0 +1,141 @@
+{
+  "semantics": [
+    {
+      "label": "Sarrera",
+      "description": "Aukeran osatu sarrera.",
+      "default": "<p style=\"text-align: center;\"></p>"
+    },
+    {
+      "description": "Sartu blokeorako nahi duzun konbinazioa. Kontuan izan konbinazio luzeak erabiltzea ezegokia izan daitekeela gailu txikietan.",
+      "default": "0123",
+      "label": "Konbinazioa"
+    },
+    {
+      "label": "Segmentu bakoitzerako ikurrak",
+      "description": "Aukeratu segmentu bakoitzak izan behar dituen ikurrak. Sinboloak hemen zehaztutako ordenan agertuko dira.",
+      "default": "0123456789"
+    },
+    {
+      "label": "Jokabide-ezarpenak",
+      "fields": [
+        {
+          "label": "Egiaztapen automatikoa",
+          "description": "Egiaztapen automatikoa gaituta badago, blokeoa automatikoki irekiko da konbinazio zuzena sartutakoan."
+        },
+        {
+          "label": "Gehienezko saiakera kopurua",
+          "description": "Idatzi baimendutako gehienezko irekitze-saiakera kopurua edo utzi hutsik kopurua ez mugatzeko."
+        },
+        {
+          "label": "Gaitu \"Berriro saiatu\" botoia"
+        },
+        {
+          "label": "Gaitu \"Erakutsi konbinazio zuzena\" botoia"
+        }
+      ]
+    },
+    {
+      "label": "Erabiltzailearen interfazea",
+      "fields": [
+        {
+          "label": "Egiaztatu",
+          "default": "Egiaztatu"
+        },
+        {
+          "label": "Bidali",
+          "default": "Bidali"
+        },
+        {
+          "label": "Erakutsi konbinazio zuzena",
+          "default": "Erakutsi konbinazio zuzena"
+        },
+        {
+          "label": "Saiatu berriro",
+          "default": "Saiatu berriro"
+        },
+        {
+          "label": "Sarraila irekita",
+          "default": "Sarraila irekita!"
+        },
+        {
+          "label": "Blokeoa desgaituta",
+          "default": "Saiakera gehiagorik ez. Blokeoa desgaituta dago."
+        },
+        {
+          "label": "Geratzen diren saiakerak",
+          "description": "@number leku-mark bat da eta geratzen den saiakera kopuruarekin ordezkatuko da.",
+          "default": "Geratzen diren saiakerak: @number"
+        },
+        {
+          "label": "Konbinazio zuzena",
+          "default": "Konbinazio honek sarraila irekitzen du."
+        },
+        {
+          "label": "Okerreko konbinazioa",
+          "default": "Konbinazio honek ez du sarraila irekitzen."
+        },
+        {
+          "label": "Mezurik ez",
+          "default": "..."
+        }
+      ]
+    },
+    {
+      "fields": [
+        {
+          "default": "Egiaztatu konbinazioak sarraila irekitzen duen.",
+          "label": "\"Egiaztatu\" botoiaren laguntza-teknologiaren deskribapena"
+        },
+        {
+          "label": "\"Erakutsi konbinazio zuzena\" botoiaren laguntza-teknologiaren deskribapena",
+          "default": "Erakutsi konbinazio zuzena. Sarraila irekiko duten ikur zuzenak bistaratuko dira."
+        },
+        {
+          "label": "\"Saiatu berriro\" botoiaren laguntza-teknologiaren deskribapena",
+          "default": "Saiatu berriro zeregina egiten. Berrezarri blokeo-segmentu guztiak eta hasi berriro zeregina."
+        },
+        {
+          "label": "Uneko ikurraren laguntza-teknologiaren deskribapena",
+          "description": "@symbol leku-marka bat da eta dagokion balioarekin ordezkatuko da.",
+          "default": "Uneko ikurra: @symbol"
+        },
+        {
+          "label": "Uneko ikurrerako laguntza-teknologiaren deskribapena",
+          "description": "@symbols leku-marka bat da eta dagokion balioarekin ordezkatuko da.",
+          "default": "Uneko ikurrak: @symbols"
+        },
+        {
+          "label": "Aurreko ikurra botoiarentzako laguntza-teknologiaren deskribapena",
+          "default": "Aurreko ikurra"
+        },
+        {
+          "label": "Hurrengo ikurra botoiarentzako laguntza-teknologiaren deskribapena",
+          "default": "Hurrengo ikurra"
+        },
+        {
+          "description": "@combination leku-mark bat da eta dagokion balioarekin ordezkatuko da.",
+          "default": "Konbinazio honek sarraila irekitzen du. @combination.",
+          "label": "Konbinazio zuzena iragartzeko laguntza-teknologiaren deskribapena"
+        },
+        {
+          "label": "Okerreko konbinazioa iragartzeko laguntza-teknologiaren deskribapena",
+          "default": "Okerreko konbinazioa"
+        },
+        {
+          "label": "\"Desgaituta\" iragartzeko laguntza-teknologiaren deskribapena",
+          "default": "desgaituta"
+        },
+        {
+          "label": "\"Konbinazio blokeoa\" iragartzeko laguntza-teknologiaren deskribapena",
+          "default": "Konbinazio blokeoa"
+        },
+        {
+          "label": "Uneko segmentua iragartzeko laguntza-teknologiaren deskribapena",
+          "description": "@number eta @total leku-markak dira eta dagozkien balioekin ordezkatuko dira.",
+          "default": "@number/@total segmentua"
+        }
+      ],
+      "label": "Irisgarritasun testuak"
+    }
+  ]
+}
