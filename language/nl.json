@@ -1,0 +1,141 @@
+{
+  "semantics": [
+    {
+      "label": "Introductie",
+      "description": "Stel optioneel een introductie in.",
+      "default": "<p style=\"text-align: center;\"></p>"
+    },
+    {
+      "label": "Oplossing",
+      "description": "Voer de gewenste oplossing voor het combinatieslot in. Houd er rekening mee dat het gebruik van lange oplossingen niet optimaal kan zijn op kleine apparaten.",
+      "default": "0123"
+    },
+    {
+      "label": "Symbolen voor elk segment",
+      "description": "Kies de symbolen die elk segment moet tonen. De symbolen verschijnen in de hieronder aangegeven volgorde.",
+      "default": "0123456789"
+    },
+    {
+      "label": "Gedragsinstellingen",
+      "fields": [
+        {
+          "label": "Automatische controle",
+          "description": "Als de automatische controle is ingeschakeld, dan gaat het slot vanzelf open zodra de juiste oplossing is ingevoerd."
+        },
+        {
+          "label": "Het maximaal aantal pogingen",
+          "description": "Voer het maximum aantal toegestane openingspogingen in of laat deze leeg voor een onbeperkt aantal."
+        },
+        {
+          "label": "Activeer de \"Opnieuw proberen\" knop"
+        },
+        {
+          "label": "Activeer de \"Toon oplossing\" knop"
+        }
+      ]
+    },
+    {
+      "label": "Gebruikersinterface",
+      "fields": [
+        {
+          "label": "Controleer",
+          "default": "Controleer"
+        },
+        {
+          "label": "Verzend",
+          "default": "Verzend"
+        },
+        {
+          "label": "Toon oplossing",
+          "default": "Toon oplossing"
+        },
+        {
+          "label": "Opnieuw",
+          "default": "Opnieuw"
+        },
+        {
+          "label": "Combinatieslot open",
+          "default": "Combinatieslot open!"
+        },
+        {
+          "label": "Combinatieslot uitgeschakeld",
+          "default": "Er zijn geen pogingen meer. Het combinatieslot is uitgeschakeld."
+        },
+        {
+          "label": "Aantal resterende pogingen",
+          "description": "@number is een plaatshouder en wordt vervangen door het aantal resterende pogingen.",
+          "default": "Aantal resterende pogingen: @number"
+        },
+        {
+          "label": "Oplossing",
+          "default": "Deze combinatie opent het slot."
+        },
+        {
+          "label": "Verkeerde combinatie",
+          "default": "Deze combinatie opent het slot niet."
+        },
+        {
+          "label": "Geen bericht.",
+          "default": "..."
+        }
+      ]
+    },
+    {
+      "label": "Toegankelijkheidsteksten",
+      "fields": [
+        {
+          "label": "De beschrijving van de ondersteunende technologie voor de \"Controleer\" knop",
+          "default": "Controleer of de combinatie het slot opent."
+        },
+        {
+          "label": "De beschrijving van de ondersteunende technologie voor de \"Toon oplossing\" knop",
+          "default": "Toon de oplossing. De juiste symbolen die het combinatieslot openen worden getoond."
+        },
+        {
+          "label": "De beschrijving van de ondersteunende technologie voor de \"Opnieuw\" knop",
+          "default": "Start met een nieuwe poging. Reset alle slotsegmenten en begin met een nieuwe poging."
+        },
+        {
+          "label": "De beschrijving van de ondersteunende technologie voor het huidige symbool",
+          "description": "@symbol is een plaatshouder en wordt vervangen door de respectievelijke waarde.",
+          "default": "Het huidige symbool: @symbol"
+        },
+        {
+          "label": "De beschrijving van de ondersteunende technologie voor de huidige symbolen",
+          "description": "@symbols is een plaatshouder en wordt vervangen door de respectievelijke waarde.",
+          "default": "De huidige symbolen: @symbols"
+        },
+        {
+          "label": "De beschrijving van de ondersteunende technologie voor de vorige symbool-knop",
+          "default": "Het vorige symbool"
+        },
+        {
+          "label": "De beschrijving van de ondersteunende technologie voor de volgende symbool-knop",
+          "default": "Het volgende symbool"
+        },
+        {
+          "label": "De beschrijving van de ondersteunende technologie voor het weergeven van de juiste slotcombinatie",
+          "description": "@combination is een plaatshouder en wordt vervangen door de respectievelijke waarde.",
+          "default": "Deze combinatie opent het slot. @combination."
+        },
+        {
+          "label": "De beschrijving van de ondersteunende technologie voor het weergeven van de onjuiste slotcombinatie",
+          "default": "De onjuiste slotcombinatie"
+        },
+        {
+          "label": "De beschrijving van de ondersteunende technologie voor het weergeven van \"uitgeschakeld\"",
+          "default": "uitgeschakeld"
+        },
+        {
+          "label": "De beschrijving van de ondersteunende technologie voor het weergeven van \"combinatieslot\"",
+          "default": "combinatieslot"
+        },
+        {
+          "label": "De beschrijving van de ondersteunende technologie voor het weergeven van het huidige slotsegment",
+          "description": "@number en @total zijn plaatshouders en worden vervangen door de respectievelijke waarden.",
+          "default": "Segment @number van @total"
+        }
+      ]
+    }
+  ]
+}
