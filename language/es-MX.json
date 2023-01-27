@@ -1,0 +1,141 @@
+{
+  "semantics": [
+    {
+      "label": "Introducción",
+      "description": "Proporcionar una introducción opcional.",
+      "default": "<p style=\"text-align: center;\"></p>"
+    },
+    {
+      "label": "Solución",
+      "description": "Proporciona la solución deseada para la cerradura. Ten en cuenta que el uso de soluciones largas puede no ser óptimo en dispositivos pequeños.",
+      "default": "0123"
+    },
+    {
+      "label": "Símbolos para cada segmento",
+      "description": "Elige los símbolos que debe llevar cada segmento. Los símbolos aparecerán en el orden definido aquí.",
+      "default": "0123456789"
+    },
+    {
+      "label": "Configuraciones del comportamiento",
+      "fields": [
+        {
+          "label": "Verificación automática",
+          "description": "Si se habilita la verificación automática, la cerradura se abrirá automáticamente una vez que se haya proporcionado la solución correcta."
+        },
+        {
+          "label": "Número máximo de intentos",
+          "description": "Introduce el número máximo de intentos de apertura permitidos o déjalo en blanco para no limitar el número."
+        },
+        {
+          "label": "Habilitar botón \"Intentar de nuevo\""
+        },
+        {
+          "label": "Habilitar el botón \"Mostrar solución\""
+        }
+      ]
+    },
+    {
+      "label": "Interfaz de usuario",
+      "fields": [
+        {
+          "label": "Comprobar",
+          "default": "Comprobar"
+        },
+        {
+          "label": "Enviar",
+          "default": "Enviar"
+        },
+        {
+          "label": "Mostrar solución",
+          "default": "Mostrar solución"
+        },
+        {
+          "label": "Intentar de nuevo",
+          "default": "Intentar de nuevo"
+        },
+        {
+          "label": "Cerradura abierta",
+          "default": "¡Cerradura abierta!"
+        },
+        {
+          "label": "Cerradura desactivada",
+          "default": "No hay más intentos. Cerradura desactivada."
+        },
+        {
+          "label": "Intentos restantes",
+          "description": "@number es un marcador de posición y será reemplazado por el número respectivo de intentos restantes.",
+          "default": "Intentos restantes: @number"
+        },
+        {
+          "label": "Solución",
+          "default": "Esta combinación abre la cerradura."
+        },
+        {
+          "label": "Combinación incorrecta",
+          "default": "Esta combinación no abre la cerradura."
+        },
+        {
+          "label": "Sin mensaje",
+          "default": "..."
+        }
+      ]
+    },
+    {
+      "label": "Textos de Accesibilidad",
+      "fields": [
+        {
+          "label": "Descripción para las tecnologías de asistencia del botón \"Comprobar\"",
+          "default": "Comprueba si la combinación abre la cerradura."
+        },
+        {
+          "label": "Descripción para las tecnologías de asistencia del botón \"Mostrar solución\"",
+          "default": "Mostrar la solución. Se mostrarán los símbolos correctos que abren la cerradura."
+        },
+        {
+          "label": "Descripción para las tecnologías de asistencia del botón \"Intentar de nuevo\"",
+          "default": "Vuelve a intentar la tarea. Reinicia todos los elementos de la cerradura y comienza la tarea de nuevo."
+        },
+        {
+          "label": "Descripción para las tecnología de asistencia para el símbolo actual",
+          "description": "@símbolo es un remplazable y se reemplazará por el valor respectivo.",
+          "default": "Símbolo actual: @símbolo"
+        },
+        {
+          "label": "Descripción para las tecnología de asistencia para los símbolos actuales",
+          "description": "@symbols es un remplazable y será reemplazado por el valor respectivo.",
+          "default": "Símbolos actuales: @symbols"
+        },
+        {
+          "label": "Descripción para las tecnología de asistencia para el botón de símbolo anterior",
+          "default": "Símbolo anterior"
+        },
+        {
+          "label": "Descripción para las tecnología de asistencia para el botón de símbolo siguiente",
+          "default": "Símbolo siguiente"
+        },
+        {
+          "label": "Descripción para las tecnologías de asistencia para anunciar la combinación correcta",
+          "description": "@combination es un remplazable y será reemplazado por el valor respectivo.",
+          "default": "Esta combinación abre la cerradura. @combination."
+        },
+        {
+          "label": "Descripción para las tecnologías de asistencia para anunciar una combinación incorrecta",
+          "default": "Combinación incorrecta"
+        },
+        {
+          "label": "Descripción para las tecnologías de asistencia de \"Deshabilitado\"",
+          "default": "deshabilitado"
+        },
+        {
+          "label": "Descripción para las tecnologías de asistencia para anunciar \"Cerradura de combinación\"",
+          "default": "cerradura de combinación"
+        },
+        {
+          "label": "Descripción para las tecnologías de asistencia para anunciar el segmento actual",
+          "description": "@number y @total son remplazables y serán reemplazados por los valores respectivos.",
+          "default": "Segmento @number de @total"
+        }
+      ]
+    }
+  ]
+}
