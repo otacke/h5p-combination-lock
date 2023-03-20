@@ -1,0 +1,141 @@
+{
+  "semantics": [
+    {
+      "label": "介绍",
+      "description": "可选：设置一些介绍说明。",
+      "default": "<p style=\"text-align: center;\"></p>"
+    },
+    {
+      "label": "解决方案",
+      "description": "输入解锁的期望解决方案。请注意，在小屏幕设备上设置较长的解决方案可能不太理想。",
+      "default": "0123"
+    },
+    {
+      "label": "每个分段的符号",
+      "description": "选择每个分段应该带有的符号。这些符号将按照在此定义的顺序出现。",
+      "default": "0123456789"
+    },
+    {
+      "label": "行为设置",
+      "fields": [
+        {
+          "label": "自动检查",
+          "description": "如果启用自动检查，当正确的解决方案输入后锁将自动打开。"
+        },
+        {
+          "label": "最大尝试次数",
+          "description": "输入允许的最大开锁尝试次数或留空以不限制尝试次数。"
+        },
+        {
+          "label": "启用\"重试\"按钮"
+        },
+        {
+          "label": "启用\"显示解决方案\"按钮"
+        }
+      ]
+    },
+    {
+      "label": "用户界面",
+      "fields": [
+        {
+          "label": "检查",
+          "default": "检查"
+        },
+        {
+          "label": "提交",
+          "default": "提交"
+        },
+        {
+          "label": "显示答案",
+          "default": "显示答案"
+        },
+        {
+          "label": "重试",
+          "default": "重试"
+        },
+        {
+          "label": "锁已打开",
+          "default": "锁已打开！"
+        },
+        {
+          "label": "锁已禁用",
+          "default": "没有更多尝试。锁已禁用。"
+        },
+        {
+          "label": "剩余尝试次数",
+          "description": "@number 是一个占位符，将被实际的剩余尝试次数替换。",
+          "default": "剩余尝试次数：@number"
+        },
+        {
+          "label": "正确答案",
+          "default": "这个组合打开了锁。"
+        },
+        {
+          "label": "错误组合",
+          "default": "这个组合不能打开锁。"
+        },
+        {
+          "label": "无消息",
+          "default": "..."
+        }
+      ]
+    },
+    {
+      "label": "辅助功能文本",
+      "fields": [
+        {
+          "label": "“检查”按钮的辅助技术说明",
+          "default": "检查组合是否能打开锁。"
+        },
+        {
+          "label": "“显示解决方案”按钮的辅助技术说明",
+          "default": "显示解决方案。将显示可以打开锁的正确符号。"
+        },
+        {
+          "label": "“重试”按钮的辅助技术说明",
+          "default": "重试任务。重置所有锁段并重新开始任务。"
+        },
+        {
+          "label": "当前符号的辅助技术说明",
+          "description": "@symbol 是占位符，将被相应的值替换。",
+          "default": "当前符号：@symbol"
+        },
+        {
+          "label": "当前符号的辅助技术说明",
+          "description": "@symbols 是占位符，将被相应的值替换。",
+          "default": "当前符号：@symbols"
+        },
+        {
+          "label": "上一个符号按钮的辅助技术说明",
+          "default": "上一个符号"
+        },
+        {
+          "label": "下一个符号按钮的辅助技术说明",
+          "default": "下一个符号"
+        },
+        {
+          "label": "宣布正确组合的辅助技术说明",
+          "description": "@combination 是占位符，将被相应的值替换。",
+          "default": "这个组合可以打开锁。@combination。"
+        },
+        {
+          "label": "宣布错误组合的辅助技术说明",
+          "default": "错误组合"
+        },
+        {
+          "label": "宣布“禁用”的辅助技术说明",
+          "default": "禁用"
+        },
+        {
+          "label": "宣布“组合锁”的辅助技术说明",
+          "default": "组合锁"
+        },
+        {
+          "label": "当前分段的辅助技术说明",
+          "description": "@number 和 @total 是占位符，将被相应的值替换。",
+          "default": "分段 @number 共 @total 分段"
+        }
+      ]
+    }
+  ]
+}
