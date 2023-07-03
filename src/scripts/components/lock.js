@@ -1,5 +1,4 @@
 import Util from '@services/util.js';
-import Dictionary from '@services/dictionary';
 import LockSegment from './lock-segment';
 import MessageDisplay from './message-display';
 import './lock.scss';
@@ -31,6 +30,7 @@ export default class Lock {
     this.segments = this.params.solution.map((symbol, index) => {
       const segment = new LockSegment(
         {
+          dictionary: this.params.dictionary,
           index: index,
           total: this.params.solution.length,
           solution: symbol,
@@ -80,7 +80,8 @@ export default class Lock {
     this.groupLabel = document.createElement('div');
     this.groupLabel.classList.add('h5p-combination-lock-group-label');
     this.groupLabel.setAttribute('id', groupLabelId);
-    this.groupLabel.innerText = `${Dictionary.get('a11y.combinationLock')}.`;
+    this.groupLabel.innerText =
+      `${this.params.dictionary.get('a11y.combinationLock')}.`;
     this.segmentsDOM.appendChild(this.groupLabel);
 
     // Will announce current combination for all segments
@@ -190,7 +191,7 @@ export default class Lock {
       .map((segment) => segment.getResponse())
       .join(', ');
 
-    let text = Dictionary
+    let text = this.params.dictionary
       .get('a11y.currentSymbols')
       .replace(/@symbols/g, symbolString);
     if (text.substring(text.length - 1) !== '.') {

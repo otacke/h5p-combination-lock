@@ -1,5 +1,4 @@
 import Util from '@services/util.js';
-import Dictionary from '@services/dictionary';
 import './wheel.scss';
 
 /** Wheel */
@@ -60,7 +59,7 @@ export default class Wheel {
     this.spinbutton.setAttribute('tabindex', '0');
     this.spinbutton.setAttribute(
       'aria-label',
-      Dictionary.get('a11y.segment')
+      this.params.dictionary.get('a11y.segment')
         .replace(/@number/g, this.params.index + 1)
         .replace(/@total/g, this.params.total)
     );

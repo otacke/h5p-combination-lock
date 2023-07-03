@@ -1,5 +1,4 @@
 import Util from '@services/util.js';
-import Dictionary from '@services/dictionary';
 import Button from './button';
 import './lock-segment.scss';
 import Wheel from './wheel';
@@ -40,13 +39,14 @@ export default class LockSegment {
       }
     );
     this.buttonNext.setAriaLabel([
-      Dictionary.get('a11y.nextSymbol'),
-      Dictionary.get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol)
+      this.params.dictionary.get('a11y.nextSymbol'),
+      this.params.dictionary.get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol)
     ]);
     this.dom.appendChild(this.buttonNext.getDOM());
 
     this.wheel = new Wheel(
       {
+        dictionary: this.params.dictionary,
         alphabet: this.params.alphabet,
         position: this.position,
         index: this.params.index,
@@ -71,10 +71,14 @@ export default class LockSegment {
         }
       }
     );
+
     this.buttonPrevious.setAriaLabel([
-      Dictionary.get('a11y.previousSymbol'),
-      Dictionary.get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol)
+      this.params.dictionary
+        .get('a11y.previousSymbol'),
+      this.params.dictionary
+        .get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol)
     ]);
+
     this.dom.appendChild(this.buttonPrevious.getDOM());
 
     // iOS is behind ... Again ...
@@ -139,12 +143,16 @@ export default class LockSegment {
 
     const currentSymbol = this.params.alphabet[this.position];
     this.buttonNext.setAriaLabel([
-      Dictionary.get('a11y.nextSymbol'),
-      Dictionary.get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol)
+      this.params.dictionary
+        .get('a11y.nextSymbol'),
+      this.params.dictionary
+        .get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol)
     ]);
     this.buttonPrevious.setAriaLabel([
-      Dictionary.get('a11y.previousSymbol'),
-      Dictionary.get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol)
+      this.params.dictionary
+        .get('a11y.previousSymbol'),
+      this.params.dictionary
+        .get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol)
     ]);
   }
 
@@ -160,12 +168,12 @@ export default class LockSegment {
     this.buttonPrevious.disable();
 
     this.buttonNext.setAriaLabel([
-      Dictionary.get('a11y.nextSymbol'),
-      Dictionary.get('a11y.disabled')
+      this.params.dictionary.get('a11y.nextSymbol'),
+      this.params.dictionary.get('a11y.disabled')
     ]);
     this.buttonNext.setAriaLabel([
-      Dictionary.get('a11y.previousSymbol'),
-      Dictionary.get('a11y.disabled')
+      this.params.dictionary.get('a11y.previousSymbol'),
+      this.params.dictionary.get('a11y.disabled')
     ]);
   }
 
@@ -194,16 +202,18 @@ export default class LockSegment {
 
     const currentSymbol = this.params.alphabet[this.position];
     const buttonSymbol = (this.isDisabled) ?
-      Dictionary.get('a11y.disabled') :
-      Dictionary.get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol);
+      this.params.dictionary
+        .get('a11y.disabled') :
+      this.params.dictionary
+        .get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol);
 
     this.buttonNext.setAriaLabel([
-      Dictionary.get('a11y.nextSymbol'),
+      this.params.dictionary.get('a11y.nextSymbol'),
       buttonSymbol
     ]);
 
     this.buttonPrevious.setAriaLabel([
-      Dictionary.get('a11y.previousSymbol'),
+      this.params.dictionary.get('a11y.previousSymbol'),
       buttonSymbol
     ]);
   }

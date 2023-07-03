@@ -103,7 +103,8 @@ export default class Initialization {
     this.languageTag = Util.formatLanguageCode(defaultLanguage);
 
     // Fill dictionary
-    Dictionary.fill({ l10n: this.params.l10n, a11y: this.params.a11y });
+    this.dictionary = new Dictionary();
+    this.dictionary.fill({ l10n: this.params.l10n, a11y: this.params.a11y });
 
     // Retrieve previous state
     this.previousState = this.extras?.previousState || {};
@@ -120,6 +121,7 @@ export default class Initialization {
     // Lock instance
     this.lock = new Lock(
       {
+        dictionary: this.dictionary,
         alphabet: this.params.alphabet.match(charRegex()),
         solution: this.params.solution.match(charRegex()),
         autoCheck: this.params.behaviour.autoCheck,
@@ -167,39 +169,39 @@ export default class Initialization {
     // Check answer button
     this.addButton(
       'check-answer',
-      Dictionary.get('l10n.check'),
+      this.dictionary.get('l10n.check'),
       () => {
         this.checkAnswer();
       },
       !this.params.behaviour.autoCheck,
-      { 'aria-label': Dictionary.get('a11y.check') },
+      { 'aria-label': this.dictionary.get('a11y.check') },
       {
         contentData: this.extras,
-        textIfSubmitting: Dictionary.get('l10n.submit')
+        textIfSubmitting: this.dictionary.get('l10n.submit')
       });
 
     // Show solution button
     this.addButton(
       'show-solution',
-      Dictionary.get('l10n.showSolution'),
+      this.dictionary.get('l10n.showSolution'),
       () => {
         this.showSolutions({ showRetry: true });
       },
       this.params.behaviour.autoCheck &&
         this.params.behaviour.enableSolutionsButton,
-      { 'aria-label': Dictionary.get('a11y.showSolution') }
+      { 'aria-label': this.dictionary.get('a11y.showSolution') }
     );
 
     // Retry button
     this.addButton(
       'try-again',
-      Dictionary.get('l10n.retry'),
+      this.dictionary.get('l10n.retry'),
       () => {
         this.resetTask();
         this.lock.focus();
       },
       false,
-      { 'aria-label': Dictionary.get('a11y.retry') }
+      { 'aria-label': this.dictionary.get('a11y.retry') }
     );
 
     return dom;
@@ -211,10 +213,12 @@ export default class Initialization {
   recreateViewState() {
     if (this.viewState === CombinationLock.VIEW_STATES['task']) {
       if (!this.params.behaviour.autoCheck && this.maxAttempts !== Infinity) {
-        const attemptsLeftText = Dictionary.get('l10n.attemptsLeft')
+        const attemptsLeftText = this.dictionary
+          .get('l10n.attemptsLeft')
           .replace(/@number/g, this.attemptsLeft);
 
-        const wrongCombinationText = Dictionary.get('a11y.wrongCombination');
+        const wrongCombinationText = this.dictionary
+          .get('a11y.wrongCombination');
 
         this.announceMessage({
           text: attemptsLeftText,
@@ -223,7 +227,7 @@ export default class Initialization {
       }
       else {
         this.announceMessage({
-          text: Dictionary.get('l10n.noMessage'),
+          text: this.dictionary.get('l10n.noMessage'),
           aria: ''
         });
       }

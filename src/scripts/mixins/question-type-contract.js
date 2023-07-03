@@ -1,4 +1,3 @@
-import Dictionary from '@services/dictionary';
 import charRegex from 'char-regex';
 
 /**
@@ -46,7 +45,7 @@ export default class QuestionTypeContract {
    * @see contract at {@link https://h5p.org/documentation/developers/contracts#guides-header-4}
    */
   showSolutions(params = {}) {
-    const ariaText = Dictionary
+    const ariaText = this.dictionary
       .get('a11y.correctCombination')
       .replace(
         /@combination/g, this.params.solution.match(charRegex()).join(', ')
@@ -56,7 +55,7 @@ export default class QuestionTypeContract {
     this.lock.showSolutions();
 
     this.announceMessage({
-      text: Dictionary.get('l10n.correctCombination'),
+      text: this.dictionary.get('l10n.correctCombination'),
       aria: ariaText
     });
 
@@ -90,10 +89,10 @@ export default class QuestionTypeContract {
     this.wasAnswerGiven = false;
 
     if (!this.params.behaviour.autoCheck && this.maxAttempts !== Infinity) {
-      const attemptsLeftText = Dictionary.get('l10n.attemptsLeft')
+      const attemptsLeftText = this.dictionary.get('l10n.attemptsLeft')
         .replace(/@number/g, this.attemptsLeft);
 
-      const wrongCombinationText = Dictionary.get('a11y.wrongCombination');
+      const wrongCombinationText = this.dictionary.get('a11y.wrongCombination');
 
       this.announceMessage({
         text: attemptsLeftText,
@@ -102,7 +101,7 @@ export default class QuestionTypeContract {
     }
     else {
       this.announceMessage({
-        text: Dictionary.get('l10n.noMessage'),
+        text: this.dictionary.get('l10n.noMessage'),
         aria: ''
       });
     }

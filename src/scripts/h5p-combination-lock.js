@@ -1,5 +1,4 @@
 import Util from '@services/util';
-import Dictionary from '@services/dictionary';
 import QuestionTypeContract from './mixins/question-type-contract';
 import Initialization from './mixins/initialization';
 import Xapi from './mixins/xapi';
@@ -96,7 +95,7 @@ export default class CombinationLock extends H5P.Question {
     this.lock.disable();
     this.setViewState('results');
 
-    this.announceMessage({ text: Dictionary.get('l10n.lockOpen') });
+    this.announceMessage({ text: this.dictionary.get('l10n.lockOpen') });
 
     if (!params.skipXAPI) {
       this.triggerXAPIEvent('answered');
@@ -126,15 +125,17 @@ export default class CombinationLock extends H5P.Question {
    */
   handleIntermediaryWrongResponse() {
     if (this.attemptsLeft === Infinity) {
-      this.announceMessage({ text: Dictionary.get('l10n.wrongCombination') });
+      this.announceMessage({
+        text: this.dictionary.get('l10n.wrongCombination')
+      });
 
       return;
     }
 
-    const attemptsLeftText = Dictionary.get('l10n.attemptsLeft')
+    const attemptsLeftText = this.dictionary.get('l10n.attemptsLeft')
       .replace(/@number/g, this.attemptsLeft);
 
-    const wrongCombinationText = Dictionary.get('a11y.wrongCombination');
+    const wrongCombinationText = this.dictionary.get('a11y.wrongCombination');
 
     this.announceMessage({
       text: attemptsLeftText,
@@ -155,7 +156,7 @@ export default class CombinationLock extends H5P.Question {
       this.triggerXAPIEvent('answered');
     }
 
-    this.announceMessage({ text: Dictionary.get('l10n.lockDisabled') });
+    this.announceMessage({ text: this.dictionary.get('l10n.lockDisabled') });
 
     // Lock disabled message should be read before other element gets focus
     window.setTimeout(() => {
