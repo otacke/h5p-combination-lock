@@ -41,7 +41,6 @@ export default class Button {
 
   /**
    * Return the DOM for this class.
-   *
    * @returns {HTMLElement} DOM for this class.
    */
   getDOM() {
@@ -77,7 +76,6 @@ export default class Button {
 
   /**
    * Set aria label.
-   *
    * @param {string | string[] | null} ariaLabel Aria label.
    */
   setAriaLabel(ariaLabel = null) {

@@ -13,7 +13,7 @@ export default class Lock {
    * @param {string[]} params.solution Solution symbols.
    * @param {boolean} params.autoCheck If true, check solution automatically.
    * @param {number|Infinity} params.maxAttempts Number of maximum attempts.
-   * @param {object} [params.previousState={}] Previously stored state.
+   * @param {object} [params.previousState] Previously stored state.
    * @param {object} callbacks Callbacks.
    * @param {function} callbacks.onChanged Called when lock is changed.
    * @param {function} callbacks.onResized Called when lock is resized.
@@ -56,7 +56,6 @@ export default class Lock {
 
   /**
    * Build DOM. Using spin button design pattern for a11y.
-   *
    * @see https://www.w3.org/WAI/ARIA/apg/example-index/spinbutton/datepicker-spinbuttons.html
    */
   buildDOM() {
@@ -101,7 +100,6 @@ export default class Lock {
 
   /**
    * Return the DOM for this class.
-   *
    * @returns {HTMLElement} DOM for this class.
    */
   getDOM() {
@@ -119,7 +117,6 @@ export default class Lock {
 
   /**
    * Get response.
-   *
    * @returns {string} Response.
    */
   getResponse() {
@@ -128,7 +125,6 @@ export default class Lock {
 
   /**
    * Get current positions of segments.
-   *
    * @returns {number[]} Current positions of segments.
    */
   getPositions() {
@@ -137,7 +133,6 @@ export default class Lock {
 
   /**
    * Get current state.
-   *
    * @returns {object} Current state.
    */
   getCurrentState() {
@@ -148,7 +143,6 @@ export default class Lock {
 
   /**
    * Set text.
-   *
    * @param {string} text Text to display.
    */
   setMessage(text) {
@@ -157,7 +151,6 @@ export default class Lock {
 
   /**
    * Get text.
-   *
    * @returns {string} Text from display.
    */
   getMessage() {
@@ -264,7 +257,6 @@ export default class Lock {
 
   /**
    * Handle segment activation.
-   *
    * @param {KeyboardEvent.key} key Key for movement.
    */
   handleSegmentAction(key) {

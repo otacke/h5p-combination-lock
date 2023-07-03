@@ -12,7 +12,6 @@ export default class MessageDisplay {
 
   /**
    * Return the DOM for this class.
-   *
    * @returns {HTMLElement} DOM for this class.
    */
   getDOM() {
@@ -21,7 +20,6 @@ export default class MessageDisplay {
 
   /**
    * Set width.
-   *
    * @param {number} width Width.
    */
   setWidth(width) {
@@ -30,7 +28,6 @@ export default class MessageDisplay {
 
   /**
    * Set text.
-   *
    * @param {string} text Text to display.
    */
   setText(text) {
@@ -39,7 +36,6 @@ export default class MessageDisplay {
 
   /**
    * Get text.
-   *
    * @returns {string} Text from display.
    */
   getText() {

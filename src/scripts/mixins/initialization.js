@@ -144,7 +144,6 @@ export default class Initialization {
 
   /**
    * Build main DOM.
-   *
    * @returns {HTMLElement} Main DOM.
    */
   buildDOM() {

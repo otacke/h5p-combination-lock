@@ -7,7 +7,6 @@ import charRegex from 'char-regex';
 export default class XAPI {
   /**
    * Trigger xAPI event.
-   *
    * @param {string} verb Short id of the verb we want to trigger.
    */
   triggerXAPIEvent(verb) {
@@ -17,7 +16,6 @@ export default class XAPI {
 
   /**
    * Create an xAPI event.
-   *
    * @param {string} verb Short id of the verb we want to trigger.
    * @returns {H5P.XAPIEvent} Event template.
    */
@@ -50,7 +48,6 @@ export default class XAPI {
 
   /**
    * Get the xAPI definition for the xAPI object.
-   *
    * @returns {object} XAPI definition.
    */
   getXAPIDefinition() {
@@ -80,7 +77,6 @@ export default class XAPI {
 
   /**
    * Get task title.
-   *
    * @returns {string} Title.
    */
   getTitle() {
@@ -93,7 +89,6 @@ export default class XAPI {
   /**
    * Get description.
    * Uses XAPI_PLACEHOLDER as defined by H5P Group for their reporting module.
-   *
    * @returns {string} Description.
    */
   getDescription() {

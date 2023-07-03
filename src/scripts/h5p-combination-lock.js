@@ -10,7 +10,7 @@ export default class CombinationLock extends H5P.Question {
    * @class
    * @param {object} params Parameters passed by the editor.
    * @param {number} contentId Content's id.
-   * @param {object} [extras={}] Saved state, metadata, etc.
+   * @param {object} [extras] Saved state, metadata, etc.
    */
   constructor(params, contentId, extras = {}) {
     super('combination-lock');
@@ -48,7 +48,6 @@ export default class CombinationLock extends H5P.Question {
 
   /**
    * Get current state.
-   *
    * @returns {object} Current state.
    */
   getCurrentState() {
@@ -63,8 +62,7 @@ export default class CombinationLock extends H5P.Question {
 
   /**
    * Check answer.
-   *
-   * @param {object} [params={}] Parameters.
+   * @param {object} [params] Parameters.
    * @param {boolean} params.skipXAPI If true, don't trigger xAPI events.
    */
   checkAnswer(params = {}) {
@@ -91,8 +89,7 @@ export default class CombinationLock extends H5P.Question {
 
   /**
    * Handle correct response.
-   *
-   * @param {object} [params={}] Parameters.
+   * @param {object} [params] Parameters.
    * @param {boolean} params.skipXAPI If true, don't trigger xAPI events.
    */
   handleCorrectResponse(params = {}) {
@@ -147,8 +144,7 @@ export default class CombinationLock extends H5P.Question {
 
   /**
    * Handle final wrong response.
-   *
-   * @param {object} [params={}] Parameters.
+   * @param {object} [params] Parameters.
    * @param {boolean} params.skipXAPI If true, don't trigger xAPI events.
    */
   handleFinalWrongResponse(params = {}) {
@@ -188,7 +184,6 @@ export default class CombinationLock extends H5P.Question {
 
   /**
    * Announce message as text and audio.
-   *
    * @param {object} params Parameters.
    * @param {string} params.text Text.
    */
@@ -203,7 +198,6 @@ export default class CombinationLock extends H5P.Question {
 
   /**
    * Set view state.
-   *
    * @param {string|number} state State to be set.
    */
   setViewState(state) {

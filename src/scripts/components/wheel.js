@@ -82,7 +82,6 @@ export default class Wheel {
 
   /**
    * Return the DOM for this class.
-   *
    * @returns {HTMLElement} DOM for this class.
    */
   getDOM() {
@@ -91,7 +90,6 @@ export default class Wheel {
 
   /**
    * Set position.
-   *
    * @param {number} position New position.
    */
   setPosition(position) {
@@ -127,7 +125,6 @@ export default class Wheel {
 
   /**
    * Scroll to index on wheel.
-   *
    * @param {object} params Parameters.
    * @param {number} params.index Index to scroll to.
    * @param {boolean} params.noAnimation If true, jump instead of scrolling.
@@ -189,7 +186,6 @@ export default class Wheel {
 
   /**
    * Handle key down on spinbutton.
-   *
    * @param {KeyboardEvent} event Keyboard event
    */
   handleKeydown(event) {
@@ -213,7 +209,6 @@ export default class Wheel {
 
   /**
    * Cooldown. Workaround for transitionend event that may never be called.
-   *
    * @param {number} timeout Timeout.
    */
   cooldown(timeout) {

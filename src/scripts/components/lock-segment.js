@@ -99,7 +99,6 @@ export default class LockSegment {
 
   /**
    * Return the DOM for this class.
-   *
    * @returns {HTMLElement} DOM for this class.
    */
   getDOM() {
@@ -108,7 +107,6 @@ export default class LockSegment {
 
   /**
    * Get current response.
-   *
    * @returns {string} Current response.
    */
   getResponse() {
@@ -117,7 +115,6 @@ export default class LockSegment {
 
   /**
    * Get current position.
-   *
    * @returns {number} Current position.
    */
   getPosition() {
@@ -189,7 +186,6 @@ export default class LockSegment {
 
   /**
    * Set position.
-   *
    * @param {number} position New position.
    */
   setPosition(position) {
@@ -214,7 +210,6 @@ export default class LockSegment {
 
   /**
    * Change symbol.
-   *
    * @param {number} position New position.
    */
   changeSymbol(position) {
@@ -257,7 +252,6 @@ export default class LockSegment {
 
   /**
    * Handle wheel changed.
-   *
    * @param {string} key KeyboardEvent key.
    */
   handleWheelChanged(key) {
