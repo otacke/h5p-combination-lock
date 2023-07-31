@@ -1,7 +1,7 @@
 import Util from '@services/util.js';
-import Button from './button';
+import Button from '@components/button';
 import './lock-segment.scss';
-import Wheel from './wheel';
+import Wheel from '@components/wheel';
 
 /** Segment */
 export default class LockSegment {

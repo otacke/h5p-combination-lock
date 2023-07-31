@@ -1,6 +1,6 @@
 import Util from '@services/util.js';
-import LockSegment from './lock-segment';
-import MessageDisplay from './message-display';
+import LockSegment from '@components/lock-segment';
+import MessageDisplay from '@components/message-display';
 import './lock.scss';
 
 /** Segment */

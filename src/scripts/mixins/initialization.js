@@ -1,7 +1,7 @@
 import Util from '@services/util';
 import Dictionary from '@services/dictionary';
 import charRegex from 'char-regex';
-import CombinationLock from '../h5p-combination-lock';
+import CombinationLock from '@scripts/h5p-combination-lock';
 import Lock from '@components/lock';
 import he from 'he';
 

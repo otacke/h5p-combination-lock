@@ -1,7 +1,7 @@
 import Util from '@services/util';
-import QuestionTypeContract from './mixins/question-type-contract';
-import Initialization from './mixins/initialization';
-import Xapi from './mixins/xapi';
+import QuestionTypeContract from '@mixins/question-type-contract';
+import Initialization from '@mixins/initialization';
+import XAPI from '@mixins/xapi';
 import '@styles/h5p-combination-lock.scss';
 
 export default class CombinationLock extends H5P.Question {
@@ -15,7 +15,7 @@ export default class CombinationLock extends H5P.Question {
     super('combination-lock');
 
     Util.addMixins(
-      CombinationLock, [QuestionTypeContract, Initialization, Xapi]
+      CombinationLock, [QuestionTypeContract, Initialization, XAPI]
     );
 
     /*
