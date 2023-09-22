@@ -47,9 +47,13 @@ export default class CombinationLock extends H5P.Question {
 
   /**
    * Get current state.
-   * @returns {object} Current state.
+   * @returns {object|undefined} Current state.
    */
   getCurrentState() {
+    if (!this.getAnswerGiven()) {
+      return;
+    }
+
     return {
       wasAnswerGiven: this.wasAnswerGiven,
       attemptsLeft: this.attemptsLeft,
