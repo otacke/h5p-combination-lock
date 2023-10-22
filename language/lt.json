@@ -1,0 +1,141 @@
+{
+  "semantics": [
+    {
+      "label": "Įvadas",
+      "description": "Pasirinktinai nustatykite įvadą.",
+      "default": "<p style=\"text-align: center;\"></p>"
+    },
+    {
+      "label": "Sprendimas",
+      "description": "Enter the desired solution for the lock. Please note that using long solutions may be suboptimal on small devices.",
+      "default": "0123"
+    },
+    {
+      "label": "Simboliai kiekvienam segmentui",
+      "description": "Choose the symbols that each segment should bear. The symbols will appear in the order defined here.",
+      "default": "0123456789"
+    },
+    {
+      "label": "Veikimo nustatymai",
+      "fields": [
+        {
+          "label": "Automatinis tikrinimas",
+          "description": "If autocheck is enabled, the lock will open automatically once the correct solution has been entered."
+        },
+        {
+          "label": "Maksimalus bandymų skaičius",
+          "description": "Enter the maximum number of opening attempts allowed or leave empty to not limit the number."
+        },
+        {
+          "label": "Enable \"Retry\" button"
+        },
+        {
+          "label": "Įjungti mygtuką „Rodyti sprendimą“"
+        }
+      ]
+    },
+    {
+      "fields": [
+        {
+          "label": "Check",
+          "default": "Tikrinti"
+        },
+        {
+          "label": "Pateikti",
+          "default": "Pateikti"
+        },
+        {
+          "label": "Rodyti sprendimą",
+          "default": "Rodyti sprendimą"
+        },
+        {
+          "label": "Bandyti dar kartą",
+          "default": "Bandyti dar kartą"
+        },
+        {
+          "label": "Lock open",
+          "default": "Užraktas atidarytas!"
+        },
+        {
+          "label": "Užraktas išjungtas",
+          "default": "Daugiau jokių bandymų. Užraktas išjungtas."
+        },
+        {
+          "label": "Liko bandymų",
+          "description": "@number is a placeholder and will be replaced by the respective number of attempts left.",
+          "default": "Attempts left: @number"
+        },
+        {
+          "label": "Sprendimas",
+          "default": "This combination opens the lock."
+        },
+        {
+          "label": "Wrong combination",
+          "default": "This combination does not open the lock."
+        },
+        {
+          "label": "No message",
+          "default": "..."
+        }
+      ],
+      "label": "User interface"
+    },
+    {
+      "fields": [
+        {
+          "label": "Mygtuko „Tikrinti“ pagalbinės technologijos aprašymas",
+          "default": "Check whether the combination opens the lock."
+        },
+        {
+          "label": "Mygtuko „Rodyti sprendimą“ pagalbinės technologijos aprašymas",
+          "default": "Show the solution. The correct symbols that will open the lock will be displayed."
+        },
+        {
+          "label": "Assistive technology description for \"Retry\" button",
+          "default": "Retry the task. Reset all lock segments and start the task over again."
+        },
+        {
+          "label": "Assistive technology description for current symbol",
+          "description": "@symbol is a placeholder and will be replaced by the respective value.",
+          "default": "Current symbol: @symbol"
+        },
+        {
+          "label": "Assistive technology description for current symbols",
+          "description": "@symbols is a placeholder and will be replaced by the respective value.",
+          "default": "Current symbols: @symbols"
+        },
+        {
+          "label": "Assistive technology description for previous symbol button",
+          "default": "Previous symbol"
+        },
+        {
+          "default": "Next symbol",
+          "label": "Assistive technology description for next symbol button"
+        },
+        {
+          "label": "Assistive technology description for announcing correct combination",
+          "description": "@combination is a placeholder and will be replaced by the respective value.",
+          "default": "This combination opens the lock. @combination."
+        },
+        {
+          "label": "Assistive technology description for announcing a wrong combination",
+          "default": "Wrong combination"
+        },
+        {
+          "default": "disabled",
+          "label": "Assistive technology description for announcing \"disabled\""
+        },
+        {
+          "default": "combination lock",
+          "label": "Assistive technology description for announcing \"combination lock\""
+        },
+        {
+          "label": "Assistive technology description for announcing the current segment",
+          "description": "@number and @total are placeholders and will be replaced by the respective values.",
+          "default": "Segment @number of @total"
+        }
+      ],
+      "label": "Accessibility texts"
+    }
+  ]
+}
