@@ -4,7 +4,6 @@
   "description": "Use a combination lock in H5P",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "stylelint './src/**/*.scss' && eslint './src/**/*.js'",
     "build": "webpack --mode=production",
     "watch": "webpack --mode=development --watch"
