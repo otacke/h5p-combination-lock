@@ -1,7 +1,6 @@
 {
   "semantics": [
     {
-      "default": "<p style=\"text-align: center;\"></p>",
       "label": "Introducción",
       "description": "Proporcionar una introducción opcional."
     },

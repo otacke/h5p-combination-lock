@@ -2,8 +2,7 @@
   "semantics": [
     {
       "label": "介绍",
-      "description": "可选：设置一些介绍说明。",
-      "default": "<p style=\"text-align: center;\"></p>"
+      "description": "可选：设置一些介绍说明。"
     },
     {
       "label": "答案",

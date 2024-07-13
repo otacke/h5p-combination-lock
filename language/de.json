@@ -2,8 +2,7 @@
   "semantics": [
     {
       "label": "Einleitung",
-      "description": "Füge optional eine Einleitung ein.",
-      "default": "<p style=\"text-align: center;\"></p>"
+      "description": "Füge optional eine Einleitung ein."
     },
     {
       "label": "Lösung",

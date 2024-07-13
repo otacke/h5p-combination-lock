@@ -2,8 +2,7 @@
   "semantics": [
     {
       "label": "Introductie",
-      "description": "Stel optioneel een introductie in.",
-      "default": "<p style=\"text-align: center;\"></p>"
+      "description": "Stel optioneel een introductie in."
     },
     {
       "label": "Oplossing",

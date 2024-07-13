@@ -2,8 +2,7 @@
   "semantics": [
     {
       "label": "Įvadas",
-      "description": "Pasirinktinai nustatykite įvadą.",
-      "default": "<p style=\"text-align: center;\"></p>"
+      "description": "Pasirinktinai nustatykite įvadą."
     },
     {
       "label": "Sprendimas",

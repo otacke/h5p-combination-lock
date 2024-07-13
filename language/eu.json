@@ -2,8 +2,7 @@
   "semantics": [
     {
       "label": "Sarrera",
-      "description": "Aukeran osatu sarrera.",
-      "default": "<p style=\"text-align: center;\"></p>"
+      "description": "Aukeran osatu sarrera."
     },
     {
       "description": "Sartu blokeorako nahi duzun konbinazioa. Kontuan izan konbinazio luzeak erabiltzea ezegokia izan daitekeela gailu txikietan.",
