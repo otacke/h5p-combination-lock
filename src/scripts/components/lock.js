@@ -66,8 +66,8 @@ export default class Lock {
     lock.classList.add('h5p-combination-lock-elements');
     this.dom.appendChild(lock);
 
-    const groupLabelId = H5P.createUUID();
-    const configurationId = H5P.createUUID();
+    const groupLabelId = `group-${H5P.createUUID()}`;
+    const configurationId = `configuration-${H5P.createUUID()}`;
 
     this.segmentsDOM = document.createElement('div');
     this.segmentsDOM.classList.add('h5p-combination-lock-segments');
