@@ -1,4 +1,4 @@
-@import "@styles/main";
+@use "@styles/main";
 
 .h5p-combination-lock-segment {
   align-items: center;
@@ -9,7 +9,7 @@
   margin: 0 0.3rem;
   user-select: none;
   -webkit-touch-callout: none;
-  min-width: $minimum-a11y-size;
+  min-width: main.$minimum-a11y-size;
 
   &.focus {
     outline: solid black;
