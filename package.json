@@ -28,7 +28,7 @@
     "mini-css-extract-plugin": "^2.9.2",
     "regenerator-runtime": "^0.14.1",
     "resolve-url-loader": "^5.0.0",
-    "sass": "^1.80.6",
+    "sass": "^1.81.0",
     "sass-loader": "^16.0.3",
     "stylelint": "^16.10.0",
     "stylelint-config-recommended": "^14.0.1",
@@ -37,7 +37,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "char-regex": "^2.0.1",
+    "char-regex": "^2.0.2",
     "he": "^1.2.0"
   },
   "browserslist": "> 0.5%, last 2 versions, Firefox ESR, not dead"
