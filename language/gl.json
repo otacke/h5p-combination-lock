@@ -5,14 +5,12 @@
       "description": "Opcionalmente, establece algunha introdución."
     },
     {
-      "default": "0123",
       "label": "Solución",
       "description": "Introduza a solución desexada para a pechadura de combinación. Ten en conta que o uso de solucións longas pode non ser óptimo en dispositivos pequenos."
     },
     {
       "label": "Símbolos para cada segmento",
-      "description": "Escolle os símbolos que debe levar cada segmento. Os símbolos aparecerán na orde aquí definida.",
-      "default": "0123456789"
+      "description": "Escolle os símbolos que debe levar cada segmento. Os símbolos aparecerán na orde aquí definida."
     },
     {
       "label": "Configuración do comportamento",

@@ -5,14 +5,12 @@
       "description": "Aukeran osatu sarrera."
     },
     {
-      "description": "Sartu blokeorako nahi duzun konbinazioa. Kontuan izan konbinazio luzeak erabiltzea ezegokia izan daitekeela gailu txikietan.",
-      "default": "0123",
-      "label": "Konbinazioa"
+      "label": "Konbinazioa",
+      "description": "Sartu blokeorako nahi duzun konbinazioa. Kontuan izan konbinazio luzeak erabiltzea ezegokia izan daitekeela gailu txikietan."
     },
     {
       "label": "Segmentu bakoitzerako ikurrak",
-      "description": "Aukeratu segmentu bakoitzak izan behar dituen ikurrak. Sinboloak hemen zehaztutako ordenan agertuko dira.",
-      "default": "0123456789"
+      "description": "Aukeratu segmentu bakoitzak izan behar dituen ikurrak. Sinboloak hemen zehaztutako ordenan agertuko dira."
     },
     {
       "label": "Jokabide-ezarpenak",

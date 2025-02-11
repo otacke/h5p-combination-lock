@@ -6,13 +6,11 @@
     },
     {
       "label": "Solution",
-      "description": "Enter the desired solution for the lock. Please note that using long solutions may be suboptimal on small devices.",
-      "default": "0123"
+      "description": "Enter the desired solution for the lock. Please note that using long solutions may be suboptimal on small devices."
     },
     {
       "label": "Symbols for each segment",
-      "description": "Choose the symbols that each segment should bear. The symbols will appear in the order defined here.",
-      "default": "0123456789"
+      "description": "Choose the symbols that each segment should bear. The symbols will appear in the order defined here."
     },
     {
       "label": "Behavioural settings",

@@ -6,13 +6,11 @@
     },
     {
       "label": "Solución",
-      "description": "Proporciona la solución deseada para la cerradura. Ten en cuenta que el uso de soluciones largas puede no ser óptimo en dispositivos pequeños.",
-      "default": "0123"
+      "description": "Proporciona la solución deseada para la cerradura. Ten en cuenta que el uso de soluciones largas puede no ser óptimo en dispositivos pequeños."
     },
     {
       "label": "Símbolos para cada segmento",
-      "description": "Elige los símbolos que debe llevar cada segmento. Los símbolos aparecerán en el orden definido aquí.",
-      "default": "0123456789"
+      "description": "Elige los símbolos que debe llevar cada segmento. Los símbolos aparecerán en el orden definido aquí."
     },
     {
       "label": "Configuración del comportamiento",

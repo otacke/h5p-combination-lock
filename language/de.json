@@ -6,13 +6,11 @@
     },
     {
       "label": "Lösung",
-      "description": "Gib hier die Lösung zum Öffnen des Schlosses ein. Bitte beachte, dass lange Lösungen auf kleinen Bildschirmen suboptimal dargestellt werden könnten.",
-      "default": "0123"
+      "description": "Gib hier die Lösung zum Öffnen des Schlosses ein. Bitte beachte, dass lange Lösungen auf kleinen Bildschirmen suboptimal dargestellt werden könnten."
     },
     {
       "label": "Symbole für jedes Segment",
-      "description": "Wähle die Symbole, die jedes Segment tragen soll. Die Symbole erscheinen in der hier definierten Reihenfolge.",
-      "default": "0123456789"
+      "description": "Wähle die Symbole, die jedes Segment tragen soll. Die Symbole erscheinen in der hier definierten Reihenfolge."
     },
     {
       "label": "Verhaltenseinstellungen",

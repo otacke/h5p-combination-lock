@@ -6,13 +6,11 @@
     },
     {
       "label": "Oplossing",
-      "description": "Voer de gewenste oplossing voor het combinatieslot in. Houd er rekening mee dat het gebruik van lange oplossingen niet optimaal kan zijn op kleine apparaten.",
-      "default": "0123"
+      "description": "Voer de gewenste oplossing voor het combinatieslot in. Houd er rekening mee dat het gebruik van lange oplossingen niet optimaal kan zijn op kleine apparaten."
     },
     {
       "label": "Symbolen voor elk segment",
-      "description": "Kies de symbolen die elk segment moet tonen. De symbolen verschijnen in de hieronder aangegeven volgorde.",
-      "default": "0123456789"
+      "description": "Kies de symbolen die elk segment moet tonen. De symbolen verschijnen in de hieronder aangegeven volgorde."
     },
     {
       "label": "Gedragsinstellingen",

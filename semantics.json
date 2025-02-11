@@ -258,7 +258,7 @@
         "label": "Assistive technology description for announcing the current segment",
         "description": "@number and @total are placeholders and will be replaced by the respective values.",
         "default": "Segment @number of @total"
-      }      
+      }
     ]
   }
 ]
