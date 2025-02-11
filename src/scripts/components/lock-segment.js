@@ -80,25 +80,6 @@ export default class LockSegment {
     ]);
 
     this.dom.appendChild(this.buttonPrevious.getDOM());
-
-    // iOS is behind ... Again ...
-    const callback = window.requestIdleCallback ?
-      window.requestIdleCallback :
-      window.requestAnimationFrame;
-
-    callback(() => {
-      // Get started once visible and ready
-      this.observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          this.observer.unobserve(this.dom);
-          this.setPosition(this.position);
-          this.wheel.uncloak();
-        }
-      }, {
-        threshold: 0
-      });
-      this.observer.observe(this.dom);
-    });
   }
 
   /**
@@ -285,6 +266,13 @@ export default class LockSegment {
     }
 
     this.changeSymbol(position);
+  }
+
+  /**
+   * Uncloak.
+   */
+  uncloak() {
+    this.wheel.uncloak();
   }
 }
 

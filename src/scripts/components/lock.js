@@ -52,6 +52,23 @@ export default class Lock {
 
     this.buildDOM();
     this.updateConfigurationAria();
+
+    Util.callOnceVisible(
+      this.dom,
+      () => {
+        // Parent dom might animate/transition and then height computation for wheels is wrong
+        Util.waitForStableHeight(
+          this.dom,
+          () => {
+            this.segments.forEach((segment) => {
+              segment.setPosition(segment.getPosition());
+              segment.uncloak();
+            });
+          }
+        );
+      },
+      { threshold: 0 }
+    );
   }
 
   /**

@@ -142,10 +142,8 @@ export default class Wheel {
     );
 
     // Compute correct translation
-    this.wheelHeight = this.wheelHeight ||
-      this.dom.getBoundingClientRect().height;
-    this.itemHeight = this.itemHeight ||
-      this.list.childNodes[0].getBoundingClientRect().height;
+    this.wheelHeight = this.wheelHeight || this.dom.getBoundingClientRect().height;
+    this.itemHeight = this.itemHeight || this.list.childNodes[0].getBoundingClientRect().height;
     this.itemOffset = (this.wheelHeight - this.itemHeight) / 2;
 
     const translation =
