@@ -145,7 +145,8 @@ export default class Util {
       const newHeight = element.getBoundingClientRect().height;
       if (newHeight === previousHeight) {
         callback();
-      } else {
+      }
+      else {
         previousHeight = newHeight;
         requestAnimationFrame(() => {
           checkHeight();
