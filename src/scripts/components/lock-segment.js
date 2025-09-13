@@ -33,14 +33,14 @@ export default class LockSegment {
       {
         onClicked: () => {
           this.changeSymbol((this.position + this.params.alphabet.length - 1) %
-            this.params.alphabet.length
+            this.params.alphabet.length,
           );
-        }
-      }
+        },
+      },
     );
     this.buttonNext.setAriaLabel([
       this.params.dictionary.get('a11y.nextSymbol'),
-      this.params.dictionary.get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol)
+      this.params.dictionary.get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol),
     ]);
     this.dom.appendChild(this.buttonNext.getDOM());
 
@@ -50,7 +50,7 @@ export default class LockSegment {
         alphabet: this.params.alphabet,
         position: this.position,
         index: this.params.index,
-        total: this.params.total
+        total: this.params.total,
       },
       {
         onChanged: (key) => {
@@ -58,8 +58,8 @@ export default class LockSegment {
         },
         onFocusChanged: (focusOn) => {
           this.dom.classList.toggle('focus', focusOn);
-        }
-      }
+        },
+      },
     );
     this.dom.appendChild(this.wheel.getDOM());
 
@@ -68,15 +68,15 @@ export default class LockSegment {
       {
         onClicked: () => {
           this.changeSymbol((this.position + 1) % this.params.alphabet.length);
-        }
-      }
+        },
+      },
     );
 
     this.buttonPrevious.setAriaLabel([
       this.params.dictionary
         .get('a11y.previousSymbol'),
       this.params.dictionary
-        .get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol)
+        .get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol),
     ]);
 
     this.dom.appendChild(this.buttonPrevious.getDOM());
@@ -127,13 +127,13 @@ export default class LockSegment {
       this.params.dictionary
         .get('a11y.nextSymbol'),
       this.params.dictionary
-        .get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol)
+        .get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol),
     ]);
     this.buttonPrevious.setAriaLabel([
       this.params.dictionary
         .get('a11y.previousSymbol'),
       this.params.dictionary
-        .get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol)
+        .get('a11y.currentSymbol').replace(/@symbol/g, currentSymbol),
     ]);
   }
 
@@ -150,11 +150,11 @@ export default class LockSegment {
 
     this.buttonNext.setAriaLabel([
       this.params.dictionary.get('a11y.nextSymbol'),
-      this.params.dictionary.get('a11y.disabled')
+      this.params.dictionary.get('a11y.disabled'),
     ]);
     this.buttonNext.setAriaLabel([
       this.params.dictionary.get('a11y.previousSymbol'),
-      this.params.dictionary.get('a11y.disabled')
+      this.params.dictionary.get('a11y.disabled'),
     ]);
   }
 
@@ -190,12 +190,12 @@ export default class LockSegment {
 
     this.buttonNext.setAriaLabel([
       this.params.dictionary.get('a11y.nextSymbol'),
-      buttonSymbol
+      buttonSymbol,
     ]);
 
     this.buttonPrevious.setAriaLabel([
       this.params.dictionary.get('a11y.previousSymbol'),
-      buttonSymbol
+      buttonSymbol,
     ]);
   }
 

@@ -32,14 +32,14 @@ export default class XAPI {
         this.getMaxScore(), // Question Type Contract mixin
         this,
         true,
-        this.getScore() > 0 // No need to have full score, but lock opened
+        this.getScore() > 0, // No need to have full score, but lock opened
       );
 
       xAPIEvent.data.statement.result = Util.extend(
         {
-          response: this.lock.getResponse().match(charRegex()).join('[,]')
+          response: this.lock.getResponse().match(charRegex()).join('[,]'),
         },
-        xAPIEvent.data.statement.result || {}
+        xAPIEvent.data.statement.result || {},
       );
     }
 
@@ -69,7 +69,7 @@ export default class XAPI {
     definition.correctResponsesPattern = [
       this.params.solution
         .match(charRegex())
-        .join('[,]')
+        .join('[,]'),
     ];
 
     return definition;
@@ -82,7 +82,7 @@ export default class XAPI {
   getTitle() {
     // H5P Core function: createTitle
     return H5P.createTitle(
-      this.extras?.metadata?.title || XAPI.DEFAULT_DESCRIPTION
+      this.extras?.metadata?.title || XAPI.DEFAULT_DESCRIPTION,
     );
   }
 

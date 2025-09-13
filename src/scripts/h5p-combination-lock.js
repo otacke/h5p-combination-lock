@@ -4,6 +4,9 @@ import Initialization from '@mixins/initialization';
 import XAPI from '@mixins/xapi';
 import '@styles/h5p-combination-lock.scss';
 
+/** @constant {number} EXTRA_TIMEOUT_MS Extra timeout to ensure DOM is ready. */
+const EXTRA_TIMEOUT_MS = 50;
+
 export default class CombinationLock extends H5P.Question {
   /**
    * @class
@@ -15,7 +18,7 @@ export default class CombinationLock extends H5P.Question {
     super('combination-lock');
 
     Util.addMixins(
-      CombinationLock, [QuestionTypeContract, Initialization, XAPI]
+      CombinationLock, [QuestionTypeContract, Initialization, XAPI],
     );
 
     /*
@@ -59,7 +62,7 @@ export default class CombinationLock extends H5P.Question {
       attemptsLeft: this.attemptsLeft,
       viewState: this.viewState,
       message: this.lock.getMessage(),
-      lock: this.lock.getCurrentState()
+      lock: this.lock.getCurrentState(),
     };
   }
 
@@ -116,12 +119,12 @@ export default class CombinationLock extends H5P.Question {
         this.showButton('try-again');
         setTimeout(() => {
           this.focusButton('try-again'); // Not done by H5P.Question
-        }, 50);
+        }, EXTRA_TIMEOUT_MS);
       }
       else if (!params.skipXAPI) {
         this.lock.focus(); // No button to focus, focus lock instead
       }
-    }, 50);
+    }, EXTRA_TIMEOUT_MS);
   }
 
   /**
@@ -130,7 +133,7 @@ export default class CombinationLock extends H5P.Question {
   handleIntermediaryWrongResponse() {
     if (this.attemptsLeft === Infinity) {
       this.announceMessage({
-        text: this.dictionary.get('l10n.wrongCombination')
+        text: this.dictionary.get('l10n.wrongCombination'),
       });
 
       return;
@@ -143,7 +146,7 @@ export default class CombinationLock extends H5P.Question {
 
     this.announceMessage({
       text: attemptsLeftText,
-      aria: [wrongCombinationText, attemptsLeftText].join('. ')
+      aria: [wrongCombinationText, attemptsLeftText].join('. '),
     });
   }
 
@@ -181,10 +184,10 @@ export default class CombinationLock extends H5P.Question {
         if (!params.skipXAPI) {
           window.setTimeout(() => {
             this.lock.focus(); // No button to focus, focus lock instead
-          }, 50);
+          }, EXTRA_TIMEOUT_MS);
         }
       }
-    }, 50);
+    }, EXTRA_TIMEOUT_MS);
   }
 
   /**
@@ -219,7 +222,7 @@ export default class CombinationLock extends H5P.Question {
       this.viewState = state;
 
       this.content.setViewState(
-        CombinationLock.VIEW_STATES.find((value) => value === state).keys[0]
+        CombinationLock.VIEW_STATES.find((value) => value === state).keys[0],
       );
     }
   }

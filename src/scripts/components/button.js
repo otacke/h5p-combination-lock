@@ -16,11 +16,11 @@ export default class Button {
     this.params = Util.extend({
       id: H5P.createUUID(),
       label: '\u1F605',
-      classes: []
+      classes: [],
     }, params);
 
     this.callbacks = Util.extend({
-      onClicked: () => {}
+      onClicked: () => {},
     }, callbacks);
 
     this.isDisabled = false;

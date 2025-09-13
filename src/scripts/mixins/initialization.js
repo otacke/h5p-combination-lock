@@ -5,6 +5,9 @@ import CombinationLock from '@scripts/h5p-combination-lock';
 import Lock from '@components/lock';
 import he from 'he';
 
+/** @constant {number} MIN_ALPHABET_LENGTH Minimum length of alphabet. */
+const MIN_ALPHABET_LENGTH = 3;
+
 /**
  * Mixin containing methods for initializing the content.
  */
@@ -29,7 +32,7 @@ export default class Initialization {
         autoCheck: true,
         enableRetry: true,
         enableSolutionsButton: true,
-        enableCheckButton: true
+        enableCheckButton: true,
       },
       l10n: {
         check: 'Check',
@@ -41,7 +44,7 @@ export default class Initialization {
         attemptsLeft: 'Attempts left: @number',
         correctCombination: 'This combination opens the lock.',
         wrongCombination: 'This combination does not open the lock.',
-        noMessage: '...'
+        noMessage: '...',
       },
       a11y: {
         check: 'Check whether the combination opens the lock.',
@@ -56,8 +59,8 @@ export default class Initialization {
         wrongCombination: 'Wrong combination',
         disabled: 'disabled',
         combinationLock: 'combination lock',
-        segment: 'Segment @number of @total'
-      }
+        segment: 'Segment @number of @total',
+      },
     }, this.params);
 
     // Handle potential override from parent content type
@@ -76,6 +79,7 @@ export default class Initialization {
         .slice(0, CombinationLock.SEGMENTS_MAX)
         .join('');
 
+      // eslint-disable-next-line @stylistic/js/max-len
       console.warn(`${this.getTitle()}: The original solution was truncated because it was longer than ${CombinationLock.SEGMENTS_MAX} symbols that are allowed.`);
     }
 
@@ -93,7 +97,7 @@ export default class Initialization {
       }, '');
 
     // Ensure that there are at least 3 symbols for scrolling on wheel
-    while (this.params.alphabet.match(charRegex()).length < 3) {
+    while (this.params.alphabet.match(charRegex()).length < MIN_ALPHABET_LENGTH) {
       this.params.alphabet = `${this.params.alphabet}${this.params.alphabet}`;
     }
   }
@@ -109,7 +113,7 @@ export default class Initialization {
     // Retrieve previous state
     this.previousState = this.extras?.previousState || {};
     this.viewState = this.previousState.viewState ??
-      CombinationLock.VIEW_STATES['task'];
+      CombinationLock.VIEW_STATES.task;
     this.wasAnswerGiven = this.previousState.wasAnswerGiven ?? false;
 
     this.maxAttempts = this.params.behaviour.autoCheck ?
@@ -126,7 +130,7 @@ export default class Initialization {
         solution: this.params.solution.match(charRegex()),
         autoCheck: this.params.behaviour.autoCheck,
         maxAttempts: this.maxAttempts,
-        previousState: this.previousState.lock
+        previousState: this.previousState.lock,
       },
       {
         onChanged: () => {
@@ -134,8 +138,8 @@ export default class Initialization {
         },
         onResized: () => {
           this.trigger('resize');
-        }
-      }
+        },
+      },
     );
 
     // Relay H5P resize to lock component
@@ -177,7 +181,7 @@ export default class Initialization {
       { 'aria-label': this.dictionary.get('a11y.check') },
       {
         contentData: this.extras,
-        textIfSubmitting: this.dictionary.get('l10n.submit')
+        textIfSubmitting: this.dictionary.get('l10n.submit'),
       });
 
     // Show solution button
@@ -189,7 +193,7 @@ export default class Initialization {
       },
       this.params.behaviour.autoCheck &&
         this.params.behaviour.enableSolutionsButton,
-      { 'aria-label': this.dictionary.get('a11y.showSolution') }
+      { 'aria-label': this.dictionary.get('a11y.showSolution') },
     );
 
     // Retry button
@@ -201,7 +205,7 @@ export default class Initialization {
         this.lock.focus();
       },
       false,
-      { 'aria-label': this.dictionary.get('a11y.retry') }
+      { 'aria-label': this.dictionary.get('a11y.retry') },
     );
 
     return dom;
@@ -211,7 +215,7 @@ export default class Initialization {
    * Recreate the view state from previous state.
    */
   recreateViewState() {
-    if (this.viewState === CombinationLock.VIEW_STATES['task']) {
+    if (this.viewState === CombinationLock.VIEW_STATES.task) {
       if (!this.params.behaviour.autoCheck && this.maxAttempts !== Infinity) {
         const attemptsLeftText = this.dictionary
           .get('l10n.attemptsLeft')
@@ -222,20 +226,20 @@ export default class Initialization {
 
         this.announceMessage({
           text: attemptsLeftText,
-          aria: [wrongCombinationText, attemptsLeftText].join('. ')
+          aria: [wrongCombinationText, attemptsLeftText].join('. '),
         });
       }
       else {
         this.announceMessage({
           text: this.dictionary.get('l10n.noMessage'),
-          aria: ''
+          aria: '',
         });
       }
     }
-    else if (this.viewState === CombinationLock.VIEW_STATES['results']) {
+    else if (this.viewState === CombinationLock.VIEW_STATES.results) {
       this.checkAnswer({ skipXAPI: true });
     }
-    else if (this.viewState === CombinationLock.VIEW_STATES['solutions']) {
+    else if (this.viewState === CombinationLock.VIEW_STATES.solutions) {
       this.showSolutions({ showRetry: true });
     }
   }

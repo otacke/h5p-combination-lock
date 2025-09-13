@@ -1,6 +1,9 @@
 import Util from '@services/util.js';
 import './wheel.scss';
 
+/** @constant {number} OVERFLOW_TIMEOUT_MS Timeout for overflow workaround. */
+const OVERFLOW_TIMEOUT_MS = 250;
+
 /** Wheel */
 export default class Wheel {
   /**
@@ -19,7 +22,7 @@ export default class Wheel {
 
     this.callbacks = Util.extend({
       onChanged: () => {},
-      onFocusChanged: () => {}
+      onFocusChanged: () => {},
     }, callbacks);
 
     this.oldIndex = this.params.position ?? 0;
@@ -36,7 +39,7 @@ export default class Wheel {
     const alphabetPlus = [
       this.params.alphabet[this.params.alphabet.length - 1],
       ...this.params.alphabet,
-      this.params.alphabet[0]
+      this.params.alphabet[0],
     ];
 
     this.items = alphabetPlus.map((symbol) => {
@@ -61,7 +64,7 @@ export default class Wheel {
       'aria-label',
       this.params.dictionary.get('a11y.segment')
         .replace(/@number/g, this.params.index + 1)
-        .replace(/@total/g, this.params.total)
+        .replace(/@total/g, this.params.total),
     );
 
     this.spinbutton.addEventListener('keydown', (event) => {
@@ -105,7 +108,7 @@ export default class Wheel {
       setTimeout(() => {
         this.oldIndex = this.params.alphabet.length;
         this.scrollTo({ index: this.oldIndex, noAnimation: true });
-      }, 250);
+      }, OVERFLOW_TIMEOUT_MS);
     }
     else if (this.oldIndex === this.params.alphabet.length && position === 0) {
       // Overflow scrolling down
@@ -113,7 +116,7 @@ export default class Wheel {
       setTimeout(() => {
         this.oldIndex = 1;
         this.scrollTo({ index: this.oldIndex, noAnimation: true });
-      }, 250);
+      }, OVERFLOW_TIMEOUT_MS);
     }
     else {
       this.oldIndex = position + 1;
@@ -138,12 +141,13 @@ export default class Wheel {
 
     this.spinbutton.setAttribute('aria-valuenow', `${alphabetIndex}`);
     this.spinbutton.setAttribute(
-      'aria-valuetext', this.params.alphabet[alphabetIndex]
+      'aria-valuetext', this.params.alphabet[alphabetIndex],
     );
 
     // Compute correct translation
     this.wheelHeight = this.wheelHeight || this.dom.getBoundingClientRect().height;
     this.itemHeight = this.itemHeight || this.list.childNodes[0].getBoundingClientRect().height;
+    // eslint-disable-next-line no-magic-numbers
     this.itemOffset = (this.wheelHeight - this.itemHeight) / 2;
 
     const translation =

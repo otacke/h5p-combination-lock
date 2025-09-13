@@ -1,5 +1,8 @@
 import charRegex from 'char-regex';
 
+/** @constant {number} EXTRA_TIMEOUT_MS Extra timeout to ensure DOM is ready. */
+const EXTRA_TIMEOUT_MS = 50;
+
 /**
  * Mixin containing methods for H5P Question Type contract.
  */
@@ -48,7 +51,7 @@ export default class QuestionTypeContract {
     const ariaText = this.dictionary
       .get('a11y.correctCombination')
       .replace(
-        /@combination/g, this.params.solution.match(charRegex()).join(', ')
+        /@combination/g, this.params.solution.match(charRegex()).join(', '),
       );
 
     this.lock.disable();
@@ -56,7 +59,7 @@ export default class QuestionTypeContract {
 
     this.announceMessage({
       text: this.dictionary.get('l10n.correctCombination'),
-      aria: ariaText
+      aria: ariaText,
     });
 
     // Announce message before some other element gets focus
@@ -73,10 +76,10 @@ export default class QuestionTypeContract {
         else {
           window.setTimeout(() => {
             this.lock.focus(); // No button to focus, focus lock instead
-          }, 50);
+          }, EXTRA_TIMEOUT_MS);
         }
       }
-    }, 50);
+    }, EXTRA_TIMEOUT_MS);
   }
 
   /**
@@ -96,13 +99,13 @@ export default class QuestionTypeContract {
 
       this.announceMessage({
         text: attemptsLeftText,
-        aria: [wrongCombinationText, attemptsLeftText].join('. ')
+        aria: [wrongCombinationText, attemptsLeftText].join('. '),
       });
     }
     else {
       this.announceMessage({
         text: this.dictionary.get('l10n.noMessage'),
-        aria: ''
+        aria: '',
       });
     }
 
@@ -131,7 +134,7 @@ export default class QuestionTypeContract {
   getXAPIData() {
     const xAPIEvent = this.createXAPIEvent('answered');
     return {
-      statement: xAPIEvent.data.statement
+      statement: xAPIEvent.data.statement,
     };
   }
 }

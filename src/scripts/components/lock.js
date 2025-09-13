@@ -19,12 +19,12 @@ export default class Lock {
    */
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({
-      previousState: {}
+      previousState: {},
     }, params);
 
     this.callbacks = Util.extend({
       onChanged: () => {},
-      onResized: () => {}
+      onResized: () => {},
     }, callbacks);
 
     this.segments = this.params.solution.map((symbol, index) => {
@@ -35,13 +35,13 @@ export default class Lock {
           total: this.params.solution.length,
           solution: symbol,
           alphabet: this.params.alphabet,
-          position: this.params.previousState?.positions[index] ?? null
+          position: this.params.previousState?.positions[index] ?? null,
         },
         {
           onChanged: () => {
             this.handleSegmentChanged();
-          }
-        }
+          },
+        },
       );
 
       return segment;
@@ -64,10 +64,10 @@ export default class Lock {
               segment.setPosition(segment.getPosition());
               segment.uncloak();
             });
-          }
+          },
         );
       },
-      { threshold: 0 }
+      { threshold: 0 },
     );
   }
 
@@ -90,7 +90,7 @@ export default class Lock {
     this.segmentsDOM.classList.add('h5p-combination-lock-segments');
     this.segmentsDOM.setAttribute('role', 'group');
     this.segmentsDOM.setAttribute(
-      'aria-labelledby', `${groupLabelId} ${configurationId}`
+      'aria-labelledby', `${groupLabelId} ${configurationId}`,
     );
     lock.appendChild(this.segmentsDOM);
 
@@ -129,7 +129,7 @@ export default class Lock {
    */
   resize() {
     this.messageDisplay.setWidth(
-      this.segmentsDOM.getBoundingClientRect().width
+      this.segmentsDOM.getBoundingClientRect().width,
     );
   }
 
@@ -155,7 +155,7 @@ export default class Lock {
    */
   getCurrentState() {
     return {
-      positions: this.getPositions()
+      positions: this.getPositions(),
     };
   }
 
