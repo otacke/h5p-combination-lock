@@ -12,8 +12,8 @@
     );
   box-shadow: 0 0 10px rgb(0 0 0 / 60%);
   color: var(--combination-lock-control-color);
-  font-size: 2rem;
-  height: 6rem;
+  font-size: calc(2 * var(--h5p-theme-font-size-m));
+  height: calc(6 * var(--h5p-theme-spacing-s));
   overflow: hidden;
   text-align: center;
   width: 100%;
@@ -28,8 +28,8 @@
     }
 
     .h5p-combination-lock-wheel-listitem {
-      height: 3.5rem;
-      line-height: 3.5rem;
+      height: calc(3.5 * var(--h5p-theme-spacing-s));
+      line-height: calc(3.5 * var(--h5p-theme-spacing-s));
 
       &.cloaked {
         visibility: hidden;
@@ -40,7 +40,7 @@
   .h5p-combination-lock-wheel-spinbutton {
     grid-column: 1;
     grid-row: 1;
-    height: 6rem;
+    height: calc(6 * var(--h5p-theme-spacing-s));
     z-index: 1;
 
     &:focus {

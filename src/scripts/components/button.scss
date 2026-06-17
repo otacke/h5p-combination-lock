@@ -2,9 +2,9 @@
   background: linear-gradient(#d0d3dc 0%, #fff 50%, #d0d3dc 100%);
   border: none;
   color: var(--combination-lock-control-color);
-  font-size: 1.25rem;
-  height: max(var(--combination-lock-min-target-size), 1.5rem);
-  line-height: max(var(--combination-lock-min-target-size), 1.5rem);
+  font-size: var(--h5p-theme-font-size-xl);
+  height: max(var(--combination-lock-min-target-size), var(--h5p-theme-spacing-m));
+  line-height: max(var(--combination-lock-min-target-size), var(--h5p-theme-spacing-m));
   padding: 0;
   width: 100%;
 
