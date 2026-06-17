@@ -1,8 +1,11 @@
-@use "@styles/main";
-
 .h5p-combination-lock {
-  background-color: main.$color-background;
-  color: main.$color-text;
+  // Local CSS custom properties. Declared on the root class so the
+  // cascade delivers them to every descendant selector.
+  --combination-lock-min-target-size: 44px; // WCAG 2.5.5 touch target floor
+  --combination-lock-offset-offscreen: -999999px; // off-screen position utility
+
+  background-color: var(--h5p-theme-ui-base);
+  color: var(--h5p-theme-text-primary);
   width: 100%;
 
   .h5p-combination-lock-main {

@@ -1,5 +1,3 @@
-@use "@styles/main";
-
 .h5p-combination-lock-case {
   background: linear-gradient(#fff, #b3b7c6);
   border-radius: 0.5rem;
@@ -23,7 +21,7 @@
       .h5p-combination-lock-group-label,
       .h5p-combination-lock-current-combination-aria {
         position: absolute;
-        left: main.$offset-offscreen;
+        left: var(--combination-lock-offset-offscreen);
       }
     }
   }
