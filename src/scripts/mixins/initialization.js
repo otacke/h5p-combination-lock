@@ -182,6 +182,8 @@ export default class Initialization {
       {
         contentData: this.extras,
         textIfSubmitting: this.dictionary.get('l10n.submit'),
+        styleType: 'primary',
+        icon: 'check',
       });
 
     // Show solution button
@@ -194,7 +196,10 @@ export default class Initialization {
       this.params.behaviour.autoCheck &&
         this.params.behaviour.enableSolutionsButton,
       { 'aria-label': this.dictionary.get('a11y.showSolution') },
-    );
+      {
+        styleType: 'secondary',
+        icon: 'show-solutions',
+      });
 
     // Retry button
     this.addButton(
@@ -206,7 +211,10 @@ export default class Initialization {
       },
       false,
       { 'aria-label': this.dictionary.get('a11y.retry') },
-    );
+      {
+        styleType: 'secondary',
+        icon: 'retry',
+      });
 
     return dom;
   }

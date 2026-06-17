@@ -1,29 +1,27 @@
-@use "@styles/main";
-
 .h5p-combination-lock-case {
   background: linear-gradient(#fff, #b3b7c6);
-  border-radius: 0.5rem;
+  border-radius: var(--h5p-theme-border-radius-large);
   box-shadow: inset 0 -0.5rem 0.25rem -0.25rem #8288a1, 0 2px 3px 1px rgb(0 0 0 / 50%);
   display: flex;
-  margin-bottom: 0.25rem;
-  padding: 1rem;
+  margin-bottom: calc(0.25 * var(--h5p-theme-spacing-s));
+  padding: var(--h5p-theme-spacing-s);
 
   .h5p-combination-lock-elements {
     background: linear-gradient(#676e89, #5e6078);
-    border-radius: 0.5rem;
+    border-radius: var(--h5p-theme-border-radius-large);
     display: flex;
     flex-direction: column;
-    padding: 0.5rem 1rem;
+    padding: calc(0.5 * var(--h5p-theme-spacing-s)) var(--h5p-theme-spacing-s);
 
     .h5p-combination-lock-segments {
       display: flex;
       flex-direction: row;
-      margin-bottom: 1rem;
+      margin-bottom: var(--h5p-theme-spacing-s);
 
       .h5p-combination-lock-group-label,
       .h5p-combination-lock-current-combination-aria {
         position: absolute;
-        left: main.$offset-offscreen;
+        left: var(--combination-lock-offset-offscreen);
       }
     }
   }
