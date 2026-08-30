@@ -1,17 +1,15 @@
-@use "@styles/main";
-
 .h5p-combination-lock-message-display {
   align-items: center;
   background-color: rgba(0, 0, 0, 0.1);
-  border-radius: 0.5rem;
+  border-radius: var(--h5p-theme-border-radius-large);
   box-sizing: border-box;
   color: #edeff2;
   display: flex;
-  font-size: 1.25rem;
+  font-size: var(--h5p-theme-font-size-xl);
   justify-content: center;
-  line-height: 1.25rem;
+  line-height: var(--h5p-theme-font-size-xl);
   min-height: 3.5rem;
-  padding: 0.25rem;
+  padding: calc(0.25 * var(--h5p-theme-spacing-s));
   text-align: center;
   width: 100%;
 

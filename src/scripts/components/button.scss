@@ -1,12 +1,10 @@
-@use "@styles/main";
-
 .h5p-combination-lock-button {
   background: linear-gradient(#d0d3dc 0%, #fff 50%, #d0d3dc 100%);
   border: none;
-  color: main.$color-text;
-  font-size: 1.25rem;
-  height: max(main.$minimum-a11y-size, 1.5rem);
-  line-height: max(main.$minimum-a11y-size, 1.5rem);
+  color: var(--combination-lock-control-color);
+  font-size: var(--h5p-theme-font-size-xl);
+  height: max(var(--combination-lock-min-target-size), var(--h5p-theme-spacing-m));
+  line-height: max(var(--combination-lock-min-target-size), var(--h5p-theme-spacing-m));
   padding: 0;
   width: 100%;
 

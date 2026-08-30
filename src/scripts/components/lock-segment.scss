@@ -1,15 +1,13 @@
-@use "@styles/main";
-
 .h5p-combination-lock-segment {
   align-items: center;
   display: flex;
   flex-direction: column;
   grid-column: 1;
   grid-row: 1;
-  margin: 0 0.3rem;
+  margin: 0 calc(0.3 * var(--h5p-theme-spacing-s));
   user-select: none;
   -webkit-touch-callout: none;
-  min-width: main.$minimum-a11y-size;
+  min-width: var(--combination-lock-min-target-size);
 
   &.focus {
     outline: solid black;

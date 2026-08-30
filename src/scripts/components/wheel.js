@@ -80,6 +80,20 @@ export default class Wheel {
     });
 
     this.dom.appendChild(this.spinbutton);
+
+    // Re-position the wheel when its dimensions change (e.g., density switch).
+    // Token-based sizes scale with density, so the cached scroll position
+    // would be stale after the H5P platform changes the density class on
+    // a parent. scrollTo() also re-reads dimensions, so this is enough to
+    // keep the digit centered across density changes.
+    if (typeof ResizeObserver !== 'undefined') {
+      this.resizeObserver = new ResizeObserver(() => {
+        if (typeof this.oldIndex === 'number') {
+          this.scrollTo({ index: this.oldIndex, noAnimation: true, skipFocus: true });
+        }
+      });
+      this.resizeObserver.observe(this.dom);
+    }
   }
 
   /**
@@ -145,8 +159,10 @@ export default class Wheel {
     );
 
     // Compute correct translation
-    this.wheelHeight = this.wheelHeight || this.dom.getBoundingClientRect().height;
-    this.itemHeight = this.itemHeight || this.list.childNodes[0].getBoundingClientRect().height;
+    // Re-read on every call: token-based dimensions change with density,
+    // and the cached value would go stale when the H5P platform switches density.
+    this.wheelHeight = this.dom.getBoundingClientRect().height;
+    this.itemHeight = this.list.childNodes[0].getBoundingClientRect().height;
     // eslint-disable-next-line no-magic-numbers
     this.itemOffset = (this.wheelHeight - this.itemHeight) / 2;
 
@@ -161,7 +177,9 @@ export default class Wheel {
     this.list.classList.remove('transition');
     window.requestAnimationFrame(() => {
       this.list.style.transform = translation;
-      this.focusSpinbutton();
+      if (!params.skipFocus) {
+        this.focusSpinbutton();
+      }
 
       window.requestAnimationFrame(() => {
         this.list.classList.add('transition');

@@ -15,7 +15,7 @@ export default class CombinationLock extends H5P.Question {
    * @param {object} [extras] Saved state, metadata, etc.
    */
   constructor(params, contentId, extras = {}) {
-    super('combination-lock');
+    super('combination-lock', { theme: true });
 
     Util.addMixins(
       CombinationLock, [QuestionTypeContract, Initialization, XAPI],
