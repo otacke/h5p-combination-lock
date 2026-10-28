@@ -3,7 +3,7 @@ import Dictionary from '@services/dictionary';
 import charRegex from 'char-regex';
 import CombinationLock from '@scripts/h5p-combination-lock';
 import Lock from '@components/lock';
-import he from 'he';
+import { decode } from 'he';
 
 /** @constant {number} MIN_ALPHABET_LENGTH Minimum length of alphabet. */
 const MIN_ALPHABET_LENGTH = 3;
@@ -69,7 +69,7 @@ export default class Initialization {
     }
 
     // Sanitize solution
-    this.params.solution = Util.stripHTML(he.decode(this.params.solution));
+    this.params.solution = Util.stripHTML(decode(this.params.solution));
     let symbols = this.params.solution.match(charRegex());
     if (!symbols || symbols?.length < 1) {
       symbols = ['H', '5', 'P'];
@@ -83,7 +83,7 @@ export default class Initialization {
       console.warn(`${this.getTitle()}: The original solution was truncated because it was longer than ${CombinationLock.SEGMENTS_MAX} symbols that are allowed.`);
     }
 
-    this.params.alphabet = he.decode(this.params.alphabet);
+    this.params.alphabet = decode(this.params.alphabet);
 
     // Sanitize alphabet
     this.params.alphabet = `${this.params.alphabet}${this.params.solution}`
